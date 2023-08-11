@@ -21,6 +21,11 @@ To build this project:
 
 That's all that is required to build this project.
 
+## License
+
+Distributed under the GPLv3 License. See [LICENSE](LICENSE) for more information.
+
+
 <!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/github/contributors/HHS/ASPR-ms-util
 [contributors-url]: https://github.com/HHS/ASPR-ms-util/graphs/contributors
