@@ -1,9 +1,8 @@
 [![GPL LICENSE][license-shield]][license-url]
 [![GitHub contributors][contributors-shield]][contributors-url]
 
-# Modeling Utilities Repository
-
-This project contains useful tools and utilities that are useful to use with simulation models.  
+# Modeling Utilities
+This project contains tools and utilities that are useful to use with simulation models.  
 More Specifically, these utilities are used within [GCM](https://github.com/HHS/ASPR-8) and thus this project is required to be cloned and built in order to use GCM.
 
 ## Requirements
@@ -22,7 +21,6 @@ To build this project:
 That's all that is required to build this project.
 
 ## License
-
 Distributed under the GPLv3 License. See [LICENSE](LICENSE) for more information.
 
 
