@@ -63,7 +63,7 @@ public class GeoVisualizerDriver {
 
 	public static void main(String[] args) throws IOException {
 
-		Path tractsFile = Paths.get(args[0]);
+		Path tractsFile = Paths.get("src\\test\\resources\\geotesting\\tract-ids.csv");
 
 		Map<ClientData, LatLon> dataMap = new LinkedHashMap<>();
 
