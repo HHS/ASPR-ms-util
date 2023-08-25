@@ -8,24 +8,22 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import util.annotations.UnitTag;
+import util.annotations.UnitTestConstructor;
+import util.annotations.UnitTestField;
+import util.annotations.UnitTestMethod;
 import util.meta.unittestcoverage.MetaInfoContainer;
 import util.meta.unittestcoverage.MetaInfoGenerator;
 import util.meta.unittestcoverage.warnings.ConstructorWarning;
 import util.meta.unittestcoverage.warnings.FieldWarning;
 import util.meta.unittestcoverage.warnings.MethodWarning;
 import util.meta.unittestcoverage.warnings.WarningType;
-import util.annotations.UnitTag;
-import util.annotations.UnitTestConstructor;
-import util.annotations.UnitTestField;
-import util.annotations.UnitTestMethod;
 
 /**
  * A script covering the details of the GCM Test Plan. It produces a console
  * report that measures the completeness/status of the test classes. It does not
  * measure the correctness of any test, but rather shows which tests exist and
  * their status.
- *
- *
  */
 public class MetaInfoReport {
 
@@ -36,11 +34,11 @@ public class MetaInfoReport {
 
 		// Should point to src/test/java
 		final Path testPath = Paths.get(args[1]);
-		MetaInfoContainer metaInfoContainer = MetaInfoGenerator	.builder()//
-																.setSourcePath(sourcePath)//
-																.setTestPath(testPath)//
-																.build()//
-																.execute();//
+		MetaInfoContainer metaInfoContainer = MetaInfoGenerator.builder()//
+				.setSourcePath(sourcePath)//
+				.setTestPath(testPath)//
+				.build()//
+				.execute();//
 
 		reportWarnings(metaInfoContainer);
 		reportTags(metaInfoContainer);
@@ -53,11 +51,13 @@ public class MetaInfoReport {
 
 	private static String getMethodString(UnitTestMethod unitTestMethod) {
 
-		return "Method: " + unitTestMethod.target().getCanonicalName() + "." + unitTestMethod.name() + Arrays.toString(unitTestMethod.args());
+		return "Method: " + unitTestMethod.target().getCanonicalName() + "." + unitTestMethod.name()
+				+ Arrays.toString(unitTestMethod.args());
 	}
 
 	private static String getConstructorString(UnitTestConstructor unitTestConstructor) {
-		return "Constructor: " + unitTestConstructor.target().getCanonicalName() + "." + Arrays.toString(unitTestConstructor.args());
+		return "Constructor: " + unitTestConstructor.target().getCanonicalName() + "."
+				+ Arrays.toString(unitTestConstructor.args());
 	}
 
 	private static void reportTags(MetaInfoContainer metaInfoContainer) {
@@ -113,11 +113,11 @@ public class MetaInfoReport {
 					List<String> list = map.get(target);
 					count += list.size();
 				}
-				System.out.println("Tag = " + unitTag+"("+count+")");
+				System.out.println("Tag = " + unitTag + "(" + count + ")");
 				for (Class<?> target : map.keySet()) {
 					List<String> list = map.get(target);
 					for (String annotationString : list) {
-						System.out.println("\t"+target.getSimpleName()+"\t" + annotationString);
+						System.out.println("\t" + target.getSimpleName() + "\t" + annotationString);
 					}
 				}
 			}
@@ -134,17 +134,20 @@ public class MetaInfoReport {
 
 		for (FieldWarning fieldWarning : metaInfoContainer.getFieldWarnings()) {
 			List<String> list = warningMap.get(fieldWarning.getWarningType());
-			list.add(fieldWarning.getField().getDeclaringClass().getSimpleName() + "\t" + fieldWarning.getField().toString() + " " + fieldWarning.getDetails());
+			list.add(fieldWarning.getField().getDeclaringClass().getSimpleName() + "\t"
+					+ fieldWarning.getField().toString() + " " + fieldWarning.getDetails());
 		}
 
 		for (MethodWarning methodWarning : metaInfoContainer.getMethodWarnings()) {
 			List<String> list = warningMap.get(methodWarning.getWarningType());
-			list.add(methodWarning.getMethod().getDeclaringClass().getSimpleName() + "\t" + methodWarning.getMethod().toString() + " " + methodWarning.getDetails());
+			list.add(methodWarning.getMethod().getDeclaringClass().getSimpleName() + "\t"
+					+ methodWarning.getMethod().toString() + " " + methodWarning.getDetails());
 		}
 
 		for (ConstructorWarning constructorWarning : metaInfoContainer.getConstructorWarnings()) {
 			List<String> list = warningMap.get(constructorWarning.getWarningType());
-			list.add(constructorWarning.getConstructor().getDeclaringClass().getSimpleName() + "\t" + constructorWarning.getConstructor().toString() + " " + constructorWarning.getDetails());
+			list.add(constructorWarning.getConstructor().getDeclaringClass().getSimpleName() + "\t"
+					+ constructorWarning.getConstructor().toString() + " " + constructorWarning.getDetails());
 		}
 
 		int warningCount = 0;

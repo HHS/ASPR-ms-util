@@ -10,7 +10,6 @@ public final class BinContainer {
 
 	/**
 	 * Constructs the {@link BinContainer} from the given binSize.
-	 * 
 	 */
 	private BinContainer(MutableBinContainer mutableBinContainer) {
 		this.lowIndex = mutableBinContainer.lowIndex;
@@ -34,8 +33,7 @@ public final class BinContainer {
 	/**
 	 * Creates a builder for a bin container
 	 * 
-	 * @throws IllegalArgumentException
-	 * <li>if the bin size was non-positive</li>
+	 * @throws IllegalArgumentException if the bin size was non-positive
 	 */
 	public static Builder builder(double binSize) {
 		return new Builder(binSize);
@@ -50,26 +48,24 @@ public final class BinContainer {
 	private final int highIndex;
 
 	public static class Builder {
-		
+
 		private MutableBinContainer mutableBinContainer;
 
-		private Builder(double binSize) {			
+		private Builder(double binSize) {
 			mutableBinContainer = new MutableBinContainer(binSize);
 		}
 
 		/**
 		 * Builds the {@link BinContainer} from the contributed values.
-		 * 
 		 */
-		public BinContainer build() {			
-			return new BinContainer(mutableBinContainer);			
+		public BinContainer build() {
+			return new BinContainer(mutableBinContainer);
 		}
 
 		/**
 		 * Adds the given value by the given number of times.
 		 * 
-		 * @throws IllegalArgumentException
-		 *             <li>if the count is negative
+		 * @throws IllegalArgumentException if the count is negative
 		 */
 		public Builder addValue(double value, int count) {
 			mutableBinContainer.addValue(value, count);
@@ -79,12 +75,9 @@ public final class BinContainer {
 	}
 
 	/**
-	 * Represents a half open interval [lowerBound,upperBound) that contains a
-	 * count of values.
-	 * 
-	 *
+	 * Represents a half open interval [lowerBound,upperBound) that contains a count
+	 * of values.
 	 */
-
 	public final static class Bin {
 		private final double lowerBound;
 		private final double upperBound;
@@ -152,8 +145,11 @@ public final class BinContainer {
 		 * Constructs the Bin
 		 * 
 		 * @throws IllegalArgumentException
-		 *             <li>if the lower bound exceeds the upper bound
-		 *             <li>if the count is negative
+		 *                                      <ul>
+		 *                                      <li>if the lower bound exceeds the upper
+		 *                                      bound</li>
+		 *                                      <li>if the count is negative</li>
+		 *                                      </ul>
 		 */
 		public Bin(double lowerBound, double upperBound, int count) {
 			if (lowerBound > upperBound) {
@@ -220,8 +216,7 @@ public final class BinContainer {
 		/**
 		 * Adds a value to the container
 		 * 
-		 * @throws IllegalArgumentException
-		 *             <li>if the count is negative</li>
+		 * @throws IllegalArgumentException if the count is negative
 		 */
 		public void addValue(double value, int count) {
 			if (count < 0) {
@@ -247,8 +242,8 @@ public final class BinContainer {
 	}
 
 	/**
-	 * Returns the bin associated with the given index. Bins are indexed from 0
-	 * to binCount-1.
+	 * Returns the bin associated with the given index. Bins are indexed from 0 to
+	 * binCount-1.
 	 */
 	public Bin getBin(int index) {
 		if (index < 0) {

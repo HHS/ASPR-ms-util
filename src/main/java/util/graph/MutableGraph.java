@@ -8,12 +8,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 
  * A generics-based, mutable graph of nodes(N) and edges(E). All iterators are
  * immutable and will throw UnsupportedOperationException runtime exception on
  * remove().
- * 
- *
  */
 public final class MutableGraph<N, E> {
 
@@ -50,8 +47,7 @@ public final class MutableGraph<N, E> {
 
 	/*
 	 * Returns a {@link Graph} backed by this {@link MutableGraph}. Mutations in
-	 * this {@link MutableGraph} will be reflected in the resultant {@link
-	 * Graph}
+	 * this {@link MutableGraph} will be reflected in the resultant {@link Graph}
 	 * 
 	 * This method is package access only and should only be used to reduce the
 	 * overhead costs of creating Graphs from MutableGraphs.
@@ -89,8 +85,8 @@ public final class MutableGraph<N, E> {
 	}
 
 	/**
-	 * Adds the edge to this graph, possibly replacing the edge if it is already
-	 * in the graph. Adds the nodes if required.
+	 * Adds the edge to this graph, possibly replacing the edge if it is already in
+	 * the graph. Adds the nodes if required.
 	 */
 	public void addEdge(E edge, N originNode, N destinationNode) {
 		removeEdge(edge);
@@ -385,8 +381,7 @@ public final class MutableGraph<N, E> {
 	}
 
 	/**
-	 * Returns a hash code that is the sum of the hash codes of its nodes and
-	 * edges.
+	 * Returns a hash code that is the sum of the hash codes of its nodes and edges.
 	 */
 	@Override
 	public int hashCode() {
@@ -403,9 +398,9 @@ public final class MutableGraph<N, E> {
 	}
 
 	/**
-	 * Returns true if and only if the given object is an instance of
-	 * {@link Graph} or {@link MutableGraph} that contains the same nodes and
-	 * edges as this {@link MutableGraph}
+	 * Returns true if and only if the given object is an instance of {@link Graph}
+	 * or {@link MutableGraph} that contains the same nodes and edges as this
+	 * {@link MutableGraph}
 	 */
 
 	@SuppressWarnings("rawtypes")

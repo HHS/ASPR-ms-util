@@ -168,12 +168,12 @@ public class VolumetricDimensionTree<T> {
 	private VolumetricDimensionTree(Data data) {
 		this.data = data;
 		defaultDimensionTreeRec = new DimensionTreeRec<>();
-		defaultDimensionTreeRec.dimensionTree = DimensionTree	.builder()//
-																.setLowerBounds(data.lowerBounds)//
-																.setUpperBounds(data.upperBounds)//
-																.setLeafSize(data.leafSize)//
-																.setFastRemovals(data.fastRemovals)//
-																.build();//
+		defaultDimensionTreeRec.dimensionTree = DimensionTree.builder()//
+				.setLowerBounds(data.lowerBounds)//
+				.setUpperBounds(data.upperBounds)//
+				.setLeafSize(data.leafSize)//
+				.setFastRemovals(data.fastRemovals)//
+				.build();//
 
 		defaultDimensionTreeRec.maxRadius = 0;
 	}
@@ -200,11 +200,11 @@ public class VolumetricDimensionTree<T> {
 			if (dimensionTreeRec == null) {
 				dimensionTreeRec = new DimensionTreeRec<>();
 
-				dimensionTreeRec.dimensionTree = DimensionTree	.builder().setLowerBounds(data.lowerBounds)//
-																.setUpperBounds(data.upperBounds)//
-																.setLeafSize(data.leafSize)//
-																.setFastRemovals(data.fastRemovals)//
-																.build();//
+				dimensionTreeRec.dimensionTree = DimensionTree.builder().setLowerBounds(data.lowerBounds)//
+						.setUpperBounds(data.upperBounds)//
+						.setLeafSize(data.leafSize)//
+						.setFastRemovals(data.fastRemovals)//
+						.build();//
 
 				dimensionTreeRec.maxRadius = FastMath.exp(index);
 				treeMap.put(index, dimensionTreeRec);
@@ -215,11 +215,11 @@ public class VolumetricDimensionTree<T> {
 	}
 
 	/**
-	 * Removes the member from this tree using the suggested radius to narrow
-	 * the search. If the given radius is different from any radius used to
-	 * store the object, there is no guarantee that the object will be removed.
-	 * This is not guaranteed to remove all occurrences of the member if
-	 * multiple radii and positions were used to add the member.
+	 * Removes the member from this tree using the suggested radius to narrow the
+	 * search. If the given radius is different from any radius used to store the
+	 * object, there is no guarantee that the object will be removed. This is not
+	 * guaranteed to remove all occurrences of the member if multiple radii and
+	 * positions were used to add the member.
 	 */
 	public boolean remove(double radius, T t) {
 
@@ -281,7 +281,8 @@ public class VolumetricDimensionTree<T> {
 			result.add(locationRec.location);
 		}
 		for (DimensionTreeRec<T> dimensionTreeRec : treeMap.values()) {
-			List<LocationRec<T>> potentialIntersections = dimensionTreeRec.dimensionTree.getMembersInSphere(radius + dimensionTreeRec.maxRadius, position);
+			List<LocationRec<T>> potentialIntersections = dimensionTreeRec.dimensionTree
+					.getMembersInSphere(radius + dimensionTreeRec.maxRadius, position);
 			for (LocationRec<T> locationRec : potentialIntersections) {
 				if (locationRec.containsPosition(position, radius)) {
 					result.add(locationRec.location);

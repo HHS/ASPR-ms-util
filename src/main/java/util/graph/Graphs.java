@@ -34,9 +34,9 @@ public final class Graphs {
 
 	/**
 	 * Returns the sub-graph of the input graph that has had all of its acyclic
-	 * parts (sources and sinks) removed. That is, the resultant graph will
-	 * contain only cycles. This method is commonly used to determine whether a
-	 * graph is acyclic, i.e. the returned graph is empty, with no nodes.
+	 * parts (sources and sinks) removed. That is, the resultant graph will contain
+	 * only cycles. This method is commonly used to determine whether a graph is
+	 * acyclic, i.e. the returned graph is empty, with no nodes.
 	 */
 	public static <N, E> Graph<N, E> getSourceSinkReducedGraph(Graph<N, E> graph) {
 		MutableGraph<N, E> mutableGraph = new MutableGraph<>();
@@ -55,21 +55,20 @@ public final class Graphs {
 	}
 
 	/**
-	 * Returns the sub-graph of the input graph that has had all of its
-	 * non-cyclic edges removed. A non-cyclic edge is one
-	 * where there is no path through the graph from the edge's destination node
-	 * to its source node.
+	 * Returns the sub-graph of the input graph that has had all of its non-cyclic
+	 * edges removed. A non-cyclic edge is one where there is no path through the
+	 * graph from the edge's destination node to its source node.
 	 */
 	public static <N, E> Graph<N, E> getEdgeReducedGraph(Graph<N, E> graph) {
 		MutableGraph<N, E> mutableGraph = new MutableGraph<>();
 		mutableGraph.addAll(graph);
 		List<E> edges = graph.getEdges();
-		
-		for(E edge : edges) {
+
+		for (E edge : edges) {
 			N originNode = graph.getOriginNode(edge);
 			N destinationNode = graph.getDestinationNode(edge);
-			Optional<Path<E>> optional = Paths.getPath(graph, destinationNode, originNode, (e)->1, (a,b)->0);
-			if(optional.isEmpty()) {
+			Optional<Path<E>> optional = Paths.getPath(graph, destinationNode, originNode, (e) -> 1, (a, b) -> 0);
+			if (optional.isEmpty()) {
 				mutableGraph.removeEdge(edge);
 			}
 		}
@@ -78,7 +77,6 @@ public final class Graphs {
 
 	/**
 	 * Returns the GraphCyclisity of the given graph
-	 * 
 	 */
 	public static <N, E> GraphCyclisity getGraphCyclisity(Graph<N, E> graph) {
 
@@ -93,26 +91,17 @@ public final class Graphs {
 	}
 
 	/**
-	 * 
-	 * An enumeration of the three types of graph connectedness.
-	 * 
-	 * Strongly connected graphs are ones in which for every pair (not
-	 * necessarily distinct) of nodes in the graph there exits a Path connecting
-	 * those nodes. Note that a node is not implicitly connected to itself.
-	 * 
-	 * Weakly connected graphs are ones where the nodes connect to one another
-	 * if edge directionality is ignored. Formally, let graph G exist with edges
-	 * E and nodes N. Construct a graph GPrime with all of N and E(i.e. a copy
-	 * of G). For each edge e in E, add an oppositely directed to GPrime. G is
-	 * weakly connected graph if and only if GPrime is strongly connected.
-	 * 
-	 * Disconnected graphs are those that are neither strongly nor weakly
-	 * connected.
-	 * 
-	 * Note that strongly connected graphs are weakly connected. Empty graphs
-	 * are considered strongly connected.
-	 * 
-	 * 
+	 * An enumeration of the three types of graph connectedness. Strongly connected
+	 * graphs are ones in which for every pair (not necessarily distinct) of nodes
+	 * in the graph there exits a Path connecting those nodes. Note that a node is
+	 * not implicitly connected to itself. Weakly connected graphs are ones where
+	 * the nodes connect to one another if edge directionality is ignored. Formally,
+	 * let graph G exist with edges E and nodes N. Construct a graph GPrime with all
+	 * of N and E(i.e. a copy of G). For each edge e in E, add an oppositely
+	 * directed to GPrime. G is weakly connected graph if and only if GPrime is
+	 * strongly connected. Disconnected graphs are those that are neither strongly
+	 * nor weakly connected. Note that strongly connected graphs are weakly
+	 * connected. Empty graphs are considered strongly connected.
 	 */
 	public static enum GraphConnectedness {
 		STRONGLYCONNECTED,
@@ -123,9 +112,7 @@ public final class Graphs {
 	}
 
 	/**
-	 * 
 	 * Determines the connectedness of a graph
-	 * 
 	 */
 	public static <N, E> GraphConnectedness getGraphConnectedness(Graph<N, E> graph) {
 		if (cutGraph(graph).size() == 1) {
@@ -140,11 +127,9 @@ public final class Graphs {
 	}
 
 	/**
-	 * 
-	 * Separates a graph into a set of independent weakly connected and
-	 * disconnected sub graphs. All disconnected subgraphs will consist of
-	 * single nodes with no edges.
-	 * 
+	 * Separates a graph into a set of independent weakly connected and disconnected
+	 * sub graphs. All disconnected subgraphs will consist of single nodes with no
+	 * edges.
 	 */
 	public static <N, E> List<Graph<N, E>> cutGraph(Graph<N, E> graph) {
 		// create a list to receive the graphs
@@ -239,8 +224,8 @@ public final class Graphs {
 	}
 
 	/**
-	 * Returns a graph that has the same nodes and edges as the given graph,
-	 * with each edge being reversed
+	 * Returns a graph that has the same nodes and edges as the given graph, with
+	 * each edge being reversed
 	 */
 	public static <N, E> Graph<N, E> getReverseGraph(Graph<N, E> graph) {
 

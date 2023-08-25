@@ -23,7 +23,6 @@ import util.vector.Circle2D.SolutionAlgorithm;
  * 
  *
  */
-
 public class MT_Circle2D {
 	
 

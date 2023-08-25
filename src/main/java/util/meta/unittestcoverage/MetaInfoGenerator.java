@@ -17,20 +17,18 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import util.meta.unittestcoverage.warnings.ConstructorWarning;
-import util.meta.unittestcoverage.warnings.FieldWarning;
-import util.meta.unittestcoverage.warnings.MethodWarning;
-import util.meta.unittestcoverage.warnings.WarningType;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestField;
 import util.annotations.UnitTestForCoverage;
 import util.annotations.UnitTestMethod;
+import util.meta.unittestcoverage.warnings.ConstructorWarning;
+import util.meta.unittestcoverage.warnings.FieldWarning;
+import util.meta.unittestcoverage.warnings.MethodWarning;
+import util.meta.unittestcoverage.warnings.WarningType;
 
 /**
  * A utility class for generating various warnings on the coverage deficiencies
  * of the the unit test suite.
- *
- *
  */
 public class MetaInfoGenerator {
 
@@ -39,7 +37,8 @@ public class MetaInfoGenerator {
 	}
 
 	private static String getClassName(Path sourcePath, Path file) {
-		return file.toString().substring(sourcePath.toString().length() + 1, file.toString().length() - 5).replace(File.separator, ".");
+		return file.toString().substring(sourcePath.toString().length() + 1, file.toString().length() - 5)
+				.replace(File.separator, ".");
 	}
 
 	/**
@@ -130,7 +129,8 @@ public class MetaInfoGenerator {
 				if (Modifier.isStatic(subClass.getModifiers())) {
 					getClasses(subClass, set);
 				} else {
-					warningContainerBuilder.addGeneralWarning(WarningType.NONSTATIC_SUBCLASS.getDescription() + " " + subClass);
+					warningContainerBuilder
+							.addGeneralWarning(WarningType.NONSTATIC_SUBCLASS.getDescription() + " " + subClass);
 				}
 			}
 		}
@@ -158,12 +158,14 @@ public class MetaInfoGenerator {
 		}
 		if (sourceConstructor != null) {
 			if (!sourceConstructors.contains(sourceConstructor)) {
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.TEST_METHOD_NOT_MAPPED_TO_PROPER_SOURCE_CONSTRUCTOR));
+				warningContainerBuilder.addMethodWarning(
+						new MethodWarning(testMethod, WarningType.TEST_METHOD_NOT_MAPPED_TO_PROPER_SOURCE_CONSTRUCTOR));
 			}
 			coveredSourceConstructors.add(sourceConstructor);
 			warningContainerBuilder.addUnitTestConstructor(unitTestConstructor);
 		} else {
-			warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.SOURCE_CONSTRUCTOR_CANNOT_BE_RESOLVED));
+			warningContainerBuilder
+					.addMethodWarning(new MethodWarning(testMethod, WarningType.SOURCE_CONSTRUCTOR_CANNOT_BE_RESOLVED));
 		}
 	}
 
@@ -179,13 +181,15 @@ public class MetaInfoGenerator {
 		}
 		if (sourceField != null) {
 			if (!sourceFields.contains(sourceField)) {
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.TEST_METHOD_NOT_MAPPED_TO_PROPER_SOURCE_FIELD, sourceField.toString()));
+				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod,
+						WarningType.TEST_METHOD_NOT_MAPPED_TO_PROPER_SOURCE_FIELD, sourceField.toString()));
 			} else {
 				coveredSourceFields.add(sourceField);
 				warningContainerBuilder.addUnitTestField(unitTestField);
 			}
 		} else {
-			warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.SOURCE_FIELD_CANNOT_BE_RESOLVED, fieldExceptionMessage));
+			warningContainerBuilder.addMethodWarning(
+					new MethodWarning(testMethod, WarningType.SOURCE_FIELD_CANNOT_BE_RESOLVED, fieldExceptionMessage));
 		}
 	}
 
@@ -201,13 +205,15 @@ public class MetaInfoGenerator {
 		}
 		if (sourceMethod != null) {
 			if (!sourceMethods.contains(sourceMethod)) {
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.TEST_METHOD_NOT_MAPPED_TO_PROPER_SOURCE_METHOD, sourceMethod.toString()));
+				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod,
+						WarningType.TEST_METHOD_NOT_MAPPED_TO_PROPER_SOURCE_METHOD, sourceMethod.toString()));
 			} else {
 				coveredSourceMethods.add(sourceMethod);
 				warningContainerBuilder.addUnitTestMethod(unitTestMethod);
 			}
 		} else {
-			warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.SOURCE_METHOD_CANNOT_BE_RESOLVED, methodExceptionMessage));
+			warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod,
+					WarningType.SOURCE_METHOD_CANNOT_BE_RESOLVED, methodExceptionMessage));
 		}
 	}
 
@@ -240,28 +246,36 @@ public class MetaInfoGenerator {
 				// ignore the method
 				break;
 			case 1:
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.UNIT_FIELD_ANNOTATION_WITHOUT_TEST_ANNOTATION));
+				warningContainerBuilder.addMethodWarning(
+						new MethodWarning(testMethod, WarningType.UNIT_FIELD_ANNOTATION_WITHOUT_TEST_ANNOTATION));
 				break;
 			case 2:
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.UNIT_METHOD_ANNOTATION_WITHOUT_TEST_ANNOTATION));
+				warningContainerBuilder.addMethodWarning(
+						new MethodWarning(testMethod, WarningType.UNIT_METHOD_ANNOTATION_WITHOUT_TEST_ANNOTATION));
 				break;
 			case 3:
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
+				warningContainerBuilder
+						.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
 				break;
 			case 4:
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.UNIT_CONSTRUCTOR_ANNOTATION_WITHOUT_TEST_ANNOTATION));
+				warningContainerBuilder.addMethodWarning(
+						new MethodWarning(testMethod, WarningType.UNIT_CONSTRUCTOR_ANNOTATION_WITHOUT_TEST_ANNOTATION));
 				break;
 			case 5:
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
+				warningContainerBuilder
+						.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
 				break;
 			case 6:
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
+				warningContainerBuilder
+						.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
 				break;
 			case 7:
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
+				warningContainerBuilder
+						.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
 				break;
 			case 8:
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.TEST_ANNOTATION_WITHOUT_UNIT_ANNOTATION));
+				warningContainerBuilder.addMethodWarning(
+						new MethodWarning(testMethod, WarningType.TEST_ANNOTATION_WITHOUT_UNIT_ANNOTATION));
 				break;
 			case 9:
 				probeFieldTest(testMethod, unitTestField);
@@ -270,19 +284,23 @@ public class MetaInfoGenerator {
 				probeMethodTest(testMethod, unitTestMethod);
 				break;
 			case 11:
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
+				warningContainerBuilder
+						.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
 				break;
 			case 12:
 				probeConstructorTest(testMethod, unitTestConstructor);
 				break;
 			case 13:
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
+				warningContainerBuilder
+						.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
 				break;
 			case 14:
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
+				warningContainerBuilder
+						.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
 				break;
 			case 15:
-				warningContainerBuilder.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
+				warningContainerBuilder
+						.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
 				break;
 
 			default:
@@ -308,8 +326,10 @@ public class MetaInfoGenerator {
 		private Path sourcePath;
 
 		private Path testPath;
-		
-		public Data() {}
+
+		public Data() {
+		}
+
 		public Data(Data data) {
 			sourcePath = data.sourcePath;
 			testPath = data.testPath;
@@ -354,7 +374,8 @@ public class MetaInfoGenerator {
 	private void checkSourceMethodCoverage() {
 		for (Method method : sourceMethods) {
 			if (!coveredSourceMethods.contains(method)) {
-				warningContainerBuilder.addMethodWarning(new MethodWarning(method, WarningType.SOURCE_METHOD_REQUIRES_TEST));
+				warningContainerBuilder
+						.addMethodWarning(new MethodWarning(method, WarningType.SOURCE_METHOD_REQUIRES_TEST));
 			}
 		}
 	}
@@ -362,7 +383,8 @@ public class MetaInfoGenerator {
 	private void checkSourceFieldCoverage() {
 		for (Field field : sourceFields) {
 			if (!coveredSourceFields.contains(field)) {
-				warningContainerBuilder.addFieldWarning(new FieldWarning(field, WarningType.SOURCE_FIELD_REQUIRES_TEST));
+				warningContainerBuilder
+						.addFieldWarning(new FieldWarning(field, WarningType.SOURCE_FIELD_REQUIRES_TEST));
 			}
 		}
 	}
@@ -370,7 +392,8 @@ public class MetaInfoGenerator {
 	private void checkSourceConstructorCoverage() {
 		for (Constructor<?> constructor : sourceConstructors) {
 			if (!coveredSourceConstructors.contains(constructor)) {
-				this.warningContainerBuilder.addConstructorWarning(new ConstructorWarning(constructor, WarningType.SOURCE_CONSTRUCTOR_REQUIRES_TEST));
+				this.warningContainerBuilder.addConstructorWarning(
+						new ConstructorWarning(constructor, WarningType.SOURCE_CONSTRUCTOR_REQUIRES_TEST));
 			}
 		}
 	}

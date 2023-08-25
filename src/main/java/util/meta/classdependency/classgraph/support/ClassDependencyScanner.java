@@ -81,14 +81,14 @@ public class ClassDependencyScanner {
 		}
 	}
 
-	private ClassDependencyScanner() {		
+	private ClassDependencyScanner() {
 	}
 
 	public static ClassDependencyScan execute(Path dir) throws IOException {
 		final SourceFileVisitor sourceFileVisitor = new SourceFileVisitor(dir);
 		Files.walkFileTree(dir, sourceFileVisitor);
 		return sourceFileVisitor.builder.build();
-		
+
 	}
 
 }

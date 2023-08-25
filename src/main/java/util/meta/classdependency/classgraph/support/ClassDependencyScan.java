@@ -14,8 +14,10 @@ public class ClassDependencyScan {
 	private static class Data {
 		private Set<JavaDependency> javaDependencies = new LinkedHashSet<>();
 		private Set<String> localPackageNames = new LinkedHashSet<>();
-		
-		public Data() {}
+
+		public Data() {
+		}
+
 		public Data(Data data) {
 			javaDependencies.addAll(data.javaDependencies);
 			localPackageNames.addAll(localPackageNames);

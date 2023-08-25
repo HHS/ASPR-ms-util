@@ -12,8 +12,6 @@ import util.vector.MutableVector3D;
 /**
  * Represents an immutable, non-crossing polygon on the surface of a unit
  * sphere.
- * 
- *
  */
 
 @Immutable
@@ -32,15 +30,13 @@ public class SphericalPolygon {
 
 	/**
 	 * Builder class for {@link SphericalPolygon}
-	 * 
-	 *
 	 */
 	public static class Builder {
 
 		/**
-		 * Adds a {@link SphericalPoint} to the {@link SphericalPolygon}. Order
-		 * of addition dictates the order of the vertices of the polygon.
-		 * Winding order may be either left or right handed.
+		 * Adds a {@link SphericalPoint} to the {@link SphericalPolygon}. Order of
+		 * addition dictates the order of the vertices of the polygon. Winding order may
+		 * be either left or right handed.
 		 */
 		public Builder addSphericalPoint(SphericalPoint sphericalPoint) {
 			data.sphericalPoints.add(sphericalPoint);
@@ -48,8 +44,8 @@ public class SphericalPolygon {
 		}
 
 		/**
-		 * Sets the useSearchTree policy for the {@link SphericalPolygon}.
-		 * Default is true;
+		 * Sets the useSearchTree policy for the {@link SphericalPolygon}. Default is
+		 * true;
 		 */
 		public Builder setUseSearchTree(boolean useSearchTree) {
 			data.useSearchTree = useSearchTree;
@@ -66,18 +62,23 @@ public class SphericalPolygon {
 		}
 
 		/**
-		 * Builds a {@link SphericalPolygon} from the supplied
-		 * {@link SphericalPoint} values.
+		 * Builds a {@link SphericalPolygon} from the supplied {@link SphericalPoint}
+		 * values.
 		 * 
 		 * @throws MalformedSphericalPolygonException
-		 * 
-		 *             <li>if any of the {@link SphericalPoint} values are null
-		 *             <li>if there are fewer than three {@link SphericalPoint}
-		 *             values
-		 *             <li>if the {@link SphericalPoint} values form a crossing
-		 *             polygon
-		 *             <li>if the polygon is ambiguous
-		 * 
+		 *                                                <ul>
+		 *                                                <li>if any of the
+		 *                                                {@link SphericalPoint} values
+		 *                                                are null</li>
+		 *                                                <li>if there are fewer than
+		 *                                                three {@link SphericalPoint}
+		 *                                                values</li>
+		 *                                                <li>if the
+		 *                                                {@link SphericalPoint} values
+		 *                                                form a crossing polygon</li>
+		 *                                                <li>if the polygon is
+		 *                                                ambiguous</li>
+		 *                                                </ul>
 		 */
 		public SphericalPolygon build() {
 			return new SphericalPolygon(data);
@@ -114,8 +115,8 @@ public class SphericalPolygon {
 	private final VolumetricDimensionTree<SphericalTriangle> searchTree;
 
 	/**
-	 * Returns the {@link Chirality} of this {@link SphericalPolygon} relative
-	 * to the natural order of its SphericalPoints.
+	 * Returns the {@link Chirality} of this {@link SphericalPolygon} relative to
+	 * the natural order of its SphericalPoints.
 	 */
 	public Chirality getChirality() {
 		return chirality;
@@ -133,7 +134,8 @@ public class SphericalPolygon {
 				}
 			}
 		} else {
-			List<SphericalTriangle> membersInSphere = searchTree.getMembersInSphere(0, sphericalPoint.getPosition().toArray());
+			List<SphericalTriangle> membersInSphere = searchTree.getMembersInSphere(0,
+					sphericalPoint.getPosition().toArray());
 			for (SphericalTriangle sphericalTriangle : membersInSphere) {
 				if (sphericalTriangle.contains(sphericalPoint)) {
 					return true;
@@ -145,8 +147,8 @@ public class SphericalPolygon {
 	}
 
 	/**
-	 * Returns true if this {@link SphericalPolygon} overlaps with any part of
-	 * the given {@link SphericalPolygon}
+	 * Returns true if this {@link SphericalPolygon} overlaps with any part of the
+	 * given {@link SphericalPolygon}
 	 */
 	public boolean intersects(SphericalPolygon sphericalPolygon) {
 		for (SphericalTriangle triangle1 : sphericalTriangles) {
@@ -169,8 +171,8 @@ public class SphericalPolygon {
 	}
 
 	/**
-	 * Returns true if this {@link SphericalPolygon} overlaps with any part of
-	 * the given {@link SphericalArc}
+	 * Returns true if this {@link SphericalPolygon} overlaps with any part of the
+	 * given {@link SphericalArc}
 	 */
 	public boolean intersects(SphericalArc sphericalArc) {
 		for (SphericalTriangle triangle : sphericalTriangles) {
@@ -182,8 +184,8 @@ public class SphericalPolygon {
 	}
 
 	/**
-	 * Returns true if this {@link SphericalPolygon} overlaps with any part of
-	 * the given {@link SphericalTriangle}
+	 * Returns true if this {@link SphericalPolygon} overlaps with any part of the
+	 * given {@link SphericalTriangle}
 	 */
 	public boolean intersects(SphericalTriangle sphericalTriangle) {
 		for (SphericalTriangle triangle : sphericalTriangles) {
@@ -196,7 +198,8 @@ public class SphericalPolygon {
 
 	private static SphericalTriangle popEar(int index, List<SphericalPoint> points, Chirality chirality) {
 		// form the triangle from the index
-		SphericalTriangle t = new SphericalTriangle(points.get((index + -1 + points.size()) % points.size()), points.get(index), points.get((index + 1) % points.size()));
+		SphericalTriangle t = new SphericalTriangle(points.get((index + -1 + points.size()) % points.size()),
+				points.get(index), points.get((index + 1) % points.size()));
 
 		/*
 		 * if the triangle does not agree with chirality then we are done
@@ -205,8 +208,8 @@ public class SphericalPolygon {
 			return null;
 		}
 		/*
-		 * if the triangle's new side crosses any of the non-attached legs, then
-		 * we are done
+		 * if the triangle's new side crosses any of the non-attached legs, then we are
+		 * done
 		 */
 
 		// here are the indices of the attached legs. We will not attempt to
@@ -244,10 +247,10 @@ public class SphericalPolygon {
 	private static List<SphericalTriangle> triangulate(List<SphericalPoint> sphericalPoints, Chirality chirality) {
 
 		/*
-		 * We will attempt to remove nodes from the list one by one by popping
-		 * an ear off the polygon -- that is, we will remove a triangle and get
-		 * an increasingly simple polygon. If all goes well, we will be left
-		 * with a degenerate polygon (one that has no nodes)
+		 * We will attempt to remove nodes from the list one by one by popping an ear
+		 * off the polygon -- that is, we will remove a triangle and get an increasingly
+		 * simple polygon. If all goes well, we will be left with a degenerate polygon
+		 * (one that has no nodes)
 		 * 
 		 */
 
@@ -255,10 +258,10 @@ public class SphericalPolygon {
 		List<SphericalPoint> points = new ArrayList<>(sphericalPoints);
 
 		/*
-		 * Roll around the polygon, trying to pop off a node and its
-		 * corresponding triangle. Popping an ear is successful only when the
-		 * triangle so formed is fully inside the polygon. If we fail
-		 * repeatedly, we stop once we have come full circle.
+		 * Roll around the polygon, trying to pop off a node and its corresponding
+		 * triangle. Popping an ear is successful only when the triangle so formed is
+		 * fully inside the polygon. If we fail repeatedly, we stop once we have come
+		 * full circle.
 		 * 
 		 */
 
@@ -306,7 +309,8 @@ public class SphericalPolygon {
 		centroid = new SphericalPoint(v);
 
 		if (!centroid.getPosition().isFinite()) {
-			throw new MalformedSphericalPolygonException("the spherical polygon formed from the given spherical points is ambiguous");
+			throw new MalformedSphericalPolygonException(
+					"the spherical polygon formed from the given spherical points is ambiguous");
 		}
 
 		double r = Double.NEGATIVE_INFINITY;
@@ -338,10 +342,10 @@ public class SphericalPolygon {
 
 		if (sphericalTriangles.size() > SEARCH_TREE_THRESHOLD && data.useSearchTree) {
 			searchTree = VolumetricDimensionTree.builder()//
-												.setFastRemovals(true)//
-												.setLowerBounds(new double[] { -1, -1, -1 })//
-												.setUpperBounds(new double[] { 1, 1, 1 })//
-												.build();//
+					.setFastRemovals(true)//
+					.setLowerBounds(new double[] { -1, -1, -1 })//
+					.setUpperBounds(new double[] { 1, 1, 1 })//
+					.build();//
 
 			for (SphericalTriangle sphericalTriangle : sphericalTriangles) {
 				double[] triangleCenter = sphericalTriangle.getCentroid().toArray();
@@ -363,9 +367,8 @@ public class SphericalPolygon {
 
 	/**
 	 * Returns the center of this {@link SphericalPolygon}. All vertices of this
-	 * polygon lie with the radius around the centroid. The centroid is
-	 * calculated as the numerical average of the points that compose the
-	 * polygon.
+	 * polygon lie with the radius around the centroid. The centroid is calculated
+	 * as the numerical average of the points that compose the polygon.
 	 */
 	public SphericalPoint getCentroid() {
 		return centroid;

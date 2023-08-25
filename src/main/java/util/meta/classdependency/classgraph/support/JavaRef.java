@@ -7,7 +7,7 @@ public final class JavaRef {
 	private final String className;
 	private final String packageName;
 
-	public JavaRef(String className, String packageName) {		
+	public JavaRef(String className, String packageName) {
 		this.className = className;
 		this.packageName = packageName;
 	}
@@ -65,10 +65,9 @@ public final class JavaRef {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 	public String getFullName() {
-		return packageName+"."+className+".java";
+		return packageName + "." + className + ".java";
 	}
 
-	
 }

@@ -3,7 +3,6 @@ package util.spherical;
 /**
  * A RuntimeException thrown when a {@link SphericalPoint} cannot be formed due
  * to a non-normalizable input.
- *
  */
 public class MalformedSphericalPointException extends RuntimeException {
 
@@ -12,7 +11,7 @@ public class MalformedSphericalPointException extends RuntimeException {
 	public MalformedSphericalPointException() {
 		super();
 	}
-	
+
 	public MalformedSphericalPointException(String message) {
 		super(message);
 	}

@@ -8,8 +8,6 @@ import net.jcip.annotations.NotThreadSafe;
 
 /**
  * A utility class that allows an ordered set of objects to be used as a key.
- *
- *
  */
 @NotThreadSafe
 public final class MultiKey {
@@ -20,7 +18,6 @@ public final class MultiKey {
 	/**
 	 * A convenience builder class for MultiKey for situations where it is not
 	 * practical to use the ellipsis based constructor.
-	 *
 	 */
 	public static class Builder {
 
@@ -82,9 +79,10 @@ public final class MultiKey {
 	/**
 	 * Returns the indexed key from the keys provided during construction.
 	 *
-	 * @throws ArrayIndexOutOfBoundsException
-	 *             if the index is non-negative or greater than or equal to the
-	 *             number of keys used to create this MultiKey.
+	 * @throws ArrayIndexOutOfBoundsException if the index is non-negative or
+	 *                                            greater than or equal to the
+	 *                                            number of keys used to create this
+	 *                                            MultiKey.
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T getKey(final int index) {
@@ -93,7 +91,6 @@ public final class MultiKey {
 
 	/**
 	 * Returns the keys that form this Multikey as an Object array.
-	 *
 	 */
 	public Object[] getKeys() {
 		return Arrays.copyOf(objects, objects.length);

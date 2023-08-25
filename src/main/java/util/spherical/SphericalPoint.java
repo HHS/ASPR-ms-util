@@ -7,8 +7,6 @@ import util.vector.Vector3D;
 /**
  * Represents an immutable point on the unit sphere. Instances are created via
  * included builder class.
- *
- *
  */
 @Immutable
 public final class SphericalPoint {
@@ -16,11 +14,10 @@ public final class SphericalPoint {
 	/**
 	 * Creates a new {@link SphericalPoint} from the given {@link Vector3D}
 	 * 
-	 * @throws MalformedSphericalPointException
-	 *             <li>if the given {@link Vector3D} is not normalizable
-	 * @throws NullPointerException
-	 *             <li>if the given {@link Vector3D} is null
-	 * 
+	 * @throws MalformedSphericalPointException if the given {@link Vector3D} is not
+	 *                                              normalizable
+	 * @throws NullPointerException             if the given {@link Vector3D} is
+	 *                                              null
 	 */
 	public SphericalPoint(Vector3D v) {
 
@@ -33,10 +30,10 @@ public final class SphericalPoint {
 	}
 
 	/**
-	 * Creates a new {@link SphericalPoint} from the given {@link muVector3D}
+	 * Creates a new {@link SphericalPoint} from the given {@link MutableVector3D}
 	 * 
-	 * @throws MalformedSphericalPointException
-	 *             <li>if the given {@link Vector3D} is not normalizable
+	 * @throws MalformedSphericalPointException if the given {@link Vector3D} is not
+	 *                                              normalizable
 	 */
 	public SphericalPoint(MutableVector3D v) {
 		position = new Vector3D(v).normalize();

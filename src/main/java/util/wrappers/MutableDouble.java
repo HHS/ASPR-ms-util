@@ -1,33 +1,34 @@
 package util.wrappers;
+
 public final class MutableDouble {
 	private double value;
 
 	/**
 	 * Constructs this MutableDouble from the given value
-	 */	
-	public MutableDouble(double value) {		
+	 */
+	public MutableDouble(double value) {
 		this.value = value;
 	}
-	
-	
+
 	/**
 	 * Constructs this MutableDouble defaulted to zero
-	 */	
+	 */
 	public MutableDouble() {
-				
+
 	}
-	
+
 	/**
 	 * Increments the current value by one
 	 */
-	public void increment(){
+	public void increment() {
 		value++;
 	}
+
 	/**
 	 * Increments the current value by the given value
 	 */
 
-	public void increment(double value){
+	public void increment(double value) {
 		this.value += value;
 	}
 
@@ -35,17 +36,18 @@ public final class MutableDouble {
 	 * Decrements the current value by one
 	 */
 
-	public void decrement(){
+	public void decrement() {
 		value--;
 	}
+
 	/**
 	 * Decrements the current value by the given value
 	 */
 
-	public void decrement(double value){
+	public void decrement(double value) {
 		this.value -= value;
 	}
-	
+
 	/**
 	 * Sets the current value
 	 */
@@ -53,7 +55,7 @@ public final class MutableDouble {
 	public void setValue(double value) {
 		this.value = value;
 	}
-	
+
 	/**
 	 * Returns the current value
 	 */
@@ -63,7 +65,6 @@ public final class MutableDouble {
 
 	/**
 	 * Returns the string representation of the current value(X) in the form
-	 * 
 	 * "MutableDouble [value="+ X+"]"
 	 */
 
@@ -77,7 +78,7 @@ public final class MutableDouble {
 	}
 
 	/**
-	 * Returns a hash code based on the current value 
+	 * Returns a hash code based on the current value
 	 */
 	@Override
 	public int hashCode() {
@@ -90,7 +91,8 @@ public final class MutableDouble {
 	}
 
 	/**
-	 * Two MutableDouble objects are equal if and only if the current values are equal 
+	 * Two MutableDouble objects are equal if and only if the current values are
+	 * equal
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -106,5 +108,5 @@ public final class MutableDouble {
 		}
 		return true;
 	}
-		
+
 }

@@ -8,12 +8,14 @@ public final class FieldWarning {
 	private final String details;
 
 	/**
-	 * Constructs the field warning. Null details are replaced with an empty
-	 * details string.
+	 * Constructs the field warning. Null details are replaced with an empty details
+	 * string.
 	 * 
 	 * @throws NullPointerException
-	 *             <li>if the field is null</li>
-	 *             <li>if the warning type is null</li>
+	 *                                  <ul>
+	 *                                  <li>if the field is null</li>
+	 *                                  <li>if the warning type is null</li>
+	 *                                  </ul>
 	 */
 	public FieldWarning(Field field, WarningType warningType, String details) {
 		if (field == null) {
@@ -30,13 +32,15 @@ public final class FieldWarning {
 			this.details = details;
 		}
 	}
+
 	/**
-	 * Constructs the field warning with a default empty string for
-	 * details.
+	 * Constructs the field warning with a default empty string for details.
 	 * 
 	 * @throws NullPointerException
-	 *             <li>if the field is null</li>
-	 *             <li>if the warning type is null</li>
+	 *                                  <ul>
+	 *                                  <li>if the field is null</li>
+	 *                                  <li>if the warning type is null</li>
+	 *                                  </ul>
 	 */
 	public FieldWarning(Field field, WarningType warningType) {
 		if (field == null) {

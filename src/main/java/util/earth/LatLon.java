@@ -6,8 +6,6 @@ import net.jcip.annotations.Immutable;
  * An immutable container class for a pair of latitude/longitude values measured
  * in degrees where latitude is in the interval [-90,90] and longitude is in the
  * interval [-180,180]
- * 
- *
  */
 
 @Immutable
@@ -35,9 +33,12 @@ public class LatLon {
 	 * Constructs a LatLon from the given latitude and longitude
 	 * 
 	 * @throws IllegalArgumentException
-	 *             <li>if the latitude is not in the interval [-90,90]
-	 *             <li>if the longitude is not in the interval [-180,180]
-	 * 
+	 *                                      <ul>
+	 *                                      <li>if the latitude is not in the
+	 *                                      interval [-90,90]</li>
+	 *                                      <li>if the longitude is not in the
+	 *                                      interval [-180,180]</li>
+	 *                                      </ul>
 	 * @param latitude
 	 * @param longitude
 	 */
@@ -61,8 +62,7 @@ public class LatLon {
 	/**
 	 * Constructs a LatLon from the given LatLonAlt
 	 * 
-	 * @throws NullPointerException 
-	 *             <li>if the latLonAlt is null
+	 * @throws NullPointerException if the latLonAlt is null
 	 * @param latLonAlt
 	 */
 	public LatLon(LatLonAlt latLonAlt) {

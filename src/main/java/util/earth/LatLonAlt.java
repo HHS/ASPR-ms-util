@@ -28,9 +28,12 @@ public class LatLonAlt {
 	 * Constructs a LatLonAlt from the given latitude and longitude
 	 * 
 	 * @throws IllegalArgumentException
-	 *             <li>if the latitude is not in the interval [-90,90]</li>
-	 *             <li>if the longitude is not in the interval [-180,180]</li>
-	 * 
+	 *                                      <ul>
+	 *                                      <li>if the latitude is not in the
+	 *                                      interval [-90,90]</li>
+	 *                                      <li>if the longitude is not in the
+	 *                                      interval [-180,180]</li>
+	 *                                      </ul>
 	 * @param latitude
 	 * @param longitude
 	 */
@@ -53,17 +56,17 @@ public class LatLonAlt {
 	}
 
 	/**
-	 * Constructs a LatLonAlt from the given Vector3D where latitude = x,
-	 * longitude = y and altitude = z
+	 * Constructs a LatLonAlt from the given Vector3D where latitude = x, longitude
+	 * = y and altitude = z
 	 * 
-	 * @throws NullPointerException
-	 *             <li>if the vector3d is null<li>
-	 *             
-	 * @throws IllegalArgumentException            
-	 *             <li>if the latitude(v.getX()) is not in the interval [-90,90]<li>
-	 *             <li>if the longitude(v.getY()) is not in the interval
-	 *             [-180,180]<li>
-	 * @param latLonAlt
+	 * @throws NullPointerException     if the vector3d is null
+	 * @throws IllegalArgumentException
+	 *                                      <ul>
+	 *                                      <li>if the latitude(v.getX()) is not in
+	 *                                      the interval [-90,90]</li>
+	 *                                      <li>if the longitude(v.getY()) is not in
+	 *                                      the interval [-180,180]</li>
+	 *                                      </ul>
 	 */
 	public LatLonAlt(Vector3D vector3d) {
 		if (vector3d == null) {
@@ -92,9 +95,7 @@ public class LatLonAlt {
 	/**
 	 * Constructs a LatLonAlt from the given LatLon with altitude set to zero
 	 * 
-	 * @throws NullPointerException
-	 *             <li>if the latLon is null
-	 * @param latLonAlt
+	 * @throws NullPointerException if the latLon is null
 	 */
 
 	public LatLonAlt(LatLon latLon) {
@@ -115,8 +116,8 @@ public class LatLonAlt {
 	}
 
 	/**
-	 * Returns a Vector3D from this LatLonAlt where x = latitude, y = longitude
-	 * and z = altitude.
+	 * Returns a Vector3D from this LatLonAlt where x = latitude, y = longitude and
+	 * z = altitude.
 	 */
 	public Vector3D toVector3D() {
 		return new Vector3D(latitude, longitude, altitude);
@@ -140,9 +141,8 @@ public class LatLonAlt {
 	}
 
 	/**
-	 * Returns true if and only if this LatLonAlt is compared to another
-	 * non-null instance of LatLonAlt with matching latitude, longitude and
-	 * altitude values
+	 * Returns true if and only if this LatLonAlt is compared to another non-null
+	 * instance of LatLonAlt with matching latitude, longitude and altitude values
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -163,9 +163,8 @@ public class LatLonAlt {
 	}
 
 	/**
-	 * Returns a string of the form
-	 * 
-	 * LatLonAlt [latitude=35.0, longitude=128.0, altitude=1000.0]
+	 * Returns a string of the form LatLonAlt [latitude=35.0, longitude=128.0,
+	 * altitude=1000.0]
 	 */
 	@Override
 	public String toString() {

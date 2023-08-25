@@ -8,8 +8,6 @@ import util.vector.Vector3D;
  * A spherical geo-model for converting various coordinate representations and
  * calculating ground ranges. Earth instances are created from approximations to
  * the WGS84 oblate earth.
- * 
- *
  */
 public class Earth {
 
@@ -17,7 +15,8 @@ public class Earth {
 
 	public final static double WGS84_POLAR_RADIUS_METERS = 6356752.314245;
 
-	public final static double WGS84_MEAN_RADIUS_METERS = (2 * WGS84_EQUATORIAL_RADIUS_METERS + WGS84_POLAR_RADIUS_METERS) / 3;
+	public final static double WGS84_MEAN_RADIUS_METERS = (2 * WGS84_EQUATORIAL_RADIUS_METERS
+			+ WGS84_POLAR_RADIUS_METERS) / 3;
 
 	private double radius;
 
@@ -72,7 +71,8 @@ public class Earth {
 		// calculate the effective spherical earth radius for the given
 		// latitude from the WGS-84 oblate earth
 		final double lat = FastMath.toRadians(latitudeDegrees);
-		return 1.0 / FastMath.sqrt(FastMath.pow(FastMath.cos(lat) / WGS84_EQUATORIAL_RADIUS_METERS, 2) + FastMath.pow(FastMath.sin(lat) / WGS84_POLAR_RADIUS_METERS, 2));
+		return 1.0 / FastMath.sqrt(FastMath.pow(FastMath.cos(lat) / WGS84_EQUATORIAL_RADIUS_METERS, 2)
+				+ FastMath.pow(FastMath.sin(lat) / WGS84_POLAR_RADIUS_METERS, 2));
 	}
 
 	/**

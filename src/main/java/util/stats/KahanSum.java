@@ -3,8 +3,6 @@ package util.stats;
 /**
  * Implements the error reducing methodology for sums of floating point numbers
  * developed by mathematician William Kahan.
- * 
- *
  */
 public final class KahanSum {
 
