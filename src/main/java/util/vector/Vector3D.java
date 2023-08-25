@@ -6,7 +6,6 @@ import net.jcip.annotations.Immutable;
 
 /**
  * A immutable vector class representing 3-dimensional components: v = (x,y,z).
- *
  */
 @Immutable
 public final class Vector3D {
@@ -61,7 +60,6 @@ public final class Vector3D {
 
 	/**
 	 * Creates a {@link Vector3D} with the component values (x,y,z).
-	 *
 	 */
 	public Vector3D(final double x, final double y, final double z) {
 		this.x = x;
@@ -70,8 +68,8 @@ public final class Vector3D {
 	}
 
 	/**
-	 * Creates a {@link Vector3D} instance that is initialized with the
-	 * coordinates values of the provided {@link MutableVector3D}.
+	 * Creates a {@link Vector3D} instance that is initialized with the coordinates
+	 * values of the provided {@link MutableVector3D}.
 	 */
 
 	public Vector3D(final MutableVector3D mutableVector3D) {
@@ -92,12 +90,11 @@ public final class Vector3D {
 
 	/**
 	 * Returns a new {@link Vector3D} instance, adding the given values.
-	 * 
 	 * <p>
-	 * <b>Examples:</b> <tt>v1 = (-1,2,6)</tt>
+	 * <b>Examples:</b> {@code v1 = (-1,2,6)}
 	 * <ul>
-	 * <li><tt>v1.add(1,-1,-1) = (-1+1,2-1,6-1) = (0,1,5)</tt>.
-	 * <li><tt>v1.add(0,0,0) = (-1,2,6)</tt>.
+	 * <li>{@code v1.add(1,-1,-1) = (-1+1,2-1,6-1) = (0,1,5)}.
+	 * <li>{@code v1.add(0,0,0) = (-1,2,6)}.
 	 * </ul>
 	 */
 	public Vector3D add(final double x, final double y, final double z) {
@@ -105,19 +102,15 @@ public final class Vector3D {
 	}
 
 	/**
-	 * Returns a new {@link Vector3D} instance, adding the given
-	 * {@link Vector3D}.
-	 * 
+	 * Returns a new {@link Vector3D} instance, adding the given {@link Vector3D}.
 	 * <p>
-	 * <b>Examples:</b> <tt>v1 = (-1,2,6)</tt>:
+	 * <b>Examples:</b> {@code v1 = (-1,2,6)}:
 	 * <ul>
-	 * <li><tt>v2 = (1,-1,-1)</tt>:
-	 * <tt>v1.add(v2) = (-1+1,2-1,6-1) = (0,1,5)</tt>.
-	 * <li><tt>v2 = (0,0,0)</tt>: <tt>v1.add(v2) = (-1,2,6)</tt>.
+	 * <li>{@code v2 = (1,-1,-1)}: {@code v1.add(v2) = (-1+1,2-1,6-1) = (0,1,5)}.
+	 * <li>{@code v2 = (0,0,0)}: {@code v1.add(v2) = (-1,2,6)}.
 	 * </ul>
 	 *
-	 * @param v
-	 *            the vector to be added.
+	 * @param v the vector to be added.
 	 */
 	public Vector3D add(final Vector3D v) {
 		return new Vector3D(x + v.x, y + v.y, z + v.z);
@@ -127,24 +120,21 @@ public final class Vector3D {
 	 * Returns a new {@link Vector3D} instance that is the sum of this
 	 * {@link Vector2D} instance and the scaled values of the given
 	 * {@link Vector3D}.
-	 * 
 	 * <p>
-	 * <b>Examples:</b> <tt>v1 = (-1,2,6)</tt>
+	 * <b>Examples:</b> {@code v1 = (-1,2,6)}
 	 * <ul>
-	 * <li><tt>v2 = (1,-1,-1)</tt>:
+	 * <li>{@code v2 = (1,-1,-1)}:
 	 * <ul>
 	 * <li>
-	 * <tt>v1.addScaled(v2,5) = (-1+5*(1),2+5*(-1),6+5*(-1)) = (-1+5,2-5,6-5) = (4,-3,1)</tt>.
+	 * {@code v1.addScaled(v2,5) = (-1+5*(1),2+5*(-1),6+5*(-1)) = (-1+5,2-5,6-5) = (4,-3,1)}.
 	 * <li>
-	 * <tt>v1.addScaled(v2,0) = (-1+0*(1),2+0*(-1),6+0*(-1)) = (-1+0,2+0,6+0) = (-1,2,6)</tt>.
+	 * {@code v1.addScaled(v2,0) = (-1+0*(1),2+0*(-1),6+0*(-1)) = (-1+0,2+0,6+0) = (-1,2,6)}.
 	 * </ul>
-	 * <li><tt>v2 = (0,0,0)</tt>: <tt>v1.addScaled(v2,5) = (-1,2,6)</tt>.
+	 * <li>{@code v2 = (0,0,0)}: {@code v1.addScaled(v2,5) = (-1,2,6)}.
 	 * </ul>
 	 *
-	 * @param v
-	 *            the vector to be added.
-	 * @param s
-	 *            the magnitude of the scale.
+	 * @param v      the vector to be added.
+	 * @param scalar the magnitude of the scale.
 	 */
 	public Vector3D addScaled(final Vector3D v, final double scalar) {
 		return new Vector3D(x + (scalar * v.x), y + (scalar * v.y), z + (scalar * v.z));
@@ -154,50 +144,49 @@ public final class Vector3D {
 	 * Returns the measure in radians of the lesser angle between this
 	 * {@link Vector3D} and the given {@link Vector3D}.
 	 * <p>
-	 * Recall, the angle (in radians) between two vectors can be determined
-	 * by:<br>
+	 * Recall, the angle (in radians) between two vectors can be determined by:<br>
 	 * Alpha = ArcCos[Dot[v1, v2] / (Norm[v1]*Norm[v2])]
 	 * <p>
-	 * If the provided vector is a 'zero vector' (i.e. <tt>(0,0,0)</tt>) the
-	 * angle in radians will result in a <tt>NaN</tt>. If the provided vector is
-	 * equal to this vector the angle in radians will be <tt>0.0</tt>.
+	 * If the provided vector is a 'zero vector' (i.e. {@code (0,0,0)}) the angle in
+	 * radians will result in a {@code NaN}. If the provided vector is equal to this
+	 * vector the angle in radians will be {@code 0.0}.
 	 * <p>
-	 * <b>Examples:</b> <tt>v1 = (-1,2,6)</tt>:
+	 * <b>Examples:</b> {@code v1 = (-1,2,6)}:
 	 * <ul>
-	 * <li><tt>v2 = (1,-1,-1)</tt>:
-	 * <tt>v1.angleInRadians(v2) = 2.5175154010533864</tt>
-	 * <li><tt>v2 = (0,0,0)</tt>: <tt>v1.angleInRadians(v2) = NaN</tt>
-	 * <li><tt>v1.angleInRadians(v1) = 0.0</tt>
+	 * <li>{@code v2 = (1,-1,-1)}:
+	 * {@code v1.angleInRadians(v2) = 2.5175154010533864}
+	 * <li>{@code v2 = (0,0,0)}: {@code v1.angleInRadians(v2) = NaN}
+	 * <li>{@code v1.angleInRadians(v1) = 0.0}
 	 * </ul>
 	 *
 	 * @see <a href=
 	 *      "http://en.wikipedia.org/wiki/Dot_product#Geometric_definition">http://en.wikipedia.org/wiki/Dot_product#Geometric_definition</a>
 	 * @see <a href=
 	 *      "http://mathworld.wolfram.com/DotProduct.html">http://mathworld.wolfram.com/DotProduct.html</a>
-	 *
 	 */
 	public double angle(final Vector3D v) {
 		return FastMath.acos(crunch(dot(v) / (length() * v.length())));
 	}
 
 	/**
-	 * Returns a new {@link Vector3D} that is the right handed cross product of
-	 * this {@link Vector3D} and the given {@link Vector3D}.
+	 * Returns a new {@link Vector3D} that is the right handed cross product of this
+	 * {@link Vector3D} and the given {@link Vector3D}.
 	 * <p>
-	 * Recall, that given two vectors that the cross product is the vector that
-	 * is perpendicular to them. The cross product vector is therefore normal to
-	 * the plane formed by the given two vectors. This is very useful for
-	 * calculating a surface normal at a particular point given two distinct
-	 * tangent vectors.
+	 * Recall, that given two vectors that the cross product is the vector that is
+	 * perpendicular to them. The cross product vector is therefore normal to the
+	 * plane formed by the given two vectors. This is very useful for calculating a
+	 * surface normal at a particular point given two distinct tangent vectors.
 	 * <p>
 	 * The calculation performed acts as a 'right cross product', meaning that
-	 * 'this' vector is the 'left' vector and the given vector is the 'right'
-	 * vector for purposes of calculating the cross product.
+	 * 'this' vector is the 'left' vector and the given vector is the 'right' vector
+	 * for purposes of calculating the cross product.
 	 * <p>
-	 * The cross product, <tt>v1 X v2</tt>, formulation is therefore,
+	 * The cross product, {@code v1 X v2}, formulation is therefore,
 	 *
 	 * <pre>
-	 * <tt>v1.cross(v2)</tt>
+	 * {@code
+	 * v1.cross(v2)
+	 * }
 	 *
 	 * = Norm[v1]Norm[v2]Sin[Alpha]
 	 *
@@ -213,22 +202,19 @@ public final class Vector3D {
 	 * = [ {(v1z)(v2x)  - (v1x)(v2z)}  ]
 	 *     {(-v1y)(v2x) + (v1z)(v2y)}
 	 * </pre>
-	 *
 	 * <p>
-	 * <b>Examples:</b> <tt>v1 = (-1,2,6)</tt>:
+	 * <b>Examples:</b> {@code v1 = (-1,2,6)}:
 	 * <ul>
-	 * <li><tt>v2 = (1,-1,-1)</tt>: <tt>v1.cross(v2) = (4,5,-1)</tt>.
-	 * <li><tt>v2 = (0,0,0)</tt>: <tt>v1.cross(v2) = (0,0,0)</tt>.
-	 * <li><tt>v1.cross(v1) = (0,0,0)</tt>.
+	 * <li>{@code v2 = (1,-1,-1)}: {@code v1.cross(v2) = (4,5,-1)}.
+	 * <li>{@code v2 = (0,0,0)}: {@code v1.cross(v2) = (0,0,0)}.
+	 * <li>{@code v1.cross(v1) = (0,0,0)}.
 	 * </ul>
 	 *
 	 * @see <a href=
 	 *      "http://en.wikipedia.org/wiki/Cross_product">http://en.wikipedia.org/wiki/Cross_product</a>
 	 * @see <a href=
 	 *      "http://mathworld.wolfram.com/CrossProduct.html">http://mathworld.wolfram.com/CrossProduct.html</a>
-	 *
-	 * @param v
-	 *            the 'right' cross vector.
+	 * @param v the 'right' cross vector.
 	 */
 	public Vector3D cross(final Vector3D v) {
 		final double crossx = (y * v.z) - (v.y * z);
@@ -241,21 +227,16 @@ public final class Vector3D {
 	 * Returns the distance between this {@link Vector3D} and the given
 	 * {@link Vector3D}.
 	 * <p>
-	 * This is Euclidean Distance (e.g. SQRT[(a-x)^2 + (b-y)^2 + (c-z)^2])
-	 * value.
+	 * This is Euclidean Distance (e.g. SQRT[(a-x)^2 + (b-y)^2 + (c-z)^2]) value.
 	 * <p>
-	 * <b>Examples:</b> <tt>v1 = (-1,2,6)</tt>:
+	 * <b>Examples:</b> {@code v1 = (-1,2,6)}:
 	 * <ul>
-	 * <li><tt>v2 = (1,-1,-1)</tt>:
-	 * <tt>v1.distanceTo(v2) = 7.874007874011811</tt>
+	 * <li>{@code v2 = (1,-1,-1)}: {@code v1.distanceTo(v2) = 7.874007874011811}
 	 * </ul>
 	 *
 	 * @see <a href=
 	 *      "http://en.wikipedia.org/wiki/Euclidean_vector#Length">http://en.wikipedia.org/wiki/Euclidean_vector#Length</a>
-	 *
-	 * @param v
-	 *            the vector to find the distance to.
-	 *
+	 * @param v the vector to find the distance to.
 	 * @return the distance between this vector and the given vector.
 	 */
 	public double distanceTo(final Vector3D v) {
@@ -269,10 +250,12 @@ public final class Vector3D {
 	 * Recall that the Dot Product is also called the "Scalar Product" or "Inner
 	 * Product".
 	 * <p>
-	 * The dot product, <tt>v1.v2</tt>, formulation is therefore,
+	 * The dot product, {@code v1.v2}, formulation is therefore,
 	 *
 	 * <pre>
-	 * <tt>v1.dot(v2)</tt>
+	 * {@code
+	 * v1.dot(v2)
+	 * }
 	 *
 	 * = Norm[v1]Norm[v2]Sin[Alpha]
 	 *
@@ -281,20 +264,17 @@ public final class Vector3D {
 	 * = (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z)
 	 * </pre>
 	 *
-	 * <b>Examples:</b> <tt>v1 = (-1,2,6)</tt>:
+	 * <b>Examples:</b> {@code v1 = (-1,2,6)}:
 	 * <ul>
-	 * <li><tt>v2 = (1,-1,-1)</tt>:
-	 * <tt>v1.dot(v2) =(-1)*1+2*(-1)+6*(-1)= -9.0</tt>
-	 * <li><tt>v2 = (0,0,0)</tt>: <tt>v1.dot(v2) = 0.0</tt>
+	 * <li>{@code v2 = (1,-1,-1)}: {@code v1.dot(v2) =(-1)*1+2*(-1)+6*(-1)= -9.0}
+	 * <li>{@code v2 = (0,0,0)}: {@code v1.dot(v2) = 0.0}
 	 * </ul>
 	 *
 	 * @see <a href=
 	 *      "http://en.wikipedia.org/wiki/Dot_product">http://en.wikipedia.org/wiki/Dot_product</a>
 	 * @see <a href=
 	 *      "http://mathworld.wolfram.com/DotProduct.html">http://mathworld.wolfram.com/DotProduct.html</a>
-	 *
-	 * @param v
-	 *            the vector for the dot product.
+	 * @param v the vector for the dot product.
 	 * @return the dot product
 	 */
 	public double dot(final Vector3D v) {
@@ -302,10 +282,10 @@ public final class Vector3D {
 	}
 
 	/**
-	 * Equals contract of {@link Vector3D}. Two vectors a and b are equal if
-	 * their x,y and z values convert to long bits in the same way. An exception
-	 * is made for -0, which is calculated as if its long bits were representing
-	 * +0. This is done to give a more intuitive meaning of equals.
+	 * Equals contract of {@link Vector3D}. Two vectors a and b are equal if their
+	 * x,y and z values convert to long bits in the same way. An exception is made
+	 * for -0, which is calculated as if its long bits were representing +0. This is
+	 * done to give a more intuitive meaning of equals.
 	 */
 	@Override
 	public boolean equals(final Object obj) {
@@ -342,7 +322,7 @@ public final class Vector3D {
 			return y;
 		case 2:
 			return z;
-		default:			
+		default:
 			throw new RuntimeException("index out of bounds " + index);
 		}
 	}
@@ -386,25 +366,22 @@ public final class Vector3D {
 	}
 
 	/**
-	 * Returns <tt>true</tt> if and only if all of the components are finite(not
-	 * NaN, not infinite).
-	 *
+	 * Returns {@code true} if and only if all of the components are finite(not NaN,
+	 * not infinite).
 	 */
 	public boolean isFinite() {
 		return !isNaN() && !isInfinite();
 	}
 
 	/**
-	 * Returns <tt>true</tt> if and only if any component is infinite.
-	 *
+	 * Returns {@code true} if and only if any component is infinite.
 	 */
 	public boolean isInfinite() {
 		return Double.isInfinite(x) || Double.isInfinite(y) || Double.isInfinite(z);
 	}
 
 	/**
-	 * Returns <tt>true</tt> if and only if any component is NaN.
-	 *
+	 * Returns {@code true} if and only if any component is NaN.
 	 */
 	public boolean isNaN() {
 		return Double.isNaN(x) || Double.isNaN(y) || Double.isNaN(z);
@@ -435,9 +412,9 @@ public final class Vector3D {
 	 * <p>
 	 * <b>Examples:</b>
 	 * <ul>
-	 * <li><tt>v1 = (-1,2,6)</tt>:
-	 * <tt>v1.length() = SQRT[41] = 6.4031242374328485</tt>
-	 * <li><tt>v1 = (0,0,0)</tt>: <tt>v1.length() = SQRT[0] = 0.0</tt>
+	 * <li>{@code v1 = (-1,2,6)}:
+	 * {@code v1.length() = SQRT[41] = 6.4031242374328485}
+	 * <li>{@code v1 = (0,0,0)}: {@code v1.length() = SQRT[0] = 0.0}
 	 * </ul>
 	 *
 	 * @see <a href=
@@ -453,14 +430,14 @@ public final class Vector3D {
 	 * Returns a new {@link Vector3D} instance that if equal to this
 	 * {@link Vector3D} scaled to unit length.
 	 * <p>
-	 * Normalizing a vector scales the vector to a unit vector. If the vector
-	 * has a length of zero, a {@link Vector3D} (NaN,NaN,NaN) will result.
+	 * Normalizing a vector scales the vector to a unit vector. If the vector has a
+	 * length of zero, a {@link Vector3D} (NaN,NaN,NaN) will result.
 	 * <p>
 	 * <b>Examples:</b>
 	 * <ul>
-	 * <li><tt>v1 = (-1,2,6)</tt>:
-	 * <tt>v1.normalize() = (-0.15617376188860607, 0.31234752377721214, 0.9370425713316364)</tt>
-	 * <li><tt>v1 = (0,0,0)</tt>: <tt>v1.normalize() = (NaN, NaN, NaN)</tt>
+	 * <li>{@code v1 = (-1,2,6)}:
+	 * {@code v1.normalize() = (-0.15617376188860607, 0.31234752377721214, 0.9370425713316364)}
+	 * <li>{@code v1 = (0,0,0)}: {@code v1.normalize() = (NaN, NaN, NaN)}
 	 * </ul>
 	 *
 	 * @see <a href=
@@ -472,14 +449,13 @@ public final class Vector3D {
 	}
 
 	/**
-	 * Returns a new {@link Vector3D} instance that is this {@link Vector3D}
-	 * scaled by -1.
-	 *
+	 * Returns a new {@link Vector3D} instance that is this {@link Vector3D} scaled
+	 * by -1.
 	 * <p>
 	 * <b>Examples:</b>
 	 * <ul>
-	 * <li><tt>v1 = (-1,2,6)</tt>: <tt>v1.reverse() = (1,-2,-6)</tt>
-	 * <li><tt>v1 = (0,0,0)</tt>: <tt>v1.reverse() = (0,0,0)</tt>
+	 * <li>{@code v1 = (-1,2,6)}: {@code v1.reverse() = (1,-2,-6)}
+	 * <li>{@code v1 = (0,0,0)}: {@code v1.reverse() = (0,0,0)}
 	 * </ul>
 	 */
 	public Vector3D reverse() {
@@ -487,39 +463,36 @@ public final class Vector3D {
 	}
 
 	/**
-	 * Returns a new {@link Vector3D} instance that is the result of Rotating
-	 * this {@link Vector3D} about the given {@link Vector3D} rotator at the
-	 * given angle in radians via a right hand rotation (i.e.
-	 * counter-clockwise).
+	 * Returns a new {@link Vector3D} instance that is the result of Rotating this
+	 * {@link Vector3D} about the given {@link Vector3D} rotator at the given angle
+	 * in radians via a right hand rotation (i.e. counter-clockwise).
 	 * <p>
 	 * <b>Examples:</b>
 	 * <ul>
-	 * <li><tt>v1 = (-1,2,6)</tt>, <tt>v2 = (1,-1,-1)</tt>,
-	 * <tt>v1.rotate(v2, theta)</tt>:
+	 * <li>{@code v1 = (-1,2,6)}, {@code v2 = (1,-1,-1)},
+	 * {@code v1.rotate(v2, theta)}:
 	 * <ul>
-	 * <li><tt>theta = 0.0</tt> -> <tt>(-1.0, 2.0, 6.0)</tt>
-	 * <li><tt>theta = Math.PI/2.0 = 1.5707963267948966</tt> ->
-	 * (-5.309401076758505, 0.11324865405187179, 3.577350269189627)</tt>
-	 * <li><tt>theta = Math.PI = 3.141592653589793</tt> -> (-5.000000000000002,
-	 * 4.000000000000002, 1.7763568394002505E-15)</tt>
-	 * <li><tt>theta = (3.0/2.0)*Math.PI = 4.71238898038469</tt> ->
-	 * (-0.690598923241498, 5.88675134594813, 2.4226497308103747)</tt>
-	 * <li><tt>theta = 2.0*Math.PI = 6.283185307179586</tt> ->
-	 * (-0.9999999999999996, 2.000000000000001, 6.0)</tt>
+	 * <li>{@code theta = 0.0} -> {@code (-1.0, 2.0, 6.0)}
+	 * <li>{@code theta = Math.PI/2.0 = 1.5707963267948966 ->
+	 * (-5.309401076758505, 0.11324865405187179, 3.577350269189627)}
+	 * <li>{@code theta = Math.PI = 3.141592653589793 -> (-5.000000000000002,
+	 * 4.000000000000002, 1.7763568394002505E-15)}
+	 * <li>{@code theta = (3.0/2.0)*Math.PI = 4.71238898038469 ->
+	 * (-0.690598923241498, 5.88675134594813, 2.4226497308103747)}
+	 * <li>{@code theta = 2.0*Math.PI = 6.283185307179586 ->
+	 * (-0.9999999999999996, 2.000000000000001, 6.0)}
 	 * </ul>
-	 * <li><tt>v1 = (-1,2,6)</tt>, <tt>v2 = (0,0,0)</tt>,
-	 * <tt>theta = Math.PI = 3.141592653589793</tt>,
-	 * <tt>v1.rotate(v2, theta)</tt> -> <tt>(NaN, NaN, NaN)</tt>
-	 * <li><tt>v1 = (0,0,0)</tt>, <tt>v2 = (1,-1,-1)</tt>,
-	 * <tt>theta = Math.PI = 3.141592653589793</tt>,
-	 * <tt>v1.rotate(v2, theta)</tt> -> <tt>(0,0,0)</tt>
+	 * <li>{@code v1 = (-1,2,6)}, {@code v2 = (0,0,0)},
+	 * {@code theta = Math.PI = 3.141592653589793}, {@code v1.rotate(v2, theta)} ->
+	 * {@code (NaN, NaN, NaN)}
+	 * <li>{@code v1 = (0,0,0)}, {@code v2 = (1,-1,-1)},
+	 * {@code theta = Math.PI = 3.141592653589793}, {@code v1.rotate(v2, theta)} ->
+	 * {@code (0,0,0)}
 	 * </ul>
 	 *
-	 * @param rotator
-	 *            the vector to rotate about.
-	 * @param theta
-	 *            the angle of rotation according to a right hand coordinate
-	 *            system (i.e. counter-clockwise).
+	 * @param rotator the vector to rotate about.
+	 * @param theta   the angle of rotation according to a right hand coordinate
+	 *                    system (i.e. counter-clockwise).
 	 */
 	public Vector3D rotateAbout(final Vector3D rotator, final double theta) {
 		final MutableVector3D m = new MutableVector3D(this);
@@ -535,32 +508,29 @@ public final class Vector3D {
 	 * <p>
 	 * <b>Examples:</b>
 	 * <ul>
-	 * <li><tt>v1 = (-1,2,6)</tt>, <tt>v2 = (1,-1,-1)</tt>:
-	 * <tt>v1.rotateToward(v2, theta)</tt> produces:
+	 * <li>{@code v1 = (-1,2,6)}, {@code v2 = (1,-1,-1)}:
+	 * {@code v1.rotateToward(v2, theta)} produces:
 	 * <ul>
-	 * <li><tt>theta = 0.0</tt> -> (-0.9999999999999999, 2.0, 6.0)</tt>
-	 * <li><tt>theta = Math.PI/2.0 = 1.5707963267948966</tt> ->
-	 * (4.937707198786941, -3.548977049128114, 2.005943549507195)</tt>
-	 * <li><tt>theta = Math.PI = 3.141592653589793</tt> -> (1.0000000000000007,
-	 * -2.0000000000000004, -6.0)</tt>
-	 * <li><tt>theta = (3.0/2.0)*Math.PI = 4.71238898038469</tt> ->
-	 * (-4.937707198786941, 3.5489770491281134, -2.0059435495071956)</tt>
-	 * <li><tt>theta = 2.0*Math.PI = 6.283185307179586</tt> ->
-	 * (-1.000000000000001, 2.000000000000001, 5.999999999999999)</tt>
+	 * <li>{@code theta = 0.0 -> (-0.9999999999999999, 2.0, 6.0)}
+	 * <li>{@code theta = Math.PI/2.0 = 1.5707963267948966 ->
+	 * 		(4.937707198786941, -3.548977049128114, 2.005943549507195)}
+	 * <li>{@code theta = Math.PI = 3.141592653589793 -> (1.0000000000000007,
+	 * 		-2.0000000000000004, -6.0)}
+	 * <li>{@code theta = (3.0/2.0)*Math.PI = 4.71238898038469 ->
+	 * 		(-4.937707198786941, 3.5489770491281134, -2.0059435495071956)}
+	 * <li>{@code theta = 2.0*Math.PI = 6.283185307179586 ->
+	 * 		(-1.000000000000001, 2.000000000000001, 5.999999999999999)}
 	 * </ul>
-	 * <li><tt>v1 = (-1,2,6)</tt>, <tt>v2 = (0,0,0)</tt>,
-	 * <tt>theta = Math.PI = 3.141592653589793</tt>,
-	 * <tt>v1.rotate(v2, theta)</tt> -> <tt>(NaN, NaN, NaN)</tt>
-	 * <li><tt>v1 = (0,0,0)</tt>, <tt>v2 = (1,-1,-1)</tt>,
-	 * <tt>theta = Math.PI = 3.141592653589793</tt>,
-	 * <tt>v1.rotate(v2, theta)</tt> -> <tt>(NaN, NaN, NaN)</tt>
-	 * </ul>
+	 * <li>{@code v1 = (-1,2,6)}, {@code v2 = (0,0,0)},
+	 * {@code theta = Math.PI = 3.141592653589793}, {@code v1.rotate(v2, theta)} ->
+	 * {@code (NaN, NaN, NaN)}
+	 * <li>{@code v1 = (0,0,0)}, {@code v2 = (1,-1,-1)},
+	 * {@code theta = Math.PI = 3.141592653589793}, {@code v1.rotate(v2, theta)} ->
+	 * {@code (NaN, NaN, NaN)}
 	 * </ul>
 	 *
-	 * @param v
-	 *            the vector to rotate toward.
-	 * @param theta
-	 *            the angle of rotation
+	 * @param v     the vector to rotate toward.
+	 * @param theta the angle of rotation
 	 */
 	public Vector3D rotateToward(final Vector3D v, final double theta) {
 		final MutableVector3D m = new MutableVector3D(this);
@@ -569,20 +539,19 @@ public final class Vector3D {
 	}
 
 	/**
-	 * Returns a new {@link Vector3D} instance resulting from the scaling of
-	 * this {@link Vector3D} by the given scaling factor.
+	 * Returns a new {@link Vector3D} instance resulting from the scaling of this
+	 * {@link Vector3D} by the given scaling factor.
 	 * <p>
-	 * <b>Examples:</b> <tt>v1 = (-1,2,6)</tt>:
+	 * <b>Examples:</b> {@code v1 = (-1,2,6)}:
 	 * <ul>
-	 * <li><tt>v1.scale(2) = (2,4,-12)</tt>
-	 * <li><tt>v1.scale(-1) = (1,-2,-6)</tt>, <b>Note:</b> This is the same as
-	 * <tt>v1.reverse()</tt>
-	 * <li><tt>v1.scale(1) = (-1,2,6)</tt>
-	 * <li><tt>v1.scale(0) = (0,0,0)</tt>
+	 * <li>{@code v1.scale(2) = (2,4,-12)}
+	 * <li>{@code v1.scale(-1) = (1,-2,-6)}, <b>Note:</b> This is the same as
+	 * {@code v1.reverse()}
+	 * <li>{@code v1.scale(1) = (-1,2,6)}
+	 * <li>{@code v1.scale(0) = (0,0,0)}
 	 * </ul>
 	 *
-	 * @param m
-	 *            the magnitude, e.g. scaling factor.
+	 * @param scalar the magnitude, e.g. scaling factor.
 	 */
 	public Vector3D scale(final double scalar) {
 		return new Vector3D(x * scalar, y * scalar, z * scalar);
@@ -600,15 +569,14 @@ public final class Vector3D {
 	}
 
 	/**
-	 * Returns the square of the distance from this {@link Vector3D} to the
-	 * given {@link Vector3D}.
+	 * Returns the square of the distance from this {@link Vector3D} to the given
+	 * {@link Vector3D}.
 	 * <p>
-	 * This is Euclidean Distance squared (e.g. (a-x)^2 + (b-y)^2 + (c-z)^2)
-	 * value.
+	 * This is Euclidean Distance squared (e.g. (a-x)^2 + (b-y)^2 + (c-z)^2) value.
 	 * <p>
-	 * <b>Examples:</b> <tt>v1 = (-1,2,6)</tt>:
+	 * <b>Examples:</b> {@code v1 = (-1,2,6)}:
 	 * <ul>
-	 * <li><tt>v2 = (1,-1,-1)</tt>: <tt>v1.squareDistanceTo(v2) = 62.0</tt>
+	 * <li>{@code v2 = (1,-1,-1)}: {@code v1.squareDistanceTo(v2) = 62.0}
 	 * </ul>
 	 */
 	public double squareDistanceTo(final Vector3D v) {
@@ -622,8 +590,8 @@ public final class Vector3D {
 	 * <p>
 	 * <b>Examples:</b>
 	 * <ul>
-	 * <li><tt>v1 = (-1,2,6)</tt>: <tt>v1.normSquared() = 41</tt>
-	 * <li><tt>v1 = (0,0,0)</tt>: <tt>v1.normSquared() = 0</tt>
+	 * <li>{@code v1 = (-1,2,6)}: {@code v1.normSquared() = 41}
+	 * <li>{@code v1 = (0,0,0)}: {@code v1.normSquared() = 0}
 	 * </ul>
 	 *
 	 * @see <a href=
@@ -636,13 +604,13 @@ public final class Vector3D {
 	}
 
 	/**
-	 * Returns a new {@link Vector3D} instance resulting from the subtraction of
-	 * the scalar components from this {@link Vector3D}.
+	 * Returns a new {@link Vector3D} instance resulting from the subtraction of the
+	 * scalar components from this {@link Vector3D}.
 	 * <p>
-	 * <b>Examples:</b> Given that <tt>v1 = (-1,2,6)</tt>
+	 * <b>Examples:</b> Given that {@code v1 = (-1,2,6)}
 	 * <ul>
-	 * <li><tt>v1.sub(1,-1,-1) = (-1-1,2-(-1),6-(-1)) = (-2,3,7)</tt>
-	 * <li><tt>v1.sub(0,0,0) = (-1,2,6)</tt>
+	 * <li>{@code v1.sub(1,-1,-1) = (-1-1,2-(-1),6-(-1)) = (-2,3,7)}
+	 * <li>{@code v1.sub(0,0,0) = (-1,2,6)}
 	 * </ul>
 	 */
 	public Vector3D sub(final double x, final double y, final double z) {
@@ -650,18 +618,17 @@ public final class Vector3D {
 	}
 
 	/**
-	 * Returns a new {@link Vector3D} instance resulting from the subtraction of
-	 * the given {@link Vector3D} from this {@link Vector3D}.
+	 * Returns a new {@link Vector3D} instance resulting from the subtraction of the
+	 * given {@link Vector3D} from this {@link Vector3D}.
 	 * <p>
-	 * <b>Examples:</b> <tt>v1 = (-1,2,6)</tt>
+	 * <b>Examples:</b> {@code v1 = (-1,2,6)}
 	 * <ul>
-	 * <li><tt>v2 = (1,-1,-1)</tt>:
-	 * <tt>v1.sub(v2) = (-1-1,2-(-1),6-(-1)) = (-2,3,7)</tt>
-	 * <li><tt>v2 = (0,0,0)</tt>: <tt>v1.sub(v2) = (-1,2,6)</tt>
+	 * <li>{@code v2 = (1,-1,-1)}:
+	 * {@code v1.sub(v2) = (-1-1,2-(-1),6-(-1)) = (-2,3,7)}
+	 * <li>{@code v2 = (0,0,0)}: {@code v1.sub(v2) = (-1,2,6)}
 	 * </ul>
 	 *
-	 * @param v
-	 *            the vector to be added.
+	 * @param v the vector to be added.
 	 */
 	public Vector3D sub(final Vector3D v) {
 		return new Vector3D(x - v.x, y - v.y, z - v.z);
@@ -676,7 +643,6 @@ public final class Vector3D {
 
 	/**
 	 * Returns the string representation of this {@link Vector3D} in the form
-	 *
 	 * Vector3D [x=2.57,y=-34.1,z=8.73]
 	 */
 	@Override

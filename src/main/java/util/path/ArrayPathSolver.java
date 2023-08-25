@@ -14,8 +14,6 @@ import util.path.Paths.TravelCostEvaluator;
 /**
  * Manages shortest path solutions for a given graph with reasonable efficiency
  * using arrays of previous path solutions and their sub-paths.
- * 
- * 
  */
 public final class ArrayPathSolver<N, E> implements PathSolver<N, E> {
 
@@ -26,7 +24,8 @@ public final class ArrayPathSolver<N, E> implements PathSolver<N, E> {
 	private TravelCostEvaluator<N> travelCostEvaluator;
 
 	@SuppressWarnings("unchecked")
-	public ArrayPathSolver(Graph<N, E> graph, EdgeCostEvaluator<E> edgeCostEvaluator, TravelCostEvaluator<N> travelCostEvaluator) {
+	public ArrayPathSolver(Graph<N, E> graph, EdgeCostEvaluator<E> edgeCostEvaluator,
+			TravelCostEvaluator<N> travelCostEvaluator) {
 		this.graph = graph;
 		this.edgeCostEvaluator = edgeCostEvaluator;
 		this.travelCostEvaluator = travelCostEvaluator;

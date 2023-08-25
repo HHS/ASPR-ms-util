@@ -12,34 +12,25 @@ import util.graph.Graph;
 import util.path.Path.Builder;
 
 /**
- * 
  * Solves a shortest path through a graph from an origin node to a destination
  * node.The solver uses two optional, auxiliary, client supplied objects: 1) an
  * EdgeCostEvaluator which returns the cost of an edge and 2) a
  * TravelCostEvaluator which determines the shortest possible cost across the
- * graph from one node to another.
- * 
- * The EdgeCostEvaluator should always return a non-negative value and should
- * return a stable value over the life-span of this utility. If the
- * EdgeCostEvaluator is null, the cost of an edge is set arbitrarily to 1.
- * 
- * The TravelCostEvaluator is also optional and exists to give the solver
- * insight into long distance costs. It should return a stable non-negative
- * value.
- * 
- * A typical TravelCostEvaluator example would be for nodes in a graph that
- * represent physical positions. The TravelCostEvaluator could return the
- * straight-line minimum distance between nodes. Note that the nodes do not have
- * to share an edge nor even be connected in the graph. By supplying a
- * TravelCostEvaluator, the client can greatly improve this solver's performance
- * in large networks where nodes represent positions in space. Essentially, the
- * TravelCostEvaluator allows the algorithm to expand its exploration of the
- * graph in an ellipse whose major axis is aligned to the origin and
- * destination, rather than doing a expanding sphere search.
- * 
- * If a path cannot be found then a degenerate, node-less path is returned.
- * 
- * 
+ * graph from one node to another. The EdgeCostEvaluator should always return a
+ * non-negative value and should return a stable value over the life-span of
+ * this utility. If the EdgeCostEvaluator is null, the cost of an edge is set
+ * arbitrarily to 1. The TravelCostEvaluator is also optional and exists to give
+ * the solver insight into long distance costs. It should return a stable
+ * non-negative value. A typical TravelCostEvaluator example would be for nodes
+ * in a graph that represent physical positions. The TravelCostEvaluator could
+ * return the straight-line minimum distance between nodes. Note that the nodes
+ * do not have to share an edge nor even be connected in the graph. By supplying
+ * a TravelCostEvaluator, the client can greatly improve this solver's
+ * performance in large networks where nodes represent positions in space.
+ * Essentially, the TravelCostEvaluator allows the algorithm to expand its
+ * exploration of the graph in an ellipse whose major axis is aligned to the
+ * origin and destination, rather than doing a expanding sphere search. If a
+ * path cannot be found then a degenerate, node-less path is returned.
  */
 public final class Paths {
 
@@ -96,14 +87,17 @@ public final class Paths {
 	 * Returns an Optional containing a Path of E if such path could be found.
 	 * 
 	 * @throws NullPointerException
-	 *             <li>if the graph is null</li>
-	 *             <li>if the origin node is null</li>
-	 *             <li>if the destination node null</li>
-	 *             <li>if the edge cost evaluator is null</li>
-	 *             <li>if the travel cost evaluator is null</li>
-	 * 
+	 *                                  <ul>
+	 *                                  <li>if the graph is null</li>
+	 *                                  <li>if the origin node is null</li>
+	 *                                  <li>if the destination node null</li>
+	 *                                  <li>if the edge cost evaluator is null</li>
+	 *                                  <li>if the travel cost evaluator is
+	 *                                  null</li>
+	 *                                  </ul>
 	 */
-	public static <N, E> Optional<Path<E>> getPath(Graph<N, E> graph, N originNode, N destinationNode, EdgeCostEvaluator<E> edgeCostEvaluator, TravelCostEvaluator<N> travelCostEvaluator) {
+	public static <N, E> Optional<Path<E>> getPath(Graph<N, E> graph, N originNode, N destinationNode,
+			EdgeCostEvaluator<E> edgeCostEvaluator, TravelCostEvaluator<N> travelCostEvaluator) {
 
 		if (graph == null) {
 			throw new NullPointerException("graph is null");
@@ -139,7 +133,8 @@ public final class Paths {
 		final Map<N, CostedNode<N, E>> map = new HashMap<>();
 		PriorityQueue<PrioritizedNode<N, E>> priorityQueue = new PriorityQueue<>();
 
-		CostedNode<N, E> originNodeWrapper = new CostedNode<>(originNode, travelCostEvaluator.getMinimumCost(originNode, destinationNode));
+		CostedNode<N, E> originNodeWrapper = new CostedNode<>(originNode,
+				travelCostEvaluator.getMinimumCost(originNode, destinationNode));
 		map.put(originNode, originNodeWrapper);
 
 		// Note that the first node placed on the queue will be unvisited and
@@ -178,7 +173,8 @@ public final class Paths {
 				}
 
 				if (targetNodeWrapper == null) {
-					targetNodeWrapper = new CostedNode<>(targetNode, travelCostEvaluator.getMinimumCost(targetNode, destinationNode));
+					targetNodeWrapper = new CostedNode<>(targetNode,
+							travelCostEvaluator.getMinimumCost(targetNode, destinationNode));
 					targetNodeWrapper.cost = edgeCost;
 					targetNodeWrapper.edge = edge;
 					map.put(targetNode, targetNodeWrapper);

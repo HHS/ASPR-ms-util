@@ -9,11 +9,8 @@ import net.jcip.annotations.NotThreadSafe;
  * Implements B.P. Welford's method for determining sample variance without
  * maintaining sample values. Corrects for a significant portion of the rounding
  * errors associated with a large number of sample values. Corrects for errors
- * that arise from high mean and low variance sample populations.
- * 
- * Adapted from https://www.johndcook.com/blog/standard_deviation/
- * 
- *
+ * that arise from high mean and low variance sample populations. Adapted from
+ * https://www.johndcook.com/blog/standard_deviation/
  */
 @NotThreadSafe
 public final class MutableStat implements Stat {
@@ -27,9 +24,7 @@ public final class MutableStat implements Stat {
 	/**
 	 * Combines several stats
 	 * 
-	 * @throws NullPointerException
-	 *             <li>if the stats are null</li>
-	 * 
+	 * @throws NullPointerException if the stats are null
 	 */
 	public static Stat combineStats(Stat... stats) {
 
@@ -143,9 +138,8 @@ public final class MutableStat implements Stat {
 			}
 
 			/*
-			 * Using Welford's method we update the mean and variance. Both are
-			 * kept in Kahan Sums rather than doubles to help reduce the
-			 * accumulation of error.
+			 * Using Welford's method we update the mean and variance. Both are kept in
+			 * Kahan Sums rather than doubles to help reduce the accumulation of error.
 			 */
 			double oldMean = mean.getSum();
 			mean.add((value - oldMean) / count);

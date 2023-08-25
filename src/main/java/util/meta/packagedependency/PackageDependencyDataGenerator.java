@@ -15,14 +15,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import util.graph.MutableGraph;
 import util.meta.packagedependency.PackageDependencyData.PackageDependencyDetails;
 import util.meta.packagedependency.PackageDependencyData.PackageRef;
-import util.graph.MutableGraph;
 
 /**
  * An utility class for generating a {@linkplain PackageDependencyData} that
  * contains an analysis of the package level java dependencies.
- * 
  */
 public class PackageDependencyDataGenerator {
 
@@ -31,7 +30,8 @@ public class PackageDependencyDataGenerator {
 	}
 
 	private static String getClassName(Path sourcePath, Path file) {
-		return file.toString().substring(sourcePath.toString().length() + 1, file.toString().length() - 5).replace(File.separator, ".");
+		return file.toString().substring(sourcePath.toString().length() + 1, file.toString().length() - 5)
+				.replace(File.separator, ".");
 	}
 
 	private static class Edge {
@@ -196,22 +196,24 @@ public class PackageDependencyDataGenerator {
 		private List<String> nodeNames = new ArrayList<>();
 		private Map<String, Node> nodeMap = new LinkedHashMap<>();
 		private PackageDependencyData.Builder packageDependencyInfoBuilder = PackageDependencyData.builder();
-		
-		public Data() {}
+
+		public Data() {
+		}
+
 		public Data(Data data) {
 			directories.addAll(data.directories);
 			packageNames.addAll(data.packageNames);
-			for(Node node : data.packageDependencyGraph.getNodes()) {
+			for (Node node : data.packageDependencyGraph.getNodes()) {
 				packageDependencyGraph.addNode(node);
 			}
-			for(Edge edge : data.packageDependencyGraph.getEdges()) {
+			for (Edge edge : data.packageDependencyGraph.getEdges()) {
 				Node originNode = data.packageDependencyGraph.getOriginNode(edge);
 				Node destinationNode = data.packageDependencyGraph.getDestinationNode(edge);
 				packageDependencyGraph.addEdge(edge, originNode, destinationNode);
 			}
 			nodeNames.addAll(data.nodeNames);
 			nodeMap.putAll(data.nodeMap);
-			
+
 		}
 	}
 
@@ -237,12 +239,8 @@ public class PackageDependencyDataGenerator {
 		/**
 		 * Adds a source code directory to analyze
 		 * 
-		 * @throws NullPointerException
-		 *             if the path is null
-		 * @throws IllegalArgumentException
-		 *             if the path is not a directory
-		 * 
-		 * 
+		 * @throws NullPointerException     if the path is null
+		 * @throws IllegalArgumentException if the path is not a directory
 		 */
 		public Builder addDirectory(Path directory) {
 			if (directory == null) {
@@ -257,8 +255,8 @@ public class PackageDependencyDataGenerator {
 		}
 
 		/**
-		 * Adds a packageName prefix that will be used to group source files
-		 * into a single node in the analysis
+		 * Adds a packageName prefix that will be used to group source files into a
+		 * single node in the analysis
 		 */
 		public Builder addPackageName(String packageName) {
 			validatePackageName(packageName);
@@ -341,7 +339,8 @@ public class PackageDependencyDataGenerator {
 			for (Edge edge : data.packageDependencyGraph.getEdges()) {
 				Node originNode = data.packageDependencyGraph.getOriginNode(edge);
 				Node destinationNode = data.packageDependencyGraph.getDestinationNode(edge);
-				m.addEdge(new PackageDependencyDetails(edge.classes), new PackageRef(originNode.name), new PackageRef(destinationNode.name));
+				m.addEdge(new PackageDependencyDetails(edge.classes), new PackageRef(originNode.name),
+						new PackageRef(destinationNode.name));
 			}
 
 			data.packageDependencyInfoBuilder.setGraph(m.toGraph());

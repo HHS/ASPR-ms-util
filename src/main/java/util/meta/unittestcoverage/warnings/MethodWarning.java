@@ -12,8 +12,10 @@ public final class MethodWarning {
 	 * details string.
 	 * 
 	 * @throws NullPointerException
-	 *             <li>if the method is null</li>
-	 *             <li>if the warning type is null</li>
+	 *                                  <ul>
+	 *                                  <li>if the method is null</li>
+	 *                                  <li>if the warning type is null</li>
+	 *                                  </ul>
 	 */
 	public MethodWarning(Method method, WarningType warningType, String details) {
 		if (method == null) {
@@ -30,13 +32,15 @@ public final class MethodWarning {
 			this.details = details;
 		}
 	}
+
 	/**
-	 * Constructs the method warning with a default empty string for
-	 * details.
+	 * Constructs the method warning with a default empty string for details.
 	 * 
 	 * @throws NullPointerException
-	 *             <li>if the method is null</li>
-	 *             <li>if the warning type is null</li>
+	 *                                  <ul>
+	 *                                  <li>if the method is null</li>
+	 *                                  <li>if the warning type is null</li>
+	 *                                  </ul>
 	 */
 	public MethodWarning(Method method, WarningType warningType) {
 		if (method == null) {

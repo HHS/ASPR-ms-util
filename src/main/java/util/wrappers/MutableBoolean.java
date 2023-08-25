@@ -5,23 +5,26 @@ public final class MutableBoolean {
 
 	/**
 	 * Constructs this MutableBoolean from the given value
-	 */	
+	 */
 	public MutableBoolean(boolean value) {
-		
+
 		this.value = value;
 	}
+
 	/**
 	 * Constructs this MutableBoolean defaulted to false
-	 */	
+	 */
 	public MutableBoolean() {
-				
+
 	}
+
 	/**
 	 * Sets the current value
 	 */
 	public void setValue(boolean value) {
 		this.value = value;
 	}
+
 	/**
 	 * Returns the current value
 	 */
@@ -32,7 +35,6 @@ public final class MutableBoolean {
 
 	/**
 	 * Returns the string representation of the current value(X) in the form
-	 * 
 	 * "MutableBoolean [value="+ X+"]"
 	 */
 
@@ -46,7 +48,7 @@ public final class MutableBoolean {
 	}
 
 	/**
-	 * Returns a hash code based on the current value 
+	 * Returns a hash code based on the current value
 	 */
 	@Override
 	public int hashCode() {
@@ -56,9 +58,9 @@ public final class MutableBoolean {
 		return result;
 	}
 
-	
 	/**
-	 * Two MutableBoolean objects are equal if and only if the current values are equal 
+	 * Two MutableBoolean objects are equal if and only if the current values are
+	 * equal
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -74,5 +76,5 @@ public final class MutableBoolean {
 		}
 		return true;
 	}
-	
+
 }

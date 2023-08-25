@@ -34,7 +34,6 @@ public final class MutableObject<T> {
 
 	/**
 	 * Returns the string representation of the current value(X) in the form
-	 * 
 	 * "MutableObject [value="+ X+"]"
 	 */
 
@@ -59,7 +58,8 @@ public final class MutableObject<T> {
 	}
 
 	/**
-	 * Two MutableObjects objects are equal if and only if the current values are equal 
+	 * Two MutableObjects objects are equal if and only if the current values are
+	 * equal
 	 */
 	@Override
 	public boolean equals(Object obj) {

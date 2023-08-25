@@ -19,11 +19,11 @@ public final class ClassGraphDriver {
 		String directoryName = args[0];
 		Path path = Paths.get(directoryName);
 		ClassDependencyScan classDependencyScan = ClassDependencyScanner.execute(path);
-		
+
 		WildCardReport.report(classDependencyScan);
-		
+
 		CircularPackageDependencyReport.report(classDependencyScan);
-		
+
 		CircularClassDependencyReport.report(classDependencyScan);
 	}
 

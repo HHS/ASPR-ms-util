@@ -311,10 +311,10 @@ public class PlanarDelaunaySolver<T> {
 		double[] upperBounds = { maxX, maxY };
 
 		searchTree = VolumetricDimensionTree.builder()//
-											.setFastRemovals(true)//
-											.setLowerBounds(lowerBounds)//
-											.setUpperBounds(upperBounds)//
-											.build();//
+				.setFastRemovals(true)//
+				.setLowerBounds(lowerBounds)//
+				.setUpperBounds(upperBounds)//
+				.build();//
 
 		double pad = 0.01;
 

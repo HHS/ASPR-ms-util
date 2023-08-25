@@ -8,12 +8,14 @@ public final class ConstructorWarning {
 	private final String details;
 
 	/**
-	 * Constructs the constructor warning. Null details are replaced with an
-	 * empty details string.
+	 * Constructs the constructor warning. Null details are replaced with an empty
+	 * details string.
 	 * 
 	 * @throws NullPointerException
-	 *             <li>if the constructor is null</li>
-	 *             <li>if the warning type is null</li>
+	 *                                  <ul>
+	 *                                  <li>if the constructor is null</li>
+	 *                                  <li>if the warning type is null</li>
+	 *                                  </ul>
 	 */
 	public ConstructorWarning(Constructor<?> constructor, WarningType warningType, String details) {
 		if (constructor == null) {
@@ -32,12 +34,13 @@ public final class ConstructorWarning {
 	}
 
 	/**
-	 * Constructs the constructor warning with a default empty string for
-	 * details.
+	 * Constructs the constructor warning with a default empty string for details.
 	 * 
 	 * @throws NullPointerException
-	 *             <li>if the constructor is null</li>
-	 *             <li>if the warning type is null</li>
+	 *                                  <ul>
+	 *                                  <li>if the constructor is null</li>
+	 *                                  <li>if the warning type is null</li>
+	 *                                  </ul>
 	 */
 	public ConstructorWarning(Constructor<?> constructor, WarningType warningType) {
 		if (constructor == null) {

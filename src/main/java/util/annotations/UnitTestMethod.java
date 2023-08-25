@@ -8,8 +8,6 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation for JUnit test methods that are testing public source methods.
- * 
- *
  */
 
 @Documented
@@ -21,7 +19,7 @@ public @interface UnitTestMethod {
 	Class<?> target();
 
 	Class<?>[] args();
-	
+
 	UnitTag[] tags() default {};
 
 }

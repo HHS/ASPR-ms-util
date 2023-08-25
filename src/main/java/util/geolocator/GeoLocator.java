@@ -19,8 +19,6 @@ import util.vector.Vector3D;
  * A generics-based utility class for managing point locations on a spherical
  * earth of WGS-84 mean radius. This utility specifically finds locations based
  * on lat-lon coordinates and a search radius.
- * 
- * 
  */
 public class GeoLocator<T> {
 
@@ -65,7 +63,6 @@ public class GeoLocator<T> {
 	 * Builder class for {@linkplain GeoLocator}. Builder instances return to an
 	 * empty and ready state post build invocation.
 	 * 
-	 *
 	 * @param <T>
 	 */
 	public static class Builder<T> {
@@ -84,8 +81,8 @@ public class GeoLocator<T> {
 		}
 
 		/**
-		 * Returns a {@linkplain GeoLocator} containing the locations presented
-		 * to this builder.
+		 * Returns a {@linkplain GeoLocator} containing the locations presented to this
+		 * builder.
 		 */
 		public GeoLocator<T> build() {
 			return new GeoLocator<>(new Data<>(data));
@@ -93,9 +90,9 @@ public class GeoLocator<T> {
 	}
 
 	/*
-	 * Record for holding the location data converted to Earth centered
-	 * coordinates (in meters) as an ECC instance. Each such record corresponds
-	 * to one of the location records recorded by the builder.
+	 * Record for holding the location data converted to Earth centered coordinates
+	 * (in meters) as an ECC instance. Each such record corresponds to one of the
+	 * location records recorded by the builder.
 	 */
 	private static class LocationEccRecord<T> {
 
@@ -115,16 +112,16 @@ public class GeoLocator<T> {
 	private final DimensionTree<LocationEccRecord<T>> dimensionTree;
 
 	/*
-	 * A utility object for converting to and from lat/lon and ecc coordinates.
-	 * This is a spherical earth using a WGS84 mean earth radius.
+	 * A utility object for converting to and from lat/lon and ecc coordinates. This
+	 * is a spherical earth using a WGS84 mean earth radius.
 	 */
 	private final Earth earth = Earth.fromMeanRadius();
 
 	private GeoLocator(Data<T> scaffold) {
 
 		/*
-		 * Create the Location Position Records(ecc-vector based) from the
-		 * Location Records(lat-lon based)
+		 * Create the Location Position Records(ecc-vector based) from the Location
+		 * Records(lat-lon based)
 		 */
 		List<LocationEccRecord<T>> locationEccRecords = scaffold.locationRecords.stream().map(rec -> {
 			LatLonAlt latLonAlt = new LatLonAlt(rec.latDegrees, rec.lonDegrees, 0);
@@ -133,11 +130,13 @@ public class GeoLocator<T> {
 		}).collect(Collectors.toList());
 
 		/*
-		 * Initialize the bounding box for the tree. This is not strictly
-		 * necessary, but it will improve the tree's performance.
+		 * Initialize the bounding box for the tree. This is not strictly necessary, but
+		 * it will improve the tree's performance.
 		 */
-		double[] lowerBounds = new double[] { Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY };
-		double[] upperBounds = new double[] { Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY };
+		double[] lowerBounds = new double[] { Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY,
+				Double.POSITIVE_INFINITY };
+		double[] upperBounds = new double[] { Double.NEGATIVE_INFINITY, Double.NEGATIVE_INFINITY,
+				Double.NEGATIVE_INFINITY };
 
 		/*
 		 * Refine the bounding box using the Location Position Records
@@ -158,10 +157,10 @@ public class GeoLocator<T> {
 		/*
 		 * Build the tree
 		 */
-		dimensionTree = DimensionTree	.builder() //
-										.setLowerBounds(lowerBounds)//
-										.setUpperBounds(upperBounds)//
-										.build();//
+		dimensionTree = DimensionTree.builder() //
+				.setLowerBounds(lowerBounds)//
+				.setUpperBounds(upperBounds)//
+				.build();//
 
 		/*
 		 * Load the tree with the Location Position Records
@@ -179,24 +178,24 @@ public class GeoLocator<T> {
 	}
 
 	/**
-	 * Returns the list of locations that are within the given radius in
-	 * kilometers from the given lat-lon position.
+	 * Returns the list of locations that are within the given radius in kilometers
+	 * from the given lat-lon position.
 	 */
 	public List<T> getLocations(double latDegrees, double lonDegrees, double radiusKilometers) {
 		double linearSearchRangeMeters = getLinearSearchRangeMeters(radiusKilometers * 1000);
 		double[] position = earth.getECCFromLatLonAlt(new LatLonAlt(latDegrees, lonDegrees, 0)).toArray();
 		return dimensionTree.getMembersInSphere(linearSearchRangeMeters, position).stream()//
-							.map(rec -> rec.location)//
-							.collect(Collectors.toList());//
+				.map(rec -> rec.location)//
+				.collect(Collectors.toList());//
 	}
 
 	/**
-	 * Returns the list of locations that are within the given radius in
-	 * kilometers from the given lat-lon position as Pairs of location and
-	 * distance(km). The resulting pairs are returned in ascending order by
-	 * distance.
+	 * Returns the list of locations that are within the given radius in kilometers
+	 * from the given lat-lon position as Pairs of location and distance(km). The
+	 * resulting pairs are returned in ascending order by distance.
 	 */
-	public List<Pair<T, Double>> getPrioritizedLocations(double latDegrees, double lonDegrees, double radiusKilometers) {
+	public List<Pair<T, Double>> getPrioritizedLocations(double latDegrees, double lonDegrees,
+			double radiusKilometers) {
 
 		double linearSearchRangeMeters = getLinearSearchRangeMeters(radiusKilometers * 1000);
 
@@ -205,18 +204,18 @@ public class GeoLocator<T> {
 		double[] positionArray = ecc.toArray();
 
 		return dimensionTree.getMembersInSphere(linearSearchRangeMeters, positionArray).stream()//
-							.map(rec -> {
-								double distance = earth.getGroundDistanceFromECC(ecc, rec.ecc);
-								return new Pair<>(rec.location, distance / 1000);
-							})//
-							.sorted(Comparator.comparingDouble(Pair::getValue))//
-							.collect(Collectors.toList());//
+				.map(rec -> {
+					double distance = earth.getGroundDistanceFromECC(ecc, rec.ecc);
+					return new Pair<>(rec.location, distance / 1000);
+				})//
+				.sorted(Comparator.comparingDouble(Pair::getValue))//
+				.collect(Collectors.toList());//
 	}
 
 	/**
 	 * Returns the nearest location in this {@linkplain GeoLocator} to the given
-	 * lat-lon position if any can be found. Ties for nearest location result in
-	 * an arbitrary selection.
+	 * lat-lon position if any can be found. Ties for nearest location result in an
+	 * arbitrary selection.
 	 */
 	public Optional<T> getNearestLocation(double latDegrees, double lonDegrees) {
 		LatLonAlt latLonAlt = new LatLonAlt(latDegrees, lonDegrees, 0);

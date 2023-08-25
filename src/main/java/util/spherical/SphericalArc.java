@@ -11,8 +11,6 @@ import util.vector.Vector3D;
 /**
  * Represents an immutable great arc segment on the unit sphere defined by two
  * distinct SphericalPoints. Instances are created via included builder class.
- * 
- *
  */
 
 @Immutable
@@ -21,12 +19,11 @@ public class SphericalArc {
 	/**
 	 * Hidden constructor
 	 * 
-	 * @throws MalformedSphericalArcException
-	 *             <li>if the two {@link SphericalPoint} values are too close
-	 *             together to properly form a normal vector.
-	 * 
-	 * @throws NullPointerException
-	 *             <li>if either {@link SphericalPoint} is null
+	 * @throws MalformedSphericalArcException if the two {@link SphericalPoint}
+	 *                                            values are too close together to
+	 *                                            properly form a normal vector.
+	 * @throws NullPointerException           if either {@link SphericalPoint} is
+	 *                                            null
 	 */
 	public SphericalArc(SphericalPoint sphericalPoint1, SphericalPoint sphericalPoint2) {
 
@@ -58,9 +55,7 @@ public class SphericalArc {
 	 * Returns the {@link Chirality} of a SphericalPoint relative to this
 	 * SphericalArc in the natural order of its SphericalPoints.
 	 * 
-	 * @throws NullPointerException
-	 *             <li>if the given {@link SphericalPoint} is null
-	 * 
+	 * @throws NullPointerException if the given {@link SphericalPoint} is null
 	 * @param sphericalPoint
 	 * @return
 	 */
@@ -82,9 +77,7 @@ public class SphericalArc {
 	 * Returns true if and only if this SphericalArc intersects the given
 	 * SphericalArc at a point
 	 * 
-	 * @throws NullPointerException
-	 *             <li>if the given arc is null
-	 * 
+	 * @throws NullPointerException if the given arc is null
 	 * @param arc
 	 * @return
 	 */
@@ -99,11 +92,8 @@ public class SphericalArc {
 	/**
 	 * Returns the SphericalPoint associated with the index
 	 * 
-	 * @param index
-	 *            Values may be 0 or 1
-	 * 
-	 * @throws IndexOutOfBoundsException
-	 *             if any other index is used
+	 * @param index Values may be 0 or 1
+	 * @throws IndexOutOfBoundsException if any other index is used
 	 */
 	public SphericalPoint getSphericalPoint(int index) {
 		return sphericalPoints[index];
@@ -135,17 +125,16 @@ public class SphericalArc {
 		Vector3D b = sphericalPoints[1].getPosition();
 
 		/*
-		 * The normal vector to each arc's plane will be perpendicular to the
-		 * solution, thus the solution is the cross product of these two
-		 * normals, or their reverse.
+		 * The normal vector to each arc's plane will be perpendicular to the solution,
+		 * thus the solution is the cross product of these two normals, or their
+		 * reverse.
 		 */
 		Vector3D solution = perp.cross(arc.perp);
 
 		/*
-		 * Does the solution lie on the first arc? It will lie on the arc's
-		 * plane. Thus, if we can show that the intersection lies between the
-		 * arc's end points then the solution is correct. Otherwise, the
-		 * solution must be reversed.
+		 * Does the solution lie on the first arc? It will lie on the arc's plane. Thus,
+		 * if we can show that the intersection lies between the arc's end points then
+		 * the solution is correct. Otherwise, the solution must be reversed.
 		 * 
 		 */
 		boolean containedOnArc = a.cross(solution).dot(perp) >= 0 && b.cross(solution).dot(perp) <= 0;
@@ -159,16 +148,14 @@ public class SphericalArc {
 	/**
 	 * Returns the distance from the given {@linkplain SphericalPoint} to this
 	 * 
-	 * @throws NullPointerException
-	 *             <li>if the given {@link SphericalPoint} is null
+	 * @throws NullPointerException if the given {@link SphericalPoint} is null
 	 */
 	public double distanceTo(SphericalPoint sphericalPoint) {
 		Vector3D a = sphericalPoints[0].getPosition();
 		Vector3D b = sphericalPoints[1].getPosition();
 
 		/*
-		 * Create a normal unit vector to the plane containing the two end
-		 * points --
+		 * Create a normal unit vector to the plane containing the two end points --
 		 */
 		MutableVector3D p = new MutableVector3D(a);
 		p.cross(b);
@@ -190,8 +177,8 @@ public class SphericalArc {
 		double angle = q.angle(qOnPlane);
 
 		/*
-		 * If q lies between the end points, then return angle, otherwise return
-		 * the angle between q and the closest end point.
+		 * If q lies between the end points, then return angle, otherwise return the
+		 * angle between q and the closest end point.
 		 */
 
 		MutableVector3D v = new MutableVector3D(qOnPlane);
@@ -203,8 +190,8 @@ public class SphericalArc {
 			double bDot = v.dot(p);// positive if clockwise from b
 			if (bDot >= 0) {
 				/*
-				 * qOnPlane, from the perspective of the normal, is CCW from A
-				 * and CW from B, so it lies between them
+				 * qOnPlane, from the perspective of the normal, is CCW from A and CW from B, so
+				 * it lies between them
 				 */
 				return angle;
 			}

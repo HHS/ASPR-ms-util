@@ -16,12 +16,8 @@ import net.jcip.annotations.Immutable;
  * graphs that represent dependencies between nodes. Its is used to establish an
  * ordering of nodes such that nodes that have no dependencies on other nodes
  * are deemed as rank zero, nodes that depend only on rank zero nodes are deemed
- * rank 1 and so on.
- * 
- * Dependency in the graph is represented by edges. An edge directed from node A
- * to node B is taken to mean that A depends on B.
- * 
- * 
+ * rank 1 and so on. Dependency in the graph is represented by edges. An edge
+ * directed from node A to node B is taken to mean that A depends on B.
  */
 @Immutable
 public final class GraphDepthEvaluator<N> {
@@ -81,8 +77,8 @@ public final class GraphDepthEvaluator<N> {
 	}
 
 	/**
-	 * Returns the nodes associated with the given depth. Will return an empty
-	 * list for depth values that are negative or exceed the max depth
+	 * Returns the nodes associated with the given depth. Will return an empty list
+	 * for depth values that are negative or exceed the max depth
 	 */
 	public List<N> getNodesForDepth(int depth) {
 		List<N> result = new ArrayList<>();
@@ -94,8 +90,8 @@ public final class GraphDepthEvaluator<N> {
 	}
 
 	/**
-	 * Returns the nodes of the graph in their ascending rank orders. Within a
-	 * rank, the order is arbitrary but repeatable across instances of
+	 * Returns the nodes of the graph in their ascending rank orders. Within a rank,
+	 * the order is arbitrary but repeatable across instances of
 	 * {@link GraphDepthEvaluator} for any given {@link Graph}.
 	 */
 	public List<N> getNodesInRankOrder() {
@@ -107,10 +103,9 @@ public final class GraphDepthEvaluator<N> {
 	}
 
 	/**
-	 * Static constructor for {@link GraphDepthEvaluator} that orders the nodes
-	 * of the given graph by the dependency relationship represented by the
-	 * graph's edges. Returns {@link Optional#empty()} if the graph contains any
-	 * cycles.
+	 * Static constructor for {@link GraphDepthEvaluator} that orders the nodes of
+	 * the given graph by the dependency relationship represented by the graph's
+	 * edges. Returns {@link Optional#empty()} if the graph contains any cycles.
 	 */
 	public static <N, E> Optional<GraphDepthEvaluator<N>> getGraphDepthEvaluator(Graph<N, E> graph) {
 		if (Graphs.getGraphCyclisity(graph) == Graphs.GraphCyclisity.ACYCLIC) {

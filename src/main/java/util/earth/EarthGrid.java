@@ -13,8 +13,6 @@ import util.vector.Vector3D;
  * good approximation to the earth's surface for several kilometers. The earth
  * is approximated by a sphere using the WGS84 earth radius for the latitude of
  * the center of the grid.
- * 
- *
  */
 public final class EarthGrid {
 
@@ -31,23 +29,22 @@ public final class EarthGrid {
 	private Vector3D c;
 
 	/**
-	 * Constructs a new EarthGrid centered at the given LatLon where the (x,y)
-	 * grid is right handed from the perspective of an observer above the earth.
-	 * The positive y axis is aligned to the azimth. For example, an azimuth of
-	 * 0 degrees will align the y axis to the north and an azimuth of 90 degrees
-	 * will align the positive y axis to the east.
+	 * Constructs a new EarthGrid centered at the given LatLon where the (x,y) grid
+	 * is right handed from the perspective of an observer above the earth. The
+	 * positive y axis is aligned to the azimth. For example, an azimuth of 0
+	 * degrees will align the y axis to the north and an azimuth of 90 degrees will
+	 * align the positive y axis to the east.
 	 * 
-	 * @throws IllegalArgumentException
-	 *             <li>if the center point is closer than
-	 *             EarthGrid.MIN_ANGLE_FROM_POLE=0.001 degrees from one of the
-	 *             poles.</li>
-	 * 
+	 * @throws IllegalArgumentException if the center point is closer than
+	 *                                      EarthGrid.MIN_ANGLE_FROM_POLE=0.001
+	 *                                      degrees from one of the poles.
 	 * @param center
 	 * @param azimuthDegrees
 	 */
 	public EarthGrid(LatLon center, double azimuthDegrees) {
 		if ((FastMath.abs(center.getLatitude()) - 90) < MIN_ANGLE_FROM_POLE) {
-			throw new IllegalArgumentException("Grid cannot be constructed within " + MIN_ANGLE_FROM_POLE + " degrees of a pole");
+			throw new IllegalArgumentException(
+					"Grid cannot be constructed within " + MIN_ANGLE_FROM_POLE + " degrees of a pole");
 		}
 		earth = Earth.fromLatitude(center.getLatitude());
 
@@ -56,9 +53,9 @@ public final class EarthGrid {
 		z = c.normalize();
 
 		x = new Vector3D(0, 0, 1)//
-									.cross(z)//
-									.normalize()//
-									.rotateAbout(z, -FastMath.toRadians(azimuthDegrees));//
+				.cross(z)//
+				.normalize()//
+				.rotateAbout(z, -FastMath.toRadians(azimuthDegrees));//
 
 		y = z.cross(x).normalize();
 	}
@@ -72,7 +69,8 @@ public final class EarthGrid {
 	}
 
 	public LatLon getLatLon(Vector2D xyCoordinate) {
-		double zlength = FastMath.sqrt(earth.getRadius() * earth.getRadius() - xyCoordinate.getX() * xyCoordinate.getX() - xyCoordinate.getY() * xyCoordinate.getY()) - earth.getRadius();
+		double zlength = FastMath.sqrt(earth.getRadius() * earth.getRadius() - xyCoordinate.getX() * xyCoordinate.getX()
+				- xyCoordinate.getY() * xyCoordinate.getY()) - earth.getRadius();
 		MutableVector3D planarPosition = new MutableVector3D(c);
 		planarPosition.addScaled(y, xyCoordinate.getY());
 		planarPosition.addScaled(x, xyCoordinate.getX());

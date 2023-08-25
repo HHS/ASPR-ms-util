@@ -8,16 +8,14 @@ import util.vector.Vector3D;
 
 /**
  * Represents an immutable triangle on the unit sphere.
- * 
- *
  */
 
 @Immutable
 public class SphericalTriangle {
 
 	/**
-	 * Returns the shortest distance from the point to this triangle. Points on
-	 * the inside of the triangle will return 0.
+	 * Returns the shortest distance from the point to this triangle. Points on the
+	 * inside of the triangle will return 0.
 	 */
 	public double distanceTo(SphericalPoint sphericalPoint) {
 
@@ -46,15 +44,13 @@ public class SphericalTriangle {
 	}
 
 	/**
-	 * Constructs a {@link SphericalTriangle} from the given
-	 * {@link SphericalPoint} values.
+	 * Constructs a {@link SphericalTriangle} from the given {@link SphericalPoint}
+	 * values.
 	 * 
-	 * @throws MalformedSphericalTriangleException
-	 * <li>if a spherical point is null</li>
-	 * 
-	 * 
+	 * @throws MalformedSphericalTriangleException if a spherical point is null
 	 */
-	public SphericalTriangle(SphericalPoint sphericalPoint1, SphericalPoint sphericalPoint2, SphericalPoint sphericalPoint3) {
+	public SphericalTriangle(SphericalPoint sphericalPoint1, SphericalPoint sphericalPoint2,
+			SphericalPoint sphericalPoint3) {
 
 		if (sphericalPoint1 == null) {
 			throw new MalformedSphericalTriangleException("null spherical point");
@@ -151,32 +147,31 @@ public class SphericalTriangle {
 	}
 
 	/**
-	 * Returns the centroid point (a unit vector) of this
-	 * {@link SphericalTriangle}
+	 * Returns the centroid point (a unit vector) of this {@link SphericalTriangle}
 	 */
 	public Vector3D getCentroid() {
 		return centroid;
 	}
 
 	/**
-	 * Returns the radius of this {@link SphericalTriangle}. The radius is
-	 * defined as the distance to the centroid from the vertices.
+	 * Returns the radius of this {@link SphericalTriangle}. The radius is defined
+	 * as the distance to the centroid from the vertices.
 	 */
 	public double getRadius() {
 		return radius;
 	}
 
 	/**
-	 * Returns the {@link Chirality} of this {@link SphericalTriangle} relative
-	 * to the natural order of its SphericalPoints.
+	 * Returns the {@link Chirality} of this {@link SphericalTriangle} relative to
+	 * the natural order of its SphericalPoints.
 	 */
 	public Chirality getChirality() {
 		return chirality;
 	}
 
 	/**
-	 * Returns true if this {@link SphericalTriangle} overlaps with any part of
-	 * the given {@link SphericalTriangle}
+	 * Returns true if this {@link SphericalTriangle} overlaps with any part of the
+	 * given {@link SphericalTriangle}
 	 */
 	public boolean intersects(SphericalTriangle sphericalTriangle) {
 		for (int i = 0; i < 3; i++) {
@@ -198,32 +193,25 @@ public class SphericalTriangle {
 	}
 
 	/**
-	 * Returns the {@link SphericalArc} that corresponds to the index. These
-	 * arcs are formed from the original {@link SphericalPoint} members that
-	 * define this {@link SphericalTriangle}. Arc[0] is formed(in order) from
-	 * Point[0] and Point[1]. Arc[1] is formed(in order) from Point[1] and
-	 * Point[2]. Arc[2] is formed(in order) from Point[2] and Point[0].
+	 * Returns the {@link SphericalArc} that corresponds to the index. These arcs
+	 * are formed from the original {@link SphericalPoint} members that define this
+	 * {@link SphericalTriangle}. Arc[0] is formed(in order) from Point[0] and
+	 * Point[1]. Arc[1] is formed(in order) from Point[1] and Point[2]. Arc[2] is
+	 * formed(in order) from Point[2] and Point[0].
 	 * 
-	 * @param index
-	 *            Values may be 0, 1 or 2
-	 * 
-	 * @throws IndexOutOfBoundsException
-	 *             if any other index is used
+	 * @param index Values may be 0, 1 or 2
+	 * @throws IndexOutOfBoundsException if any other index is used
 	 */
 	public SphericalArc getSphericalArc(int index) {
 		return sphericalArcs[index];
 	}
 
 	/**
-	 * Returns the {@link SphericalPoint} that corresponds to the index and was
-	 * used to construct this {@link SphericalTriangle}
+	 * Returns the {@link SphericalPoint} that corresponds to the index and was used
+	 * to construct this {@link SphericalTriangle}
 	 * 
-	 * @param index
-	 *            Values may be 0, 1 or 2
-	 * 
-	 * @throws IndexOutOfBoundsException
-	 *             if any other index is used
-	 * 
+	 * @param index Values may be 0, 1 or 2
+	 * @throws IndexOutOfBoundsException if any other index is used
 	 */
 	public SphericalPoint getSphericalPoint(int index) {
 		return sphericalPoints[index];

@@ -8,16 +8,12 @@ import net.jcip.annotations.ThreadSafe;
 /**
  * A {@link Stat} implementor that is immutable and is constructed via the
  * contained builder class.
- * 
- *
  */
 @ThreadSafe
 public final class ImmutableStat implements Stat {
 
 	/**
 	 * A container for collecting the five characteristics of a Stat
-	 * 
-	 *
 	 */
 	private static class Data {
 		private double mean;
@@ -47,8 +43,6 @@ public final class ImmutableStat implements Stat {
 
 	/**
 	 * A builder class for {@link ImmutableStat}
-	 * 
-	 *
 	 */
 	@NotThreadSafe
 	public static class Builder {
@@ -62,18 +56,21 @@ public final class ImmutableStat implements Stat {
 		 * Builds the ImmutableStat
 		 * 
 		 * @throws IllegalArgumentException
-		 *             <li>if the size is negative
-		 *             <li>if the size value is one and the min mean and max are
-		 *             not equal
-		 *             <li>if the size value is one and the variance is not zero
-		 *             <li>if the size value is greater than one and the min
-		 *             exceeds the max
-		 *             <li>if the size value is greater than one and the min
-		 *             exceeds the mean
-		 *             <li>if the size value is greater than one and the mean
-		 *             exceeds the max
-		 *             <li>if the size value is greater than one and the
-		 *             variance is negative
+		 *                                      <ul>
+		 *                                      <li>if the size is negative</li>
+		 *                                      <li>if the size value is one and the min
+		 *                                      mean and max are not equal</li>
+		 *                                      <li>if the size value is one and the
+		 *                                      variance is not zero</li>
+		 *                                      <li>if the size value is greater than
+		 *                                      one and the min exceeds the max</li>
+		 *                                      <li>if the size value is greater than
+		 *                                      one and the min exceeds the mean</li>
+		 *                                      <li>if the size value is greater than
+		 *                                      one and the mean exceeds the max</li>
+		 *                                      <li>if the size value is greater than
+		 *                                      one and the variance is negative</li>
+		 *                                      </ul>
 		 */
 		public ImmutableStat build() {
 			validate();
@@ -120,27 +117,25 @@ public final class ImmutableStat implements Stat {
 			return this;
 		}
 
-		/*
+		/**
 		 * Validates the content of the Stat
 		 * 
 		 * @throws IllegalArgumentException
-		 * 
-		 * <li>if the size is negative
-		 * 
-		 * <li>if the size value is one and the min mean and max are not equal
-		 * 
-		 * <li>if the size value is one and the variance is not zero
-		 * 
-		 * <li>if the size value is greater than one and the min exceeds the max
-		 * 
-		 * <li>if the size value is greater than one and the min exceeds the
-		 * mean
-		 * 
-		 * <li>if the size value is greater than one and the mean exceeds the
-		 * max
-		 * 
-		 * <li>if the size value is greater than one and the variance is
-		 * negative
+		 *                                      <ul>
+		 *                                      <li>if the size is negative
+		 *                                      <li>if the size value is one and the min
+		 *                                      mean and max are not equal
+		 *                                      <li>if the size value is one and the
+		 *                                      variance is not zero
+		 *                                      <li>if the size value is greater than
+		 *                                      one and the min exceeds the max
+		 *                                      <li>if the size value is greater than
+		 *                                      one and the min exceeds the mean
+		 *                                      <li>if the size value is greater than
+		 *                                      one and the mean exceeds the max
+		 *                                      <li>if the size value is greater than
+		 *                                      one and the variance is negative
+		 *                                      </ul>
 		 */
 		private void validate() {
 			if (data.size < 0) {

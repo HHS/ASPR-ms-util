@@ -14,8 +14,7 @@ public final class Graph<N, E> {
 	}
 
 	/**
-	 * Returns a hash code that is the sum of the hash codes of its nodes and
-	 * edges.
+	 * Returns a hash code that is the sum of the hash codes of its nodes and edges.
 	 */
 	@Override
 	public int hashCode() {
@@ -23,9 +22,9 @@ public final class Graph<N, E> {
 	}
 
 	/**
-	 * Returns true if and only if the given object is an instance of
-	 * {@link Graph} or {@link MutableGraph} that contains the same nodes and
-	 * edges as this {@link Graph}
+	 * Returns true if and only if the given object is an instance of {@link Graph}
+	 * or {@link MutableGraph} that contains the same nodes and edges as this
+	 * {@link Graph}
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -59,8 +58,8 @@ public final class Graph<N, E> {
 		}
 
 		/**
-		 * Adds the edge to this graph, possibly replacing the edge if it is
-		 * already in the graph. Adds the nodes if required.
+		 * Adds the edge to this graph, possibly replacing the edge if it is already in
+		 * the graph. Adds the nodes if required.
 		 */
 		public Builder<N, E> addEdge(E edge, N originNode, N destinationNode) {
 			mutableGraph.addEdge(edge, originNode, destinationNode);
@@ -196,11 +195,9 @@ public final class Graph<N, E> {
 	}
 
 	/**
-	 * Supplies an iterable over the edges from the origin node to the
-	 * destination node.
+	 * Supplies an iterable over the edges from the origin node to the destination
+	 * node.
 	 * 
-	 * @param originNode
-	 * @param destinationNode
 	 * @return
 	 */
 	public List<E> getEdges() {
