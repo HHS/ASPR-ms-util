@@ -10,8 +10,6 @@ import net.jcip.annotations.Immutable;
  * any breaks. A path may be crossing or cyclic, with the getEdges() list
  * containing repeated edges. A path may be a degenerate, having no edges.
  * Degenerate paths are the expected results for paths that do not exist.
- * 
- * 
  */
 @Immutable
 public final class Path<E> {
@@ -35,8 +33,8 @@ public final class Path<E> {
 			return this;
 		}
 
-		public Path<T> build() {			
-			return new Path<>(edges);			
+		public Path<T> build() {
+			return new Path<>(edges);
 		}
 	}
 
@@ -47,9 +45,8 @@ public final class Path<E> {
 	private final List<E> edges = new ArrayList<>();
 
 	/**
-	 * Returns a list over the edges in the path walk. Note that the path may
-	 * cross itself (revisit nodes) and even repeat edges.
-	 * 
+	 * Returns a list over the edges in the path walk. Note that the path may cross
+	 * itself (revisit nodes) and even repeat edges.
 	 */
 	public List<E> getEdges() {
 		return new ArrayList<>(edges);
@@ -57,10 +54,8 @@ public final class Path<E> {
 
 	/**
 	 * Returns the number of edges in the path walk through the graph. Note that
-	 * this is NOT necessarily the same value as returned by the edgeCount()
-	 * method, but rather returns a value that may be higher due to revisited
-	 * edges.
-	 * 
+	 * this is NOT necessarily the same value as returned by the edgeCount() method,
+	 * but rather returns a value that may be higher due to revisited edges.
 	 */
 
 	public int length() {

@@ -3,12 +3,12 @@ package util.meta.unittestcoverage;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.meta.unittestcoverage.warnings.ConstructorWarning;
-import util.meta.unittestcoverage.warnings.FieldWarning;
-import util.meta.unittestcoverage.warnings.MethodWarning;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestField;
 import util.annotations.UnitTestMethod;
+import util.meta.unittestcoverage.warnings.ConstructorWarning;
+import util.meta.unittestcoverage.warnings.FieldWarning;
+import util.meta.unittestcoverage.warnings.MethodWarning;
 
 public final class MetaInfoContainer {
 	private static class Data {
@@ -32,15 +32,14 @@ public final class MetaInfoContainer {
 
 		private Data data = new Data();
 
-		public MetaInfoContainer build() {			
-			return new MetaInfoContainer(data);			
+		public MetaInfoContainer build() {
+			return new MetaInfoContainer(data);
 		}
 
 		/**
 		 * Adds a constructor warning
 		 * 
-		 * @throws NullPointerException
-		 *             <li>if the constructor warning is null</li>
+		 * @throws NullPointerException if the constructor warning is null
 		 */
 		public Builder addConstructorWarning(ConstructorWarning constructorWarning) {
 			if (constructorWarning == null) {
@@ -53,8 +52,7 @@ public final class MetaInfoContainer {
 		/**
 		 * Adds a method warning
 		 * 
-		 * @throws NullPointerException
-		 *             <li>if the method warning is null</li>
+		 * @throws NullPointerException if the method warning is null
 		 */
 		public Builder addMethodWarning(MethodWarning methodWarning) {
 			if (methodWarning == null) {
@@ -65,11 +63,10 @@ public final class MetaInfoContainer {
 		}
 
 		/**
-		 * Adds a validated UnitTestField. UnitTestField instances added here
-		 * should not correspond to a warning.
+		 * Adds a validated UnitTestField. UnitTestField instances added here should not
+		 * correspond to a warning.
 		 * 
-		 * @throws NullPointerException
-		 *             <li>if the unitTestField is null</li>
+		 * @throws NullPointerException if the unitTestField is null
 		 */
 		public Builder addUnitTestField(UnitTestField unitTestField) {
 			if (unitTestField == null) {
@@ -80,11 +77,10 @@ public final class MetaInfoContainer {
 		}
 
 		/**
-		 * Adds a validated UnitTestMethod. UnitTestMethod instances added here
-		 * should not correspond to a warning.
+		 * Adds a validated UnitTestMethod. UnitTestMethod instances added here should
+		 * not correspond to a warning.
 		 * 
-		 * @throws NullPointerException
-		 *             <li>if the unitTestMethod is null</li>
+		 * @throws NullPointerException if the unitTestMethod is null
 		 */
 		public Builder addUnitTestMethod(UnitTestMethod unitTestMethod) {
 			if (unitTestMethod == null) {
@@ -95,11 +91,10 @@ public final class MetaInfoContainer {
 		}
 
 		/**
-		 * Adds a validated UnitTestConstructor. UnitTestConstructor instances
-		 * added here should not correspond to a warning.
+		 * Adds a validated UnitTestConstructor. UnitTestConstructor instances added
+		 * here should not correspond to a warning.
 		 * 
-		 * @throws NullPointerException
-		 *             <li>if the unitTestConstructor is null</li>
+		 * @throws NullPointerException if the unitTestConstructor is null
 		 */
 		public Builder addUnitTestConstructor(UnitTestConstructor unitTestConstructor) {
 			if (unitTestConstructor == null) {
@@ -112,8 +107,7 @@ public final class MetaInfoContainer {
 		/**
 		 * Adds a field warning
 		 * 
-		 * @throws NullPointerException
-		 *             <li>if the field warning is null</li>
+		 * @throws NullPointerException if the field warning is null
 		 */
 		public Builder addFieldWarning(FieldWarning fieldWarning) {
 			if (fieldWarning == null) {
@@ -126,8 +120,7 @@ public final class MetaInfoContainer {
 		/**
 		 * Adds a method warning
 		 * 
-		 * @throws NullPointerException
-		 *             <li>if the general warning is null</li>
+		 * @throws NullPointerException if the general warning is null
 		 */
 		public Builder addGeneralWarning(String generalWarning) {
 			if (generalWarning == null) {

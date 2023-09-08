@@ -314,8 +314,8 @@ public class GeoDelaunaySolver<T> {
 		}
 
 		/*
-		 * Add vertexes for each point in the model and calculate the centroid
-		 * of those points
+		 * Add vertexes for each point in the model and calculate the centroid of those
+		 * points
 		 */
 		final MutableVector3D centroid = new MutableVector3D();
 		int n = points.size();
@@ -331,8 +331,8 @@ public class GeoDelaunaySolver<T> {
 		double minDotProduct = Double.POSITIVE_INFINITY;
 
 		/*
-		 * Find the maximum angle to any point in the data from the centroid --
-		 * we use dot products to avoid the acos costs
+		 * Find the maximum angle to any point in the data from the centroid -- we use
+		 * dot products to avoid the acos costs
 		 * 
 		 */
 		for (int i = scaffoldCount; i < vertexes.size(); i++) {
@@ -357,8 +357,8 @@ public class GeoDelaunaySolver<T> {
 		final List<MutableVector3D> tangentPlaneNormals = new ArrayList<>();
 
 		/*
-		 * Form the vectors that will be perpendicular to the three planes that
-		 * are tangent to the circle formed by the max angle
+		 * Form the vectors that will be perpendicular to the three planes that are
+		 * tangent to the circle formed by the max angle
 		 * 
 		 */
 		for (int i = 0; i < scaffoldCount; i++) {
@@ -369,10 +369,10 @@ public class GeoDelaunaySolver<T> {
 		}
 
 		/*
-		 * Find the three intersections of these plane in a right handed
-		 * fashion. The resulting triangle will be right handed if the triangle
-		 * is smaller than a hemisphere and left handed otherwise. Either way,
-		 * the triangle will have all of the data points on its inside.
+		 * Find the three intersections of these plane in a right handed fashion. The
+		 * resulting triangle will be right handed if the triangle is smaller than a
+		 * hemisphere and left handed otherwise. Either way, the triangle will have all
+		 * of the data points on its inside.
 		 */
 		for (int i = 0; i < scaffoldCount; i++) {
 			final MutableVector3D v0 = tangentPlaneNormals.get(i);
@@ -386,16 +386,15 @@ public class GeoDelaunaySolver<T> {
 		}
 
 		/*
-		 * We choose the bounds that will fit the unit sphere since we cannot
-		 * easily anticipate the centroid position of each triangle, despite
-		 * knowing all the vertex positions. This will help the tree keep its
-		 * depth to a minimum.
+		 * We choose the bounds that will fit the unit sphere since we cannot easily
+		 * anticipate the centroid position of each triangle, despite knowing all the
+		 * vertex positions. This will help the tree keep its depth to a minimum.
 		 */
 		searchTree = VolumetricDimensionTree.builder()//
-											.setFastRemovals(true)//
-											.setLowerBounds(new double[] { -1, -1, -1 })//
-											.setUpperBounds(new double[] { 1, 1, 1 })//
-											.build();//
+				.setFastRemovals(true)//
+				.setLowerBounds(new double[] { -1, -1, -1 })//
+				.setUpperBounds(new double[] { 1, 1, 1 })//
+				.build();//
 
 		addTriangle(0, 1, 2);//
 	}

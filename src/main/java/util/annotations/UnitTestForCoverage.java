@@ -8,8 +8,6 @@ import java.lang.annotation.Target;
 
 /**
  * Annotation for JUnit test methods that are testing protected source methods.
- * 
- *
  */
 
 @Documented

@@ -1,14 +1,9 @@
 package util.time;
 
-
-
 /**
  * A nano-time based accumulator of elapsed time that allows the client to start
  * and stop accumulation.
- * 
- *
  */
-
 public final class Stopwatch {
 
 	private boolean running;

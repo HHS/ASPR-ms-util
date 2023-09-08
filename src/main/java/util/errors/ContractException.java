@@ -3,8 +3,6 @@ package util.errors;
 /**
  * A {@link RuntimeException} that indicates that the cause of the error as a
  * precondition(contract) violation
- * 
- *
  */
 public final class ContractException extends RuntimeException {
 
@@ -17,9 +15,7 @@ public final class ContractException extends RuntimeException {
 	 * exception's message value will be the description value of the contract
 	 * error.
 	 * 
-	 * @throws NullPointerException
-	 *             <li>if the contract error is null</li>
-	 * 
+	 * @throws NullPointerException if the contract error is null
 	 */
 	public ContractException(final ContractError contractError) {
 		super(contractError.getDescription());
@@ -27,17 +23,16 @@ public final class ContractException extends RuntimeException {
 	}
 
 	/**
-	 * Constructs the exception with the given contract error and details value.
-	 * The resulting exception's message value will be the description value of
-	 * the contract error concatenated with the details.toString().
-	 * 
-	 * The result will be contractError.getDescription() + ": " +
-	 * details.toString())
+	 * Constructs the exception with the given contract error and details value. The
+	 * resulting exception's message value will be the description value of the
+	 * contract error concatenated with the details.toString(). The result will be
+	 * contractError.getDescription() + ": " + details.toString())
 	 * 
 	 * @throws NullPointerException
-	 *             <li>if the contract error is null</li>
-	 *             <li>if the details value is null</li>
-	 * 
+	 *                                  <ul>
+	 *                                  <li>if the contract error is null</li>
+	 *                                  <li>if the details value is null</li>
+	 *                                  </ul>
 	 */
 	public ContractException(final ContractError contractError, final Object details) {
 		super(contractError.getDescription() + ": " + details.toString());
@@ -45,8 +40,8 @@ public final class ContractException extends RuntimeException {
 	}
 
 	/**
-	 * Returns the SimulationErrorType that documents the general issue that
-	 * caused the exception.
+	 * Returns the SimulationErrorType that documents the general issue that caused
+	 * the exception.
 	 */
 	public ContractError getErrorType() {
 		return contractError;

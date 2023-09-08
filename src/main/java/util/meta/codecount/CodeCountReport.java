@@ -76,7 +76,8 @@ public class CodeCountReport {
 			codeCountReport.totalBlankLineCount = rootNode.getLineCount(LineType.BLANK);
 			codeCountReport.totalCodeLineCount = rootNode.getLineCount(LineType.CODE);
 			codeCountReport.totalCommentLineCount = rootNode.getLineCount(LineType.COMMENT);
-			int totalLineCount = codeCountReport.totalBlankLineCount + codeCountReport.totalCodeLineCount + codeCountReport.totalCommentLineCount;
+			int totalLineCount = codeCountReport.totalBlankLineCount + codeCountReport.totalCodeLineCount
+					+ codeCountReport.totalCommentLineCount;
 
 			StringBuilder sb = new StringBuilder();
 			for (LineType lineType : LineType.values()) {

@@ -9,32 +9,21 @@ import util.spherical.Chirality;
 
 /**
  * A utility for calculating the smallest circle that encompasses a set of 2D
- * points.
- * 
- * The utility can use any of four algorithms for forming the circle.
- * 
- * CENTROID - The centroid of the points is used as the center of the circle with
- * the radius being the largest distance from any point to that centroid.
- * Solution is order O(n).
- * 
- * N3 - The order O(n^3) version of the N4 algorithm. It is a bit more complex
- * than N4, but is just a streamlined version of N4 and should return the same
- * circle within precision error.
- * 
- * N4 - The order O(n^4) algorithm that returns the smallest circle that will
- * contain all of the points. This will return the same solution as Nimrod
- * Megiddo's O(n) algorithm.
- * 
- * COLLAPSING_BUBBLE - An order O(n) algorithm that returns the same solution as
- * N4 approximately 80+% of the time. The remaining ~20% the algorithm returns
- * circles that are generally a fraction of percent larger than the optimal
- * solution of N4 and Megiddo's O(n) algorithm.
- * 
- * Future improvements to this class would likely include an implementation of
+ * points. The utility can use any of four algorithms for forming the circle.
+ * CENTROID - The centroid of the points is used as the center of the circle
+ * with the radius being the largest distance from any point to that centroid.
+ * Solution is order O(n). N3 - The order O(n^3) version of the N4 algorithm. It
+ * is a bit more complex than N4, but is just a streamlined version of N4 and
+ * should return the same circle within precision error. N4 - The order O(n^4)
+ * algorithm that returns the smallest circle that will contain all of the
+ * points. This will return the same solution as Nimrod Megiddo's O(n)
+ * algorithm. COLLAPSING_BUBBLE - An order O(n) algorithm that returns the same
+ * solution as N4 approximately 80+% of the time. The remaining ~20% the
+ * algorithm returns circles that are generally a fraction of percent larger
+ * than the optimal solution of N4 and Megiddo's O(n) algorithm. Future
+ * improvements to this class would likely include an implementation of
  * Megiddo's O(n) algorithm as well as a version of this utility for spherical
  * polygons.
- * 
- *
  */
 @Immutable
 public class Circle2D {
@@ -66,8 +55,8 @@ public class Circle2D {
 	}
 
 	/**
-	 * Returns true if and only if both the center and radius of this circle
-	 * contain finite values
+	 * Returns true if and only if both the center and radius of this circle contain
+	 * finite values
 	 */
 	public boolean isFinite() {
 		return Double.isFinite(radius) && center.isFinite();
@@ -92,7 +81,7 @@ public class Circle2D {
 
 	private Circle2D(Vector2D a, double radius) {
 		center = a;
-		if (radius < 0) {			
+		if (radius < 0) {
 			throw new RuntimeException("negative radius");
 		}
 		this.radius = radius;
@@ -111,8 +100,8 @@ public class Circle2D {
 	}
 
 	/**
-	 * Returns true if and only if no point is outside of this circle. An empty
-	 * list of points will return true.
+	 * Returns true if and only if no point is outside of this circle. An empty list
+	 * of points will return true.
 	 */
 	public boolean contains(List<Vector2D> points) {
 		for (Vector2D point : points) {
@@ -125,26 +114,19 @@ public class Circle2D {
 
 	/**
 	 * Constructs a {@link Circle2D} from the given points via the selected
-	 * algorithm.
-	 * 
-	 * N3 and N4 will return the smallest circle possible. N3 is O(n^3) while N4
-	 * is O(n^4).
-	 * 
-	 * CENTROID is the fastest O(n), but in practice may occasionally return a
-	 * circle that may be up to 30% larger than the optimal solution provided by
-	 * N3
-	 * 
-	 * COLLAPSING_BUBBLE a O(n) algorithm that is a bit slower than CENTROID but
-	 * returns the smallest possible circle about 80% of the time. The remaining
-	 * cases will be generally a fraction of a percent larger than optimal. This
-	 * is the current best option for most purposes.
+	 * algorithm. N3 and N4 will return the smallest circle possible. N3 is O(n^3)
+	 * while N4 is O(n^4). CENTROID is the fastest O(n), but in practice may
+	 * occasionally return a circle that may be up to 30% larger than the optimal
+	 * solution provided by N3 COLLAPSING_BUBBLE a O(n) algorithm that is a bit
+	 * slower than CENTROID but returns the smallest possible circle about 80% of
+	 * the time. The remaining cases will be generally a fraction of a percent
+	 * larger than optimal. This is the current best option for most purposes.
 	 */
 	public Circle2D(List<Vector2D> points, SolutionAlgorithm solutionAlgorithm) {
 		/*
-		 * The presumption is that the points will nearly always be distinct.
-		 * Some of the algorithms below work only when given at least three
-		 * points, even when they are not distinct. Thus we handle the first
-		 * three cases here.
+		 * The presumption is that the points will nearly always be distinct. Some of
+		 * the algorithms below work only when given at least three points, even when
+		 * they are not distinct. Thus we handle the first three cases here.
 		 */
 
 		Circle2D c;
@@ -172,7 +154,7 @@ public class Circle2D {
 			case COLLAPSING_BUBBLE:
 				c = getCollapsingBubbleSolution(points);
 				break;
-			default:				
+			default:
 				throw new RuntimeException("unhandled case " + solutionAlgorithm);
 			}
 			break;
@@ -203,10 +185,10 @@ public class Circle2D {
 	/*
 	 * Uses a centroid calculation to find a first point of contact between the
 	 * circle and the points. This circle is then collapsed by moving the center
-	 * toward the first contact point until a second contact point is
-	 * established. The center is then moved toward the midpoint between the
-	 * first two contact points until either a third contact point is found or
-	 * the center reaches the midpoint of the chord.
+	 * toward the first contact point until a second contact point is established.
+	 * The center is then moved toward the midpoint between the first two contact
+	 * points until either a third contact point is found or the center reaches the
+	 * midpoint of the chord.
 	 */
 	private Circle2D getCollapsingBubbleSolution(List<Vector2D> points) {
 
@@ -232,7 +214,7 @@ public class Circle2D {
 			Vector2D point = points.get(i);
 			double distance = cen.distanceTo(point);
 			if (distance > r) {
-				a = point;				
+				a = point;
 				r = distance;
 			}
 		}
@@ -276,8 +258,8 @@ public class Circle2D {
 		cen = m1.sub(cen).scale(minJ).add(cen);
 
 		/*
-		 * determine the radius from all the points to ensure every point will
-		 * be inside the circle
+		 * determine the radius from all the points to ensure every point will be inside
+		 * the circle
 		 */
 		r = Double.NEGATIVE_INFINITY;
 		for (int i = 0; i < points.size(); i++) {
@@ -301,7 +283,8 @@ public class Circle2D {
 		}
 
 		public Interval intersect(Interval interval) {
-			return new Interval(FastMath.max(lowerBound, interval.lowerBound), FastMath.min(upperBound, interval.upperBound));
+			return new Interval(FastMath.max(lowerBound, interval.lowerBound),
+					FastMath.min(upperBound, interval.upperBound));
 		}
 
 		public boolean isNaN() {
@@ -325,13 +308,12 @@ public class Circle2D {
 	}
 
 	/*
-	 * Returns the range of positions that could act as the center of a circle
-	 * that would have a and b on its circumference and would contain c in its
-	 * interior.
+	 * Returns the range of positions that could act as the center of a circle that
+	 * would have a and b on its circumference and would contain c in its interior.
 	 * 
-	 * The positions are returned as an interval [j,inf) or (-inf,j] where j is
-	 * the signed distance from the midpoint of the chord formed by a and b and
-	 * the right hand perpendicular bisector of that chord.
+	 * The positions are returned as an interval [j,inf) or (-inf,j] where j is the
+	 * signed distance from the midpoint of the chord formed by a and b and the
+	 * right hand perpendicular bisector of that chord.
 	 */
 	private Interval getInterval(Vector2D a, Vector2D b, Vector2D c) {
 		Interval result;
@@ -349,11 +331,10 @@ public class Circle2D {
 	}
 
 	/*
-	 * Returns the smallest circle that has a and b on its circumference where
-	 * the signed distance along the right hand perpendicular bisector of the
-	 * chord formed by a and b is a value in the given interval. This will only
-	 * be valid if the interval was formed from a and b in the getInterval()
-	 * method.
+	 * Returns the smallest circle that has a and b on its circumference where the
+	 * signed distance along the right hand perpendicular bisector of the chord
+	 * formed by a and b is a value in the given interval. This will only be valid
+	 * if the interval was formed from a and b in the getInterval() method.
 	 * 
 	 */
 	private Circle2D getCircle(Vector2D a, Vector2D b, Interval interval) {
@@ -372,8 +353,8 @@ public class Circle2D {
 
 	/*
 	 * For each pair of points, determine for each of the remaining points where
-	 * center of the smallest circle might be. The result will be the smallest
-	 * such circle.
+	 * center of the smallest circle might be. The result will be the smallest such
+	 * circle.
 	 */
 	private Circle2D getN3Solution(List<Vector2D> points) {
 		/*
@@ -381,42 +362,38 @@ public class Circle2D {
 		 */
 		Circle2D result = new Circle2D();
 		/*
-		 * Loop through each pair of points. If the pair can be on a the
-		 * circumference of a circle that contains all the points, the smallest
-		 * such circle will be produced.
+		 * Loop through each pair of points. If the pair can be on a the circumference
+		 * of a circle that contains all the points, the smallest such circle will be
+		 * produced.
 		 */
 		for (int i = 0; i < points.size() - 1; i++) {
 			for (int j = i + 1; j < points.size(); j++) {
 				/*
-				 * Assume that the full set of points that form the
-				 * perpendicular bisector of the chord formed by points i and j
-				 * will be valid centers a circle containing the remaining
-				 * points.
+				 * Assume that the full set of points that form the perpendicular bisector of
+				 * the chord formed by points i and j will be valid centers a circle containing
+				 * the remaining points.
 				 * 
 				 */
 				Interval intervalForIJ = new Interval(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
 				for (int k = 0; k < points.size(); k++) {
 					if (k != i && k != j) {
 						/*
-						 * Determine the subset of the bisector that will allow
-						 * the kth point to be in a circle that has point i and
-						 * point j on its circumference
+						 * Determine the subset of the bisector that will allow the kth point to be in a
+						 * circle that has point i and point j on its circumference
 						 */
 						Interval intervalForK = getInterval(points.get(i), points.get(j), points.get(k));
 
 						/*
-						 * Intersect this set of the points with the set so far
-						 * collected. If a NaN has occured in the interval
-						 * solution, we should ignore that solution. This
-						 * indicates that the kth point is VERY close to either
-						 * the ith or jth point.
+						 * Intersect this set of the points with the set so far collected. If a NaN has
+						 * occured in the interval solution, we should ignore that solution. This
+						 * indicates that the kth point is VERY close to either the ith or jth point.
 						 */
 						if (!intervalForK.isNaN()) {
 							intervalForIJ = intervalForIJ.intersect(intervalForK);
 						}
 						/*
-						 * If the interval for the i,j pair becomes empty, we
-						 * need not examine the remaining kth points
+						 * If the interval for the i,j pair becomes empty, we need not examine the
+						 * remaining kth points
 						 */
 						if (intervalForIJ.isEmpty()) {
 							break;
@@ -424,8 +401,7 @@ public class Circle2D {
 					}
 				}
 				/*
-				 * If the interval is not empty, then determine the center from
-				 * the interval
+				 * If the interval is not empty, then determine the center from the interval
 				 */
 				if (!intervalForIJ.isEmpty()) {
 					Circle2D circle = getCircle(points.get(i), points.get(j), intervalForIJ);
@@ -456,29 +432,27 @@ public class Circle2D {
 		Circle2D solution = new Circle2D();
 
 		/*
-		 * Any circle that contains all the points but does not have any point
-		 * on its circumference is not optimal. Similarly, if the circle contain
-		 * a single point, then the circle could be made smaller. A circle
-		 * having two of the points on its circumference may only be optimal if
-		 * those two points form a bisecting chord of the circle. The center of
-		 * such a circle will be at the midpoint of that chord. For a circle
-		 * having three or more points on its circumference, we need only to use
-		 * two distinct chords -- thus three distinct points -- to determine the
-		 * center.
+		 * Any circle that contains all the points but does not have any point on its
+		 * circumference is not optimal. Similarly, if the circle contain a single
+		 * point, then the circle could be made smaller. A circle having two of the
+		 * points on its circumference may only be optimal if those two points form a
+		 * bisecting chord of the circle. The center of such a circle will be at the
+		 * midpoint of that chord. For a circle having three or more points on its
+		 * circumference, we need only to use two distinct chords -- thus three distinct
+		 * points -- to determine the center.
 		 * 
 		 * 
-		 * We will examine each pair of points for a potential solution,
-		 * checking that the remaining points fall inside the circle formed. If
-		 * we fail to find a solution using a pairs, we must consider all
-		 * triplets of points.
+		 * We will examine each pair of points for a potential solution, checking that
+		 * the remaining points fall inside the circle formed. If we fail to find a
+		 * solution using a pairs, we must consider all triplets of points.
 		 * 
 		 */
 
 		for (int i = 0; i < points.size() - 1; i++) {
 			for (int j = i + 1; j < points.size(); j++) {
 				/*
-				 * Form a circle from the ith and jth points that will have its
-				 * center at the midpoint between them
+				 * Form a circle from the ith and jth points that will have its center at the
+				 * midpoint between them
 				 */
 				Circle2D circle = new Circle2D(points.get(i), points.get(j));
 				boolean allPointsContained = true;
@@ -496,9 +470,8 @@ public class Circle2D {
 
 		if (solution.isFinite()) {
 			/*
-			 * The original default solution was infinite. If it is now finite
-			 * then it had to have been replaced and we thus already have the
-			 * optimal solution.
+			 * The original default solution was infinite. If it is now finite then it had
+			 * to have been replaced and we thus already have the optimal solution.
 			 */
 			return solution;
 		}
@@ -507,27 +480,25 @@ public class Circle2D {
 			for (int j = i + 1; j < points.size() - 1; j++) {
 				for (int k = j + 1; k < points.size(); k++) {
 					/*
-					 * We intersect the perpendicular bisectors of the chord ab
-					 * and chord bc to find the center.
+					 * We intersect the perpendicular bisectors of the chord ab and chord bc to find
+					 * the center.
 					 * 
-					 * We are solving the equation m1 + h1*p1 = m2+ h2*p2 where
-					 * m1 and m2 are the midpoints of the chords. p1 and p2 are
-					 * the perpendicular bisectors of the chords and h1 and h2
-					 * are the scalar value needed to form the intersection of
+					 * We are solving the equation m1 + h1*p1 = m2+ h2*p2 where m1 and m2 are the
+					 * midpoints of the chords. p1 and p2 are the perpendicular bisectors of the
+					 * chords and h1 and h2 are the scalar value needed to form the intersection of
 					 * the bisectors.
 					 * 
-					 * We form d as the vector from a to b. It is perpendicular
-					 * to the bisector of chord ab.
+					 * We form d as the vector from a to b. It is perpendicular to the bisector of
+					 * chord ab.
 					 * 
-					 * Thus, (m1 + h1*p1) o d = (m2+ h2*p2) o d = center of
-					 * circle
+					 * Thus, (m1 + h1*p1) o d = (m2+ h2*p2) o d = center of circle
 					 * 
 					 * Since p1 and d are perpendicular, we have
 					 * 
 					 * m1 o d = (m2+ h2*p2) o d, so h2 = (m1-m2) o d / p2 o d
 					 * 
-					 * This allows us to solve for the center. Note that we may
-					 * drop the calculation of p1 and h1.
+					 * This allows us to solve for the center. Note that we may drop the calculation
+					 * of p1 and h1.
 					 * 
 					 */
 

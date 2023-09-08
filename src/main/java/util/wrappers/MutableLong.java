@@ -5,22 +5,24 @@ public final class MutableLong {
 
 	/**
 	 * Constructs this MutableLong from the given value
-	 */	
+	 */
 	public MutableLong(long value) {
-		
+
 		this.value = value;
 	}
+
 	/**
 	 * Constructs this MutableLong defaulted to zero
-	 */	
+	 */
 	public MutableLong() {
-				
+
 	}
+
 	/**
 	 * Increments the current value by one
 	 */
 
-	public void increment(){
+	public void increment() {
 		value++;
 	}
 
@@ -28,7 +30,7 @@ public final class MutableLong {
 	 * Increments the current value by the given value
 	 */
 
-	public void increment(long value){
+	public void increment(long value) {
 		this.value += value;
 	}
 
@@ -36,22 +38,25 @@ public final class MutableLong {
 	 * Decrements the current value by one
 	 */
 
-	public void decrement(){
+	public void decrement() {
 		value--;
 	}
+
 	/**
 	 * Decrements the current value by the given value
 	 */
 
-	public void decrement(long value){
+	public void decrement(long value) {
 		this.value -= value;
 	}
+
 	/**
 	 * Sets the current value
 	 */
 	public void setValue(long value) {
 		this.value = value;
 	}
+
 	/**
 	 * Returns the current value
 	 */
@@ -62,7 +67,6 @@ public final class MutableLong {
 
 	/**
 	 * Returns the string representation of the current value(X) in the form
-	 * 
 	 * "MutableLong [value="+ X+"]"
 	 */
 
@@ -76,7 +80,7 @@ public final class MutableLong {
 	}
 
 	/**
-	 * Returns a hash code based on the current value 
+	 * Returns a hash code based on the current value
 	 */
 	@Override
 	public int hashCode() {
@@ -87,7 +91,7 @@ public final class MutableLong {
 	}
 
 	/**
-	 * Two MutableLong objects are equal if and only if the current values are equal 
+	 * Two MutableLong objects are equal if and only if the current values are equal
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -104,7 +108,4 @@ public final class MutableLong {
 		return true;
 	}
 
-
-	
-		
 }

@@ -19,21 +19,25 @@ public final class StatusReport {
 		// Should point to src/test/java
 		final Path testPath = Paths.get(args[1]);
 
-		MetaInfoContainer metaInfoContainer = MetaInfoGenerator.builder().setSourcePath(sourcePath).setTestPath(testPath).build().execute();
-		
+		MetaInfoContainer metaInfoContainer = MetaInfoGenerator.builder().setSourcePath(sourcePath)
+				.setTestPath(testPath).build().execute();
+
 		displayWarningContainer(metaInfoContainer);
 
 	}
-	
+
 	private static void displayWarningContainer(MetaInfoContainer metaInfoContainer) {
-		for(FieldWarning fieldWarning : metaInfoContainer.getFieldWarnings()) {
-			System.out.println(fieldWarning.getWarningType().getDescription()+"\t"+fieldWarning.getField()+"\t"+fieldWarning.getDetails());
+		for (FieldWarning fieldWarning : metaInfoContainer.getFieldWarnings()) {
+			System.out.println(fieldWarning.getWarningType().getDescription() + "\t" + fieldWarning.getField() + "\t"
+					+ fieldWarning.getDetails());
 		}
-		for(MethodWarning methodWarning : metaInfoContainer.getMethodWarnings()) {
-			System.out.println(methodWarning.getWarningType().getDescription()+"\t"+methodWarning.getMethod()+"\t"+methodWarning.getDetails());
+		for (MethodWarning methodWarning : metaInfoContainer.getMethodWarnings()) {
+			System.out.println(methodWarning.getWarningType().getDescription() + "\t" + methodWarning.getMethod() + "\t"
+					+ methodWarning.getDetails());
 		}
-		for(ConstructorWarning constructorWarning : metaInfoContainer.getConstructorWarnings()) {
-			System.out.println(constructorWarning.getWarningType().getDescription()+"\t"+constructorWarning.getConstructor()+"\t"+constructorWarning.getDetails());
+		for (ConstructorWarning constructorWarning : metaInfoContainer.getConstructorWarnings()) {
+			System.out.println(constructorWarning.getWarningType().getDescription() + "\t"
+					+ constructorWarning.getConstructor() + "\t" + constructorWarning.getDetails());
 		}
 
 	}

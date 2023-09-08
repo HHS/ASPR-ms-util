@@ -16,18 +16,15 @@ import util.meta.unittestcoverage.warnings.WarningType;
 
 /**
  * A script that produces a console report shows missing unit tests.
- *
- *
  */
 public class MissingTestsReport {
 
 	/**
-	 * Runs the test and print the result to console. The first argument is the
-	 * path reference to the source folder for the production code base. The
-	 * second argument is the path reference to the source folder for the unit
-	 * test code. The third argument is optional and is a filter string that
-	 * will exclude all source classes that do not contain(case insensitive) the
-	 * filter string.
+	 * Runs the test and print the result to console. The first argument is the path
+	 * reference to the source folder for the production code base. The second
+	 * argument is the path reference to the source folder for the unit test code.
+	 * The third argument is optional and is a filter string that will exclude all
+	 * source classes that do not contain(case insensitive) the filter string.
 	 */
 	public static void run(final String[] args) {
 
@@ -37,14 +34,14 @@ public class MissingTestsReport {
 		// Should point to src/test/java
 		final Path testPath = Paths.get(args[1]);
 		MetaInfoContainer metaInfoContainer = MetaInfoGenerator.builder()//
-															.setSourcePath(sourcePath)//
-															.setTestPath(testPath)//
-															.build()//
-															.execute();//
+				.setSourcePath(sourcePath)//
+				.setTestPath(testPath)//
+				.build()//
+				.execute();//
 
 		String classNameFilter = null;
 		if (args.length > 2) {
-			classNameFilter = args[2];			
+			classNameFilter = args[2];
 		}
 
 		reportWarnings(metaInfoContainer, classNameFilter);

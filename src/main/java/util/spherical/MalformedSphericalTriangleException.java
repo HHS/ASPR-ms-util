@@ -2,7 +2,6 @@ package util.spherical;
 
 /**
  * A RuntimeException thrown when a {@link SphericalTriangle} cannot be formed.
- *
  */
 public class MalformedSphericalTriangleException extends RuntimeException {
 

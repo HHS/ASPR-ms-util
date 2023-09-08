@@ -12,35 +12,31 @@ import org.apache.commons.math3.util.FastMath;
 import util.errors.ContractException;
 
 /**
- * <P>
+ * <p>
  * Represents a multi-dimensional, generics-based, searchable tree giving
  * generally log2(N) retrieval times for stored members.
- * </P>
- * 
- * <P>
+ * </p>
+ * <p>
  * Positions in the tree are represented as arrays of double and the number of
  * dimensions in the tree are fixed by its build parameters. The tree's span in
  * the multi-dimensional space will contract and expand as needed and does so
  * with generally efficient performance. The tree specifically allows for a
  * single object to be stored at multiple locations and allows for multiple
  * objects to be stored at a single location.
- * </P>
- * 
+ * </p>
  * <p>
  * The tree supports object retrieval by:
- * <LI>all objects in the tree</LI>
- * <LI>the closest object to a given point</LI>
- * <LI>spherical and rectanguloid intersection with the tree</LI>
- * </p>
- * 
+ * <ul>
+ * <li>all objects in the tree</li>
+ * <li>the closest object to a given point</li>
+ * <li>spherical and rectanguloid intersection with the tree</li>
+ * </ul>
  * <p>
  * The tree supports object removal in O(log2(N)) time whenever it is
  * constructed with the fast removals option and O(N) without. Fast removals
  * requires significantly more memory.
  * </p>
- * 
- **/
-
+ */
 public final class DimensionTree<T> {
 
 	private final static int DEFAULTLEAFSIZE = 15;
@@ -54,8 +50,10 @@ public final class DimensionTree<T> {
 		private double[] upperBounds;
 		private int leafSize = DEFAULTLEAFSIZE;
 		private boolean fastRemovals = false;
-		
-		public Data() {}
+
+		public Data() {
+		}
+
 		public Data(Data data) {
 			lowerBounds = Arrays.copyOf(data.lowerBounds, data.lowerBounds.length);
 			upperBounds = Arrays.copyOf(data.upperBounds, data.upperBounds.length);
@@ -72,11 +70,11 @@ public final class DimensionTree<T> {
 		}
 
 		/**
-		 * Sets the fast removals policy. When fast removals is chosen, the tree
-		 * will remove objects in near constant time. This requires significant
-		 * memory resources and adds time to the storage and retrieval process.
-		 * Without fast removals, the tree must remove objects in order O(N)
-		 * time through exhaustive searching.
+		 * Sets the fast removals policy. When fast removals is chosen, the tree will
+		 * remove objects in near constant time. This requires significant memory
+		 * resources and adds time to the storage and retrieval process. Without fast
+		 * removals, the tree must remove objects in order O(N) time through exhaustive
+		 * searching.
 		 */
 		public Builder setFastRemovals(boolean fastRemovals) {
 			data.fastRemovals = fastRemovals;
@@ -84,15 +82,14 @@ public final class DimensionTree<T> {
 		}
 
 		/**
-		 * Sets the leaf size used to determine how many objects positions can
-		 * be stored in any particular node of the tree. Setting the value to a
-		 * high number such as 100 will slow down retrieval performance, but
-		 * will reduce memory overhead. Low values, such as 1 will maximize
-		 * memory use since this will cause more nodes to come into existence.
-		 * Both high and low values can slow down the tree's performance when
-		 * adding objects. Common practice is to set the value to
-		 * DEFAULTLEAFSIZE (=15), which works well in most applications.
-		 * Defaulted to 15.
+		 * Sets the leaf size used to determine how many objects positions can be stored
+		 * in any particular node of the tree. Setting the value to a high number such
+		 * as 100 will slow down retrieval performance, but will reduce memory overhead.
+		 * Low values, such as 1 will maximize memory use since this will cause more
+		 * nodes to come into existence. Both high and low values can slow down the
+		 * tree's performance when adding objects. Common practice is to set the value
+		 * to DEFAULTLEAFSIZE (=15), which works well in most applications. Defaulted to
+		 * 15.
 		 */
 
 		public Builder setLeafSize(int leafSize) {
@@ -101,10 +98,10 @@ public final class DimensionTree<T> {
 		}
 
 		/**
-		 * Sets the initial lower bounds of the tree. While the tree will expand
-		 * and contract as needed, it is often important to set the bounds to
-		 * roughly the proper magnitude to avoid some initial performance slow
-		 * downs. Lower bounds should not exceed upper bounds.
+		 * Sets the initial lower bounds of the tree. While the tree will expand and
+		 * contract as needed, it is often important to set the bounds to roughly the
+		 * proper magnitude to avoid some initial performance slow downs. Lower bounds
+		 * should not exceed upper bounds.
 		 */
 		public Builder setLowerBounds(double[] lowerBounds) {
 			data.lowerBounds = Arrays.copyOf(lowerBounds, lowerBounds.length);
@@ -112,10 +109,10 @@ public final class DimensionTree<T> {
 		}
 
 		/**
-		 * Sets the initial upper bounds of the tree. While the tree will expand
-		 * and contract as needed, it is often important to set the bounds to
-		 * roughly the proper magnitude to avoid some initial performance slow
-		 * downs. Lower bounds should not exceed upper bounds.
+		 * Sets the initial upper bounds of the tree. While the tree will expand and
+		 * contract as needed, it is often important to set the bounds to roughly the
+		 * proper magnitude to avoid some initial performance slow downs. Lower bounds
+		 * should not exceed upper bounds.
 		 */
 		public Builder setUpperBounds(double[] upperBounds) {
 			data.upperBounds = Arrays.copyOf(upperBounds, upperBounds.length);
@@ -125,23 +122,23 @@ public final class DimensionTree<T> {
 		/**
 		 * Builds a {@link DimensionTree} from the contributed parameters.
 		 * 
-		 * 
 		 * @throws ContractException
-		 *             <li>{@linkplain DimensionTreeError#NON_POSITIVE_LEAF_SIZE}
-		 *             if the selected leaf size is not positive</li>
-		 *             <li>{@linkplain DimensionTreeError#LOWER_BOUNDS_ARE_NULL}
-		 *             if the lower bounds were not contributed or were
-		 *             null</li>
-		 *             <li>{@linkplain DimensionTreeError#UPPER_BOUNDS_ARE_NULL}
-		 *             if the upper bounds were not contributed or were
-		 *             null</li>
-		 *             <li>{@linkplain DimensionTreeError#BOUNDS_MISMATCH} if
-		 *             the lower and upper bounds do not match in length</li>
-		 *             <li>{@linkplain DimensionTreeError#LOWER_BOUNDS_EXCEED_UPPER_BOUNDS}
-		 *             if any of the lower bounds exceed the corresponding upper
-		 *             bounds</li>
-		 * 
-		 * 
+		 *                               <ul>
+		 *                               <li>{@linkplain DimensionTreeError#NON_POSITIVE_LEAF_SIZE}
+		 *                               if the selected leaf size is not positive</li>
+		 *                               <li>{@linkplain DimensionTreeError#LOWER_BOUNDS_ARE_NULL}
+		 *                               if the lower bounds were not contributed or
+		 *                               were null</li>
+		 *                               <li>{@linkplain DimensionTreeError#UPPER_BOUNDS_ARE_NULL}
+		 *                               if the upper bounds were not contributed or
+		 *                               were null</li>
+		 *                               <li>{@linkplain DimensionTreeError#BOUNDS_MISMATCH}
+		 *                               if the lower and upper bounds do not match in
+		 *                               length</li>
+		 *                               <li>{@linkplain DimensionTreeError#LOWER_BOUNDS_EXCEED_UPPER_BOUNDS}
+		 *                               if any of the lower bounds exceed the
+		 *                               corresponding upper bounds</li>
+		 *                               </ul>
 		 */
 		public <T> DimensionTree<T> build() {
 			return new DimensionTree<>(new Data(data));
@@ -235,9 +232,9 @@ public final class DimensionTree<T> {
 	}
 
 	/*
-	 * Returns the child that should contain the position. It is assumed that
-	 * the position is contained in this node's bounds. If there is no such
-	 * child, one is created and placed in the appropriate slot of the children.
+	 * Returns the child that should contain the position. It is assumed that the
+	 * position is contained in this node's bounds. If there is no such child, one
+	 * is created and placed in the appropriate slot of the children.
 	 */
 	private Node<T> getChild(Node<T> node, double[] position) {
 		int childIndex = node.getChildIndex(position);
@@ -270,8 +267,8 @@ public final class DimensionTree<T> {
 	}
 
 	/*
-	 * Rather than have the root node recursively push the new member into the
-	 * tree, we elect to avoid stack loading to save some execution time.
+	 * Rather than have the root node recursively push the new member into the tree,
+	 * we elect to avoid stack loading to save some execution time.
 	 */
 	@SuppressWarnings("unchecked")
 	private Group<T> deep_add(double[] position, T t) {
@@ -332,15 +329,17 @@ public final class DimensionTree<T> {
 	 * already associated with the position. Returns false otherwise.
 	 * 
 	 * @throws RuntimeException
-	 *             <li>if the position is null
-	 *             <li>if the member is null
-	 *             <li>if the position does not match the dimension of this
-	 *             {@link DimensionTree}
+	 *                              <ul>
+	 *                              <li>if the position is null</li>
+	 *                              <li>if the member is null</li>
+	 *                              <li>if the position does not match the dimension
+	 *                              of this {@link DimensionTree}</li>
+	 *                              </ul>
 	 */
 	public boolean add(double[] position, T member) {
 
 		if (position == null) {
-			
+
 			throw new RuntimeException("null position");
 		}
 		if (position.length != commonState.dimension) {
@@ -367,7 +366,6 @@ public final class DimensionTree<T> {
 	/**
 	 * Return true if and only if the given member is contained in this
 	 * {@link DimensionTree}
-	 * 
 	 */
 	public boolean contains(T member) {
 		if (groupMap != null) {
@@ -394,9 +392,8 @@ public final class DimensionTree<T> {
 	}
 
 	/**
-	 * Retrieves all of the objects stored in this {@link DimensionTree}. This
-	 * may include duplicates if any object is stored in multiple locations.
-	 * 
+	 * Retrieves all of the objects stored in this {@link DimensionTree}. This may
+	 * include duplicates if any object is stored in multiple locations.
 	 */
 
 	public List<T> getAll() {
@@ -410,14 +407,13 @@ public final class DimensionTree<T> {
 	}
 
 	/**
-	 * Retrieves all of the objects stored in the tree within the
-	 * IDimensionalShape. The shape itself need not lie fully inside the tree's
-	 * volume, but must be well formed and agree with the tree's dimension.
+	 * Retrieves all of the objects stored in the tree within the IDimensionalShape.
+	 * The shape itself need not lie fully inside the tree's volume, but must be
+	 * well formed and agree with the tree's dimension.
 	 * 
-	 * @param dimensionalShape
-	 *            a non-null IDimensionalShape implementation
-	 * @return an ArrayList of Object containing all unique objects within
-	 *         shape's intersection with the tree.
+	 * @param dimensionalShape a non-null IDimensionalShape implementation
+	 * @return an ArrayList of Object containing all unique objects within shape's
+	 *         intersection with the tree.
 	 */
 	private List<T> getObjectsInDimensionalShape(Shape dimensionalShape) {
 		List<T> result = new ArrayList<>();
@@ -426,23 +422,24 @@ public final class DimensionTree<T> {
 	}
 
 	/**
-	 * Retrieves all of the objects within the rectanguloid formed by the lower
-	 * and upper bounds. This may include duplicates if any object is stored in
-	 * multiple locations.The rectanguloid itself need not lie fully inside this
-	 * tree's volume. The lengths of the lower and upper bound arrays must agree
-	 * with the dimension of the tree. For each dimension, lowerBounds[i] must
-	 * not exceed upperBounds[i].
+	 * Retrieves all of the objects within the rectanguloid formed by the lower and
+	 * upper bounds. This may include duplicates if any object is stored in multiple
+	 * locations.The rectanguloid itself need not lie fully inside this tree's
+	 * volume. The lengths of the lower and upper bound arrays must agree with the
+	 * dimension of the tree. For each dimension, lowerBounds[i] must not exceed
+	 * upperBounds[i].
 	 * 
-	 *
 	 * @throws RuntimeException
-	 *             <li>if the lower bounds are null<\li>
-	 *             <li>if the upper bounds are null<\li>
-	 *             <li>if the length of the upper bounds does not match the
-	 *             dimension of this tree<\li>
-	 *             <li>if the length of the lower bounds does not match the
-	 *             dimension of this tree<\li>
-	 *             <li>if the values of the lower bounds exceed the
-	 *             corresponding values of the upper bounds<\li>
+	 *                              <ul>
+	 *                              <li>if the lower bounds are null</li>
+	 *                              <li>if the upper bounds are null</li>
+	 *                              <li>if the length of the upper bounds does not
+	 *                              match the dimension of this tree</li>
+	 *                              <li>if the length of the lower bounds does not
+	 *                              match the dimension of this tree</li>
+	 *                              <li>if the values of the lower bounds exceed the
+	 *                              corresponding values of the upper bounds</li>
+	 *                              </ul>
 	 */
 
 	public List<T> getMembersInRectanguloid(double[] lowerBounds, double[] upperBounds) {
@@ -467,20 +464,18 @@ public final class DimensionTree<T> {
 	}
 
 	/**
-	 * Retrieves all of the objects stored in the tree within the radius
-	 * distance about the position. This may include duplicates if any object is
-	 * stored in multiple locations. The position itself need not lie inside
-	 * this tree's volume.
+	 * Retrieves all of the objects stored in the tree within the radius distance
+	 * about the position. This may include duplicates if any object is stored in
+	 * multiple locations. The position itself need not lie inside this tree's
+	 * volume.
 	 * 
-	 *
-	 *
-	 * 
-	 * @throw {@link RuntimeException}
-	 *        <li>if the radius is negative<\li>
-	 *        <li>if the position is null<\li>
-	 *        <li>if the position's length does not match the dimension of this
-	 *        tree
-	 *
+	 * @throws RuntimeException
+	 *                              <ul>
+	 *                              <li>if the radius is negative</li>
+	 *                              <li>if the position is null</li>
+	 *                              <li>if the position's length does not match the
+	 *                              dimension of this tree</li>
+	 *                              </ul>
 	 */
 	public List<T> getMembersInSphere(double radius, double[] position) {
 		if (position == null) {
@@ -504,9 +499,9 @@ public final class DimensionTree<T> {
 	 */
 	public boolean remove(T member) {
 		/*
-		 * First, get the list of member groups that contain the member. This
-		 * can come from the nodes via a brute force walk of the entire tree or
-		 * from a map of T to List<MemberGroup>
+		 * First, get the list of member groups that contain the member. This can come
+		 * from the nodes via a brute force walk of the entire tree or from a map of T
+		 * to List<MemberGroup>
 		 */
 		List<Group<T>> groups;
 		if (groupMap == null) {
@@ -517,18 +512,18 @@ public final class DimensionTree<T> {
 		}
 
 		/*
-		 * For each member group we will remove the member. For those member
-		 * groups where the member group is now empty, we remove the member
-		 * group from its node and cascade member group counts upward. As we
-		 * move upward toward the root, we record each node that will need to
-		 * collapse, replacing this reference as we move up. Any node that
-		 * reaches a member count of zero will be removed from its parent.
+		 * For each member group we will remove the member. For those member groups
+		 * where the member group is now empty, we remove the member group from its node
+		 * and cascade member group counts upward. As we move upward toward the root, we
+		 * record each node that will need to collapse, replacing this reference as we
+		 * move up. Any node that reaches a member count of zero will be removed from
+		 * its parent.
 		 * 
-		 * If we have a node that has been selected to collapse, we command the
-		 * node to collapse.
+		 * If we have a node that has been selected to collapse, we command the node to
+		 * collapse.
 		 * 
-		 * We next walk downward from root looking to move the root downward
-		 * into the tree?
+		 * We next walk downward from root looking to move the root downward into the
+		 * tree?
 		 */
 
 		boolean result = groups != null && !groups.isEmpty();
@@ -543,8 +538,7 @@ public final class DimensionTree<T> {
 						// reduce the group count
 						node.groupCount--;
 						/*
-						 * If the node is now empty and has a parent, remove it
-						 * from its parent
+						 * If the node is now empty and has a parent, remove it from its parent
 						 */
 						if (node.groupCount == 0) {
 							if (node.parent != null) {
@@ -552,8 +546,7 @@ public final class DimensionTree<T> {
 							}
 						}
 						/*
-						 * Don't select a node to collapse if it is being thrown
-						 * out of the tree
+						 * Don't select a node to collapse if it is being thrown out of the tree
 						 */
 						if (node.groupCount != 0 && node.groupCount <= commonState.leafSize) {
 							collapseNode = node;
@@ -580,7 +573,6 @@ public final class DimensionTree<T> {
 	// return root.toString();
 	// }
 
-	
 	/*
 	 * Returns true if and only if sqrt(a) + sqrt(b) < sqrt(c). Used in distance
 	 * comparisons where square distances are known and calculating square roots
@@ -588,9 +580,9 @@ public final class DimensionTree<T> {
 	 */
 	private static boolean squareRootInequality(double aSquare, double bSquare, double cSquare) {
 		/*
-		 * We want to know when a+b<c. However, calculating these values would
-		 * require using square roots and we can achieve better performance by
-		 * only using square values.
+		 * We want to know when a+b<c. However, calculating these values would require
+		 * using square roots and we can achieve better performance by only using square
+		 * values.
 		 * 
 		 * a+b < c becomes...
 		 * 
@@ -598,13 +590,12 @@ public final class DimensionTree<T> {
 		 * 
 		 * 2ab < c^2 - a^2 - b^2 becomes...
 		 * 
-		 * 4 a^2 b^2 < (c^2 - a^2 - b^2)^2 with the caveat that c^2 - a^2 - b^2
-		 * > 0
+		 * 4 a^2 b^2 < (c^2 - a^2 - b^2)^2 with the caveat that c^2 - a^2 - b^2 > 0
 		 */
 		double d = cSquare - aSquare - bSquare;
 		return d >= 0 && 4 * aSquare * bSquare < d * d;
 	}
-	
+
 	/*
 	 * The common parameters shared by all nodes that takes up less memory than
 	 * storing these values on each node
@@ -626,7 +617,7 @@ public final class DimensionTree<T> {
 		}
 
 	}
-	
+
 	/*
 	 * Represents a single node the in dimension tree.
 	 * 
@@ -705,17 +696,18 @@ public final class DimensionTree<T> {
 		}
 
 		/*
-		 * This method drill down to the node that that either contains the position
-		 * or comes fairly close. We use this to quickly reduce the volume around
-		 * the position where a solution might be found. If a solution is found this
-		 * way, there is no guarantee that it will be the best solution, but it very
-		 * often will be very close.
+		 * This method drill down to the node that that either contains the position or
+		 * comes fairly close. We use this to quickly reduce the volume around the
+		 * position where a solution might be found. If a solution is found this way,
+		 * there is no guarantee that it will be the best solution, but it very often
+		 * will be very close.
 		 */
 		private void findInitialNearestMemberSolution(NearestMemberQuery<T> nearestMemberData) {
 			if (children == null) {
 				for (Group<T> memberGroup : groups) {
 					double squareDistance = memberGroup.squareDistanceTo(nearestMemberData.position);
-					if ((squareDistance <= nearestMemberData.bestSquareDistance) || (nearestMemberData.bestSquareDistance < 0)) {
+					if ((squareDistance <= nearestMemberData.bestSquareDistance)
+							|| (nearestMemberData.bestSquareDistance < 0)) {
 						nearestMemberData.bestSquareDistance = squareDistance;
 						nearestMemberData.closestObject = memberGroup.members.get(0);
 					}
@@ -741,18 +733,17 @@ public final class DimensionTree<T> {
 		}
 
 		/*
-		 * This method searches the entire tree for a solution and tries to
-		 * terminate branching quickly. It depends on first having found a
-		 * reasonable near-solution, otherwise it will walk the entire tree.
+		 * This method searches the entire tree for a solution and tries to terminate
+		 * branching quickly. It depends on first having found a reasonable
+		 * near-solution, otherwise it will walk the entire tree.
 		 */
 		private void findBetterNearestMemberSolution(NearestMemberQuery<T> nearestMemberData) {
 			/*
-			 * We try to exclude any calculations if this node does not overlap the
-			 * sphere given by the current solution. We do this by comparing the
-			 * radius of this node, the radius of the current solution and the
-			 * distance to the query position. We will sometimes fail to reject
-			 * further work, but this will reject most of the potential wasted
-			 * comparisons.
+			 * We try to exclude any calculations if this node does not overlap the sphere
+			 * given by the current solution. We do this by comparing the radius of this
+			 * node, the radius of the current solution and the distance to the query
+			 * position. We will sometimes fail to reject further work, but this will reject
+			 * most of the potential wasted comparisons.
 			 *
 			 */
 
@@ -763,14 +754,16 @@ public final class DimensionTree<T> {
 				squareDistanceToPositionFromNodeCenter += delta;
 			}
 
-			if (squareRootInequality(squareRadius, nearestMemberData.bestSquareDistance, squareDistanceToPositionFromNodeCenter)) {
+			if (squareRootInequality(squareRadius, nearestMemberData.bestSquareDistance,
+					squareDistanceToPositionFromNodeCenter)) {
 				return;
 			}
 
 			if (children == null) {
 				for (Group<T> memberGroup : groups) {
 					double squareDistance = memberGroup.squareDistanceTo(nearestMemberData.position);
-					if ((squareDistance <= nearestMemberData.bestSquareDistance) || (nearestMemberData.bestSquareDistance < 0)) {
+					if ((squareDistance <= nearestMemberData.bestSquareDistance)
+							|| (nearestMemberData.bestSquareDistance < 0)) {
 						nearestMemberData.bestSquareDistance = squareDistance;
 						nearestMemberData.closestObject = memberGroup.members.get(0);
 					}
@@ -826,17 +819,17 @@ public final class DimensionTree<T> {
 					}
 				}
 				return;
-			default:			
+			default:
 				throw new RuntimeException("unhandled shape intersection type " + shapeIntersectionType);
 			}
 		}
 
 		public int getChildIndex(double[] position) {
 			/*
-			 * Rather than store an array of booleans for our analysis of child
-			 * bounds, we will use an index value that will be composed and then
-			 * decomposed to eliminate the cost of array construction and garbage
-			 * collection which has been shown in testing to be fairly expensive.
+			 * Rather than store an array of booleans for our analysis of child bounds, we
+			 * will use an index value that will be composed and then decomposed to
+			 * eliminate the cost of array construction and garbage collection which has
+			 * been shown in testing to be fairly expensive.
 			 */
 			int result = 0;
 			for (int i = 0; i < commonState.dimension; i++) {
@@ -902,7 +895,7 @@ public final class DimensionTree<T> {
 		}
 
 	}
-	
+
 	/*
 	 * Represent the members that are associated with a single position. Rather than
 	 * storing members in the leaf nodes, we store member groups. Each member group
@@ -951,7 +944,7 @@ public final class DimensionTree<T> {
 		}
 
 	}
-	
+
 	/*
 	 * Represents a rectangular box in the dimension of the tree.
 	 * 
@@ -999,7 +992,8 @@ public final class DimensionTree<T> {
 					return ShapeIntersectionType.NONE;
 				}
 
-				if ((position[i] + bounds[i] > node.upperBounds[i]) && (position[i] - bounds[i] < node.lowerBounds[i])) {
+				if ((position[i] + bounds[i] > node.upperBounds[i])
+						&& (position[i] - bounds[i] < node.lowerBounds[i])) {
 					containmentCount++;
 				}
 			}
@@ -1030,8 +1024,8 @@ public final class DimensionTree<T> {
 
 		/**
 		 * Returns a ShapeIntersectionType that is the shapes determination of the
-		 * overlap of the shape and the given node. Used to streamline the process
-		 * of gathering members from nodes during intersection tests.
+		 * overlap of the shape and the given node. Used to streamline the process of
+		 * gathering members from nodes during intersection tests.
 		 */
 		public <T> ShapeIntersectionType intersectsBox(Node<T> node);
 	}
@@ -1137,17 +1131,16 @@ public final class DimensionTree<T> {
 		NONE,
 
 		/**
-		 * The shape may intersect the node. Members of the node will require
-		 * further comparison to the shape.
+		 * The shape may intersect the node. Members of the node will require further
+		 * comparison to the shape.
 		 */
 		PARTIAL,
 
 		/**
-		 * The shape fully contains the node and all members of the node can be
-		 * gathered without further comparison to the shape.
+		 * The shape fully contains the node and all members of the node can be gathered
+		 * without further comparison to the shape.
 		 */
 		COMPLETE;
 	}
-
 
 }

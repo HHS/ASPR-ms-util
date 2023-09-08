@@ -7,44 +7,39 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import util.graph.Graph;
+import util.graph.GraphDepthEvaluator;
+import util.graph.Graphs;
 import util.meta.packagedependency.PackageDependencyData;
 import util.meta.packagedependency.PackageDependencyData.PackageDependencyDetails;
 import util.meta.packagedependency.PackageDependencyData.PackageRef;
 import util.meta.packagedependency.PackageDependencyDataGenerator;
-import util.graph.Graph;
-import util.graph.GraphDepthEvaluator;
-import util.graph.Graphs;
 
 /**
  * A console report detailing java package level dependencies across multiple
  * directories. Inputs consist of 1) directories and 2) package names. The
  * package names do not need to be complete. For example, if alpha.beta is a
  * full package name, any of the following will work: alph, alpha, alpha.,
- * alpha.bet, etc.
- * 
- * Every java class in the covered directories is scanned and the import
- * statements of the class are analyzed. Wildcard characters in the import
- * statements are tolerated, but will result in a warning that the analysis may
- * be invalid. Each import statement is assumed to occupy a single line and each
- * java file should have a package statement.
- * 
- * Classes are mapped to the first package name that matches their actual
- * package name. Thus class to class dependencies are mapped to package to
- * package dependencies. Each package to package dependency retains the list of
- * classes that formed that dependency.
- * 
- * The ouput consists of:
- * <li>a summary section that lists the inputs
+ * alpha.bet, etc. Every java class in the covered directories is scanned and
+ * the import statements of the class are analyzed. Wildcard characters in the
+ * import statements are tolerated, but will result in a warning that the
+ * analysis may be invalid. Each import statement is assumed to occupy a single
+ * line and each java file should have a package statement. Classes are mapped
+ * to the first package name that matches their actual package name. Thus class
+ * to class dependencies are mapped to package to package dependencies. Each
+ * package to package dependency retains the list of classes that formed that
+ * dependency. The ouput consists of:
+ * <ul>
+ * <li>a summary section that lists the inputs</li>
  * <li>a listing of classes containing wildcard characters in their import
- * statement
- * <li>a listing of classes that have no package statements
+ * statement</li>
+ * <li>a listing of classes that have no package statements</li>
  * <li>a listing of classes that have no corresponding package name in the
- * inputs statements
+ * inputs statements</li>
  * <li>either a listing of any circular package dependencies found or a listinge
- * of the packages in DAG order
- * <li>a listing of the package dependencies
- *
- * 
+ * of the packages in DAG order</li>
+ * <li>a listing of the package dependencies</li>
+ * </ul>
  */
 public class PackageDependencyReport {
 
@@ -155,8 +150,8 @@ public class PackageDependencyReport {
 				break;
 			case HELP:
 				helpCommandPresent = true;
-				if(!commandBlock.arguments.isEmpty()) {
-					throw new IllegalArgumentException(commandBlock.command.name()+" cannot accept arguments");
+				if (!commandBlock.arguments.isEmpty()) {
+					throw new IllegalArgumentException(commandBlock.command.name() + " cannot accept arguments");
 				}
 				break;
 			case PACKAGE_NAME:
@@ -166,14 +161,14 @@ public class PackageDependencyReport {
 				break;
 			case PRINT_GRAPH:
 				printGraph = true;
-				if(!commandBlock.arguments.isEmpty()) {
-					throw new IllegalArgumentException(commandBlock.command.name()+" cannot accept arguments");
+				if (!commandBlock.arguments.isEmpty()) {
+					throw new IllegalArgumentException(commandBlock.command.name() + " cannot accept arguments");
 				}
 				break;
 			case PRINT_FOUND_PACKAGE_NAMES:
 				printFoundPackageNames = true;
-				if(!commandBlock.arguments.isEmpty()) {
-					throw new IllegalArgumentException(commandBlock.command.name()+" cannot accept arguments");
+				if (!commandBlock.arguments.isEmpty()) {
+					throw new IllegalArgumentException(commandBlock.command.name() + " cannot accept arguments");
 				}
 				break;
 			default:
@@ -230,7 +225,8 @@ public class PackageDependencyReport {
 
 		System.out.println("package" + "\t" + "dependency" + "\t" + "class");
 
-		Graph<PackageRef, PackageDependencyDetails> packageDependencyGraph = packageDependencyData.getPackageDependencyGraph();
+		Graph<PackageRef, PackageDependencyDetails> packageDependencyGraph = packageDependencyData
+				.getPackageDependencyGraph();
 		for (PackageDependencyDetails edge : packageDependencyGraph.getEdges()) {
 			PackageRef originNode = packageDependencyGraph.getOriginNode(edge);
 			PackageRef destinationNode = packageDependencyGraph.getDestinationNode(edge);
@@ -244,8 +240,10 @@ public class PackageDependencyReport {
 	private static void reportCircularity(PackageDependencyData packageDependencyData) {
 		System.out.println();
 
-		Graph<PackageRef, PackageDependencyDetails> packageDependencyGraph = packageDependencyData.getPackageDependencyGraph();
-		Optional<GraphDepthEvaluator<PackageRef>> optional = GraphDepthEvaluator.getGraphDepthEvaluator(packageDependencyGraph);
+		Graph<PackageRef, PackageDependencyDetails> packageDependencyGraph = packageDependencyData
+				.getPackageDependencyGraph();
+		Optional<GraphDepthEvaluator<PackageRef>> optional = GraphDepthEvaluator
+				.getGraphDepthEvaluator(packageDependencyGraph);
 
 		if (!optional.isPresent()) {
 			System.out.println("Circular dependencies were found:");
@@ -294,7 +292,8 @@ public class PackageDependencyReport {
 
 			System.out.println(sb);
 		} else {
-			System.out.println("No circular package dependencies were found.  The packages form an acyclic directed graph with the following levels.");
+			System.out.println(
+					"No circular package dependencies were found.  The packages form an acyclic directed graph with the following levels.");
 			System.out.println();
 			GraphDepthEvaluator<PackageRef> graphDepthEvaluator = optional.get();
 			int maxDepth = graphDepthEvaluator.getMaxDepth();
@@ -311,7 +310,8 @@ public class PackageDependencyReport {
 		Set<String> wildcardClasses = packageDependencyData.getWildcardClasses();
 		if (!wildcardClasses.isEmpty()) {
 
-			System.out.println("The following classes contain wildcard characters in their import statements.  All other findings are potentially invalid.");
+			System.out.println(
+					"The following classes contain wildcard characters in their import statements.  All other findings are potentially invalid.");
 
 			for (String wildcardClass : wildcardClasses) {
 				System.out.println(wildcardClass);
@@ -322,7 +322,8 @@ public class PackageDependencyReport {
 	private static void reportPackagelessClasses(PackageDependencyData packageDependencyData) {
 		Set<String> packagelessClasses = packageDependencyData.getPackagelessClasses();
 		if (!packagelessClasses.isEmpty()) {
-			System.out.println("The following classes do not contain package statements.  All other findings are potentially invalid.");
+			System.out.println(
+					"The following classes do not contain package statements.  All other findings are potentially invalid.");
 
 			for (String wildcardClass : packagelessClasses) {
 				System.out.println(wildcardClass);
@@ -333,7 +334,8 @@ public class PackageDependencyReport {
 	private static void reportUncoveredClasses(PackageDependencyData packageDependencyData) {
 		Set<String> uncoveredClasses = packageDependencyData.getUncoveredClasses();
 		if (!uncoveredClasses.isEmpty()) {
-			System.out.println("The following classes are not covered in the analysis. They were encounted in the contributed directories, but do not match any of the contributed package names.");
+			System.out.println(
+					"The following classes are not covered in the analysis. They were encounted in the contributed directories, but do not match any of the contributed package names.");
 
 			for (String wildcardClass : uncoveredClasses) {
 				System.out.println(wildcardClass);

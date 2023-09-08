@@ -6,8 +6,6 @@ import util.spherical.Chirality;
 
 /**
  * A mutable 2-dimensional vector class supporting common 2D transforms.
- *
- *
  */
 public final class MutableVector2D {
 
@@ -62,8 +60,7 @@ public final class MutableVector2D {
 	/**
 	 * Constructs a {@link MutableVector2D} from another {@link MutableVector2D}
 	 *
-	 * @throws NullPointerException
-	 *             <li>if v is null
+	 * @throws NullPointerException if v is null
 	 */
 	public MutableVector2D(final MutableVector2D v) {
 		x = v.getX();
@@ -73,8 +70,7 @@ public final class MutableVector2D {
 	/**
 	 * Constructs a {@link MutableVector2D} from another {@link Vector2D}
 	 *
-	 * @throws NullPointerException
-	 *             <li>if v is null
+	 * @throws NullPointerException if v is null
 	 */
 	public MutableVector2D(final Vector2D v) {
 		x = v.getX();
@@ -91,11 +87,10 @@ public final class MutableVector2D {
 	}
 
 	/**
-	 * Adds the x and y of the given {@link MutableVector2D} to the
-	 * corresponding values of this {@link MutableVector2D}
+	 * Adds the x and y of the given {@link MutableVector2D} to the corresponding
+	 * values of this {@link MutableVector2D}
 	 *
-	 * @throws NullPointerException
-	 *             <li>if v is null
+	 * @throws NullPointerException if v is null
 	 */
 	public void add(final MutableVector2D v) {
 		x += v.getX();
@@ -103,11 +98,10 @@ public final class MutableVector2D {
 	}
 
 	/**
-	 * Adds the x and y of the given {@link MutableVector2D} to the
-	 * corresponding values of this {@link Vector2D}
+	 * Adds the x and y of the given {@link MutableVector2D} to the corresponding
+	 * values of this {@link Vector2D}
 	 *
-	 * @throws NullPointerException
-	 *             <li>if v is null
+	 * @throws NullPointerException if v is null
 	 */
 	public void add(final Vector2D v) {
 		x += v.getX();
@@ -116,11 +110,8 @@ public final class MutableVector2D {
 
 	/**
 	 * Add the given {@link MutableVector2D} as scaled by the scalar to this
-	 * {@link MutableVector2D}
-	 *
-	 * For example, if v=(5,7) and w = (2,3), then v.addScaled(w,10) would yield
-	 * v=(25,37)
-	 *
+	 * {@link MutableVector2D} For example, if v=(5,7) and w = (2,3), then
+	 * v.addScaled(w,10) would yield v=(25,37)
 	 */
 	public void addScaled(final MutableVector2D v, final double scalar) {
 		x += v.getX() * scalar;
@@ -129,11 +120,8 @@ public final class MutableVector2D {
 
 	/**
 	 * Add the given {@link Vector2D} as scaled by the scalar to this
-	 * {@link MutableVector2D}
-	 *
-	 * For example, if v=(5,7) and w = (2,3), then v.addScaled(w,10) would yield
-	 * v=(25,37)
-	 *
+	 * {@link MutableVector2D} For example, if v=(5,7) and w = (2,3), then
+	 * v.addScaled(w,10) would yield v=(25,37)
 	 */
 	public void addScaled(final Vector2D v, final double scalar) {
 		x += v.getX() * scalar;
@@ -186,9 +174,9 @@ public final class MutableVector2D {
 	}
 
 	/**
-	 * Returns 1 if the acute angle from this {@link MutableVector2D} to the
-	 * given {@link MutableVector2D} is clockwise and -1 if it is counter
-	 * clockwise. Returns 0 if the angle is zero.
+	 * Returns 1 if the acute angle from this {@link MutableVector2D} to the given
+	 * {@link MutableVector2D} is clockwise and -1 if it is counter clockwise.
+	 * Returns 0 if the angle is zero.
 	 */
 	public int cross(final MutableVector2D v) {
 		final double direction = (x * v.y) - (v.x * y);
@@ -202,9 +190,9 @@ public final class MutableVector2D {
 	}
 
 	/**
-	 * Returns 1 if the acute angle from this {@link MutableVector2D} to the
-	 * given {@link Vector2D} is clockwise and -1 if it is counter clockwise.
-	 * Returns 0 if the angle is zero.
+	 * Returns 1 if the acute angle from this {@link MutableVector2D} to the given
+	 * {@link Vector2D} is clockwise and -1 if it is counter clockwise. Returns 0 if
+	 * the angle is zero.
 	 */
 	public int cross(final Vector2D v) {
 		final double direction = (x * v.getY()) - (v.getX() * y);
@@ -250,10 +238,10 @@ public final class MutableVector2D {
 	}
 
 	/**
-	 * Equals contract of {@link MutableVector2D}. Two vectors a and b are equal
-	 * if their x and y values convert to long bits in the same way. An
-	 * exception is made for -0, which is calculated as if its long bits were
-	 * representing +0. This is done to give a more intuitive meaning of equals.
+	 * Equals contract of {@link MutableVector2D}. Two vectors a and b are equal if
+	 * their x and y values convert to long bits in the same way. An exception is
+	 * made for -0, which is calculated as if its long bits were representing +0.
+	 * This is done to give a more intuitive meaning of equals.
 	 */
 	@Override
 	public boolean equals(final Object obj) {
@@ -285,7 +273,7 @@ public final class MutableVector2D {
 			return x;
 		case 1:
 			return y;
-		default:			
+		default:
 			throw new RuntimeException("index out of bounds " + index);
 		}
 	}
@@ -320,27 +308,25 @@ public final class MutableVector2D {
 	}
 
 	/**
-	 * Returns <tt>true</tt> if any of the vector components are positive or
-	 * negative infinity.
+	 * Returns {@code true} if any of the vector components are positive or negative
+	 * infinity.
 	 *
-	 * @return <tt>true</tt> if the vector is infinite.
+	 * @return {@code true} if the vector is infinite.
 	 */
 	public boolean isInfinite() {
 		return Double.isInfinite(x) || Double.isInfinite(y);
 	}
 
 	/**
-	 * Returns <tt>true</tt> if any of the vector components are NaN 'Not a
-	 * Number'.
+	 * Returns {@code true} if any of the vector components are NaN 'Not a Number'.
 	 */
 	public boolean isNaN() {
 		return Double.isNaN(x) || Double.isNaN(y);
 	}
 
 	/**
-	 * Returns true if and only if this {@link MutableVector2D} is finite and
-	 * has a length within {@link MutableVector2D#NORMAL_LENGTH_TOLERANCE} of
-	 * unit length.
+	 * Returns true if and only if this {@link MutableVector2D} is finite and has a
+	 * length within {@link MutableVector2D#NORMAL_LENGTH_TOLERANCE} of unit length.
 	 */
 	public boolean isNormal() {
 		final double len = length();
@@ -348,8 +334,8 @@ public final class MutableVector2D {
 	}
 
 	/**
-	 * Returns <tt>true</tt> if any of the vector components are not NaN (i.e.
-	 * 'Not a Number') and not infinite.
+	 * Returns {@code true} if any of the vector components are not NaN (i.e. 'Not a
+	 * Number') and not infinite.
 	 */
 	public boolean isFinite() {
 		return !isNaN() && !isInfinite();
@@ -389,8 +375,8 @@ public final class MutableVector2D {
 	}
 
 	/**
-	 * Reverses the direction of the this Vector2D. This is equivalent to
-	 * scaling by -1.
+	 * Reverses the direction of the this Vector2D. This is equivalent to scaling by
+	 * -1.
 	 */
 	public void reverse() {
 		x *= -1;
@@ -398,8 +384,8 @@ public final class MutableVector2D {
 	}
 
 	/**
-	 * Rotates this {@link MutableVector2D} about the origin by the given angle
-	 * in radians in a counter clockwise(right handed) manner.
+	 * Rotates this {@link MutableVector2D} about the origin by the given angle in
+	 * radians in a counter clockwise(right handed) manner.
 	 */
 	public void rotate(final double theta) {
 		final MutableVector2D v = new MutableVector2D(-y, x);
@@ -409,16 +395,16 @@ public final class MutableVector2D {
 	}
 
 	/**
-	 * Rotates this {@link MutableVector2D} about the origin through the acute
-	 * angle to the given {@link MutableVector2D} by the given angle in radians.
+	 * Rotates this {@link MutableVector2D} about the origin through the acute angle
+	 * to the given {@link MutableVector2D} by the given angle in radians.
 	 */
 	public void rotateToward(final MutableVector2D v, final double theta) {
 		rotate(cross(v) * theta);
 	}
 
 	/**
-	 * Rotates this {@link MutableVector2D} about the origin through the acute
-	 * angle to the given {@link Vector2D} by the given angle in radians.
+	 * Rotates this {@link MutableVector2D} about the origin through the acute angle
+	 * to the given {@link Vector2D} by the given angle in radians.
 	 */
 	public void rotateToward(final Vector2D v, final double theta) {
 		rotate(cross(v) * theta);
@@ -482,8 +468,7 @@ public final class MutableVector2D {
 	 * Subtracts the x and y of the given {@link MutableVector2D} from the
 	 * corresponding values of this {@link MutableVector2D}
 	 *
-	 * @throws NullPointerException
-	 *             <li>if v is null
+	 * @throws NullPointerException if v is null
 	 */
 	public void sub(final MutableVector2D v) {
 		x -= v.x;
@@ -494,8 +479,7 @@ public final class MutableVector2D {
 	 * Subtracts the x and y of the given {@link MutableVector2D} from the
 	 * corresponding values of this {@link Vector2D}
 	 *
-	 * @throws NullPointerException
-	 *             <li>if v is null
+	 * @throws NullPointerException if v is null
 	 */
 	public void sub(final Vector2D v) {
 		x -= v.getX();
@@ -510,9 +494,7 @@ public final class MutableVector2D {
 	}
 
 	/**
-	 * Returns the string representation in the form
-	 *
-	 * Vector2D [x=2.57,y=-34.1]
+	 * Returns the string representation in the form Vector2D [x=2.57,y=-34.1]
 	 */
 	@Override
 	public String toString() {
@@ -521,7 +503,7 @@ public final class MutableVector2D {
 
 	/**
 	 * Sets each component of this {@link MutableVector2D} to zero. <b>Note:</b>
-	 * This is the same as calling <tt>v.assign(0,0)</tt>.
+	 * This is the same as calling {@code v.assign(0,0)}.
 	 */
 	public void zero() {
 		x = 0;
@@ -531,8 +513,8 @@ public final class MutableVector2D {
 	public final static double PERPENDICULAR_ANGLE_TOLERANCE = 1E-13;
 
 	/**
-	 * Returns true if and only if this {@link MutableVector2D} is perpendicular
-	 * to the given {@link MutableVector2D} within the
+	 * Returns true if and only if this {@link MutableVector2D} is perpendicular to
+	 * the given {@link MutableVector2D} within the
 	 * {@link Vector3D#PERPENDICULAR_ANGLE_TOLERANCE}
 	 */
 	public boolean isPerpendicularTo(MutableVector2D v) {

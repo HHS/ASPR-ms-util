@@ -14,8 +14,6 @@ import util.wrappers.MultiKey;
 /**
  * Manages shortest path solutions for a given graph with reasonable efficiency
  * using maps of previous path solutions and their sub-paths.
- * 
- * 
  */
 public class MapPathSolver<N, E> implements PathSolver<N, E> {
 
@@ -41,17 +39,19 @@ public class MapPathSolver<N, E> implements PathSolver<N, E> {
 	private TravelCostEvaluator<N> travelCostEvaluator;
 
 	/**
-	 * Create a path solver for the given graph using the edge cost evaluator
-	 * and travel cost evaluator
+	 * Create a path solver for the given graph using the edge cost evaluator and
+	 * travel cost evaluator
 	 * 
 	 * @throws NullPointerException
-	 *             <li>if the graph is null</li>
-	 *             <li>if the edge cost evaluator is null</li>
-	 *             <li>if the travel cost evaluator is null</li>
-	 * 
-	 * 
+	 *                                  <ul>
+	 *                                  <li>if the graph is null</li>
+	 *                                  <li>if the edge cost evaluator is null</li>
+	 *                                  <li>if the travel cost evaluator is
+	 *                                  null</li>
+	 *                                  </ul>
 	 */
-	public MapPathSolver(Graph<N, E> graph, EdgeCostEvaluator<E> edgeCostEvaluator, TravelCostEvaluator<N> travelCostEvaluator) {
+	public MapPathSolver(Graph<N, E> graph, EdgeCostEvaluator<E> edgeCostEvaluator,
+			TravelCostEvaluator<N> travelCostEvaluator) {
 		if (graph == null) {
 			throw new NullPointerException("graph is null");
 		}
@@ -85,7 +85,8 @@ public class MapPathSolver<N, E> implements PathSolver<N, E> {
 			}
 			result = subPath.solvedPath;
 		} else {
-			Optional<Path<E>> optional = Paths.getPath(graph, originNode, destinationNode, edgeCostEvaluator, travelCostEvaluator);
+			Optional<Path<E>> optional = Paths.getPath(graph, originNode, destinationNode, edgeCostEvaluator,
+					travelCostEvaluator);
 			if (!optional.isPresent()) {
 				return Optional.empty();
 			}
