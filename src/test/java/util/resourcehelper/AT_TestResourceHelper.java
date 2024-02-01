@@ -60,7 +60,12 @@ public class AT_TestResourceHelper {
 
     private class IOExceptionFile extends File {
 
-        public IOExceptionFile(String pathname) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public IOExceptionFile(String pathname) {
             super(pathname);
         }
 
