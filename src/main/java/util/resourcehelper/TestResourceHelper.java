@@ -30,7 +30,7 @@ public class TestResourceHelper {
         return dirPath;
     }
 
-    public static Path makeTestOutputDir(Path basepath, String subDir) {
+    public static Path makeOutputDir(Path basepath, String subDir) {
         Path dirPath = basepath.resolve(subDir);
 
         return makeOutputDir(dirPath);

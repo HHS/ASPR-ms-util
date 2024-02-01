@@ -52,7 +52,7 @@ public class AT_TestResourceHelper {
     public void testMakeTestOutputDir_SubDir() {
         Path path = TestResourceHelper.getResourceDir(this.getClass()).resolve("additional-folder");
 
-        Path newPath = TestResourceHelper.makeTestOutputDir(path, "subFolder");
+        Path newPath = TestResourceHelper.makeOutputDir(path, "subFolder");
 
         assertNotNull(newPath);
         assertTrue(newPath.toFile().exists());
