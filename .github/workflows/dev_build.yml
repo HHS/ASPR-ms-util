@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Development Build
+name: Util Development Build
 
 on:
   push:
@@ -16,6 +16,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout Util
+      uses: actions/checkout@v4
+
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
@@ -23,9 +26,6 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Checkout Util
-      uses: actions/checkout@v4
-    
     - name: Build Util
       run: mvn clean install --file pom.xml
 
