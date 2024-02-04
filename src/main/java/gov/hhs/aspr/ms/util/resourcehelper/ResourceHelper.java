@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class TestResourceHelper {
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
-    private TestResourceHelper() {
+public class ResourceHelper {
+
+    private ResourceHelper() {
     }
 
     public static Path getResourceDir(Class<?> classRef) {
@@ -47,6 +50,32 @@ public class TestResourceHelper {
         createFile(isAfile);
     }
 
+    public static Path validatePath(String path, boolean isOutput) {
+        Path maybePath = Path.of(path);
+        File maybeFile = maybePath.toFile();
+
+        boolean isDirectory = maybeFile.isDirectory();
+        boolean isFile = maybeFile.isFile();
+
+        // if the given string corresponds to a file that exists, return path
+        if (isFile) {
+            return maybePath;
+        }
+
+        // if file does not exist, ensure the path is not a directory and that the
+        // parent directory of the outputFile exists.
+        if (isOutput && !isDirectory) {
+            Path parentPath = maybePath.getParent();
+
+            if (Files.exists(parentPath)) {
+                return maybePath;
+            }
+        }
+
+        // otherwise throw an exception
+        throw new ContractException(ResourceError.UNKNOWN_FILE, path);
+    }
+
     protected static void createFile(File file) {
         try {
             file.createNewFile();
@@ -54,4 +83,5 @@ public class TestResourceHelper {
             throw new RuntimeException(e);
         }
     }
+
 }
