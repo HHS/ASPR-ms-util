@@ -24,7 +24,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: maven
   
       - name: Build Util
         run: mvn clean install --file pom.xml
