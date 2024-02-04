@@ -38,9 +38,9 @@ jobs:
         echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
 
     - name: Make Util Release
-      uses: ncipollo/release-action@v1
+      uses: ncipollo/release-action@v1.13.0
       with:
-        artifacts: "target/util-${{ env.version }}.jar,target/util-${{ env.version }}-sources.jar,target/util-${{ env.version }}-javadoc.jar"
+        artifacts: "target/util-${{ env.version }}*.jar"
         prerelease: ${{ endsWith(env.version, 'SNAPSHOT') || contains(env.version, '-RC') }}
         name: "v${{ env.version }}"
         tag: "v${{ env.version }}"

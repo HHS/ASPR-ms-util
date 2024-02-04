@@ -6,9 +6,11 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Util Pull Request Build
+name: Util Release Pull Request Build
 
-on: [pull_request]
+on:
+  pull_request:
+    branches: ["main"]
 
 jobs:
   build:
