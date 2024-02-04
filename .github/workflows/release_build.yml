@@ -6,15 +6,19 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Util Development Build
+name: Util Release Build
 
-on:
+on: 
   push:
-    branches: [ "dev" ]
+    tags:
+    - 'v*'
+    branches: ["main"]
 
 jobs:
-  build:
+  create-release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
     - name: Checkout Util
       uses: actions/checkout@v4
@@ -27,8 +31,18 @@ jobs:
         cache: maven
 
     - name: Build Util
-      run: mvn clean install --file pom.xml
+      run: mvn clean install -Prelease --file pom.xml
 
-    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
-   # - name: Update dependency graph
-     # uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+    - name: Get Util Version
+      run: |
+        echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
+
+    - name: Make Util Release
+      uses: ncipollo/release-action@v1.13.0
+      with:
+        artifacts: "target/util-${{ env.version }}*.jar"
+        prerelease: ${{ endsWith(env.version, 'SNAPSHOT') || contains(env.version, '-RC') }}
+        name: "v${{ env.version }}"
+        tag: "v${{ env.version }}"
+        generateReleaseNotes: true
+        skipIfReleaseExists: true
