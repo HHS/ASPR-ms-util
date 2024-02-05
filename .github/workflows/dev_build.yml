@@ -11,6 +11,8 @@ name: Util Development Build
 on:
   push:
     branches: [ "dev" ]
+  pull_request:
+    branches-ignore: ["main"]
 
 jobs:
   build:
