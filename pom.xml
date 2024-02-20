@@ -7,8 +7,8 @@
     <!-- Artifact -->
     <groupId>gov.hhs.aspr.ms</groupId>
     <artifactId>util</artifactId>
-    <version>4.0.0</version>
-    <packaging>jar</packaging>
+    <version>4.1.0</version>
+    <packaging>jar</packaging> 
 
     <name>Modeling Utils</name>
     <description>A suite of utility methods that are useful for simulation frameworks.</description>
@@ -53,15 +53,15 @@
         <maven.compiler.target>17</maven.compiler.target>
 
         <!-- plugin versions -->
-        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
+        <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
+        <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
 
         <!-- dependency versions-->
         <commons-math3.version>3.6.1</commons-math3.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
-        <junit-jupiter-engine.version>5.8.2</junit-jupiter-engine.version>
-        <jacoco-maven-plugin.version>0.8.9</jacoco-maven-plugin.version>
+        <junit-jupiter-engine.version>5.10.2</junit-jupiter-engine.version>
+        <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
     </properties>
 
     <!-- Dependencies -->
