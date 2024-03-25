@@ -90,7 +90,7 @@ public class TextTableReader {
     public static void read(String delimeter, String expectedHeader, Path filePath, Consumer<String[]> consumer) {
         BufferedReader reader = getReader(filePath);
 
-        String[] expectedHeaders = expectedHeader.split(delimeter);
+        String[] expectedHeaders = expectedHeader.split(delimeter, -1);
         int expectedHeaderLength = expectedHeaders.length;
         int headerLength = expectedHeaderLength;
 
@@ -107,7 +107,7 @@ public class TextTableReader {
 
             long lineNumber = 1;
             while ((line = reader.readLine()) != null) {
-                String[] lineValues = line.split(delimeter);
+                String[] lineValues = line.split(delimeter, -1);
 
                 if (lineIsCommentLine(lineValues[0], delimeter)) {
                     lineNumber++;
