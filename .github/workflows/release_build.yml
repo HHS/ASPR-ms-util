@@ -15,7 +15,7 @@ on:
     branches: ["main"]
 
 jobs:
-  create-release:
+  build-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -28,9 +28,18 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+        server-id: central
+        server-username: MAVEN_USERNAME
+        server-password: MAVEN_PASSWORD
+        gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
+        gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
-    - name: Build Util
-      run: mvn clean install -Prelease --file pom.xml
+    - name: Build and Deploy Util
+      run: mvn clean deploy -Pjavadoc,sign --file pom.xml
+      env:
+        MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+        MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
+        MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSWORD }}
 
     - name: Get Util Version
       run: |
@@ -39,9 +48,10 @@ jobs:
     - name: Make Util Release
       uses: ncipollo/release-action@v1.13.0
       with:
-        artifacts: "target/util-${{ env.version }}*.jar"
-        prerelease: ${{ endsWith(env.version, 'SNAPSHOT') || contains(env.version, '-RC') }}
+        artifacts: "target/util-${{ env.version }}*"
         name: "v${{ env.version }}"
         tag: "v${{ env.version }}"
         generateReleaseNotes: true
         skipIfReleaseExists: true
+
+      
