@@ -7,7 +7,7 @@
     <!-- Artifact -->
     <groupId>gov.hhs.aspr.ms</groupId>
     <artifactId>util</artifactId>
-    <version>4.1.1</version>
+    <version>4.1.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Modeling Utils</name>
@@ -55,14 +55,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <!-- <gpg.executable>gpg2</gpg.executable> -->
-        <gpg.useAgent>false</gpg.useAgent>
 
         <!-- plugin versions -->
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.2.2</maven-gpg-plugin.version>
+        <central-publishing-maven-plugin.version>0.4.0</central-publishing-maven-plugin.version>
 
         <!-- dependency versions-->
         <commons-math3.version>3.6.1</commons-math3.version>
@@ -137,11 +136,12 @@
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.4.0</version>
+                <version>${central-publishing-maven-plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
                   <publishingServerId>central</publishingServerId>
                   <tokenAuth>true</tokenAuth>
+                  <deploymentName>ASPR MS Util</deploymentName>
                 </configuration>
               </plugin>
         </plugins>
@@ -197,9 +197,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                        <configuration>
-                                <useAgent>false</useAgent>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
