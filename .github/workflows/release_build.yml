@@ -16,7 +16,7 @@ on:
     branches: ["main"]
 
 jobs:
-  build-deploy:
+  release:
     runs-on: ubuntu-latest
     permissions:
       contents: write

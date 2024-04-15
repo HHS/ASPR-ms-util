@@ -21,7 +21,7 @@ To use this project in your project, simply add the following dependency to your
 <dependency>
     <groupId>gov.hhs.aspr.ms</groupId>
     <artifactId>util</artifactId>
-    <version>4.1.1</version>
+    <version>4.1.2</version>
 </dependency>
 ```
 ## Building from Source

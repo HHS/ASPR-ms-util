@@ -7,7 +7,7 @@
     <!-- Artifact -->
     <groupId>gov.hhs.aspr.ms</groupId>
     <artifactId>util</artifactId>
-    <version>4.1.1</version>
+    <version>4.1.2</version>
     <packaging>jar</packaging>
 
     <name>Modeling Utils</name>
@@ -21,7 +21,7 @@
             <url>https://www.gnu.org/licenses/gpl-3.0.en.html</url>
         </license>
         <license>
-            <name>Vulnerability Disclosure Policy</name>
+            <name>HHS Vulnerability Disclosure Policy</name>
             <url>https://www.hhs.gov/vulnerability-disclosure-policy/index.html</url>
         </license>
     </licenses>
@@ -55,20 +55,20 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <!-- <gpg.executable>gpg2</gpg.executable> -->
-        <gpg.useAgent>false</gpg.useAgent>
 
         <!-- plugin versions -->
+        <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
-        <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.2.2</maven-gpg-plugin.version>
+        <central-publishing-maven-plugin.version>0.4.0</central-publishing-maven-plugin.version>
 
         <!-- dependency versions-->
         <commons-math3.version>3.6.1</commons-math3.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
         <junit-jupiter-engine.version>5.10.2</junit-jupiter-engine.version>
-        <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
     </properties>
 
     <!-- Dependencies -->
@@ -106,6 +106,36 @@
     <!-- Configure Build -->
     <build>
         <plugins>
+            <!-- used with the ${revision} for versioning, creates a pom that has the version replaced with the value of ${revision} -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${flatten-maven-plugin.version}</version>
+                <executions>
+                    <!-- enable flattening -->
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                        <configuration>
+                            <updatePomFile>true</updatePomFile>
+                            <flattenMode>ossrh</flattenMode>
+                            <flattenDependencyMode>all</flattenDependencyMode>
+                        </configuration>
+                    </execution>
+                    <!-- ensure proper cleanup -->
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- Runs unit tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -137,11 +167,12 @@
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.4.0</version>
+                <version>${central-publishing-maven-plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
                   <publishingServerId>central</publishingServerId>
                   <tokenAuth>true</tokenAuth>
+                  <deploymentName>ASPR MS Util</deploymentName>
                 </configuration>
               </plugin>
         </plugins>
@@ -197,9 +228,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                        <configuration>
-                                <useAgent>false</useAgent>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>

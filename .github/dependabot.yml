@@ -8,7 +8,7 @@ updates:
   - package-ecosystem: "maven" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: "daily"
     target-branch: "dev"
     open-pull-requests-limit: 10
     groups:
@@ -16,6 +16,10 @@ updates:
         patterns:
           - "org.codehaus.mojo:flatten-maven-plugin"
           - "org.apache.maven.plugins*"
+          - "org.sonatype.central"
+      deploy-plugins:
+        patterns:
+          - "org.sonatype.central"
       dependencies:
         patterns:
           - "org.apache.commons:commons-math3"
