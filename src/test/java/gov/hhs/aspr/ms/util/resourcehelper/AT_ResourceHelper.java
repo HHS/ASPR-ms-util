@@ -124,6 +124,8 @@ public class AT_ResourceHelper {
         });
 
         assertTrue(runtimeException.getCause() instanceof IOException);
+
+        newPath.resolve(fileName).toFile().delete();
     }
 
     @Test
@@ -147,6 +149,8 @@ public class AT_ResourceHelper {
         });
 
         assertTrue(runtimeException.getCause() instanceof IOException);
+
+        newPath.resolve(fileName).toFile().delete();
     }
 
     @Test
@@ -175,13 +179,38 @@ public class AT_ResourceHelper {
         });
 
         assertEquals(ResourceError.UNKNOWN_FILE, contractException.getErrorType());
+
+        dirPath.resolve(fileName).toFile().delete();
     }
 
     @Test
     @UnitTestMethod(target = ResourceHelper.class, name = "validateFile", args = { Path.class })
     public void testValidateFile_Path() {
-        // covered by testValidateFilePath, which internally calls this method when the
+        Path resourceDir = ResourceHelper.getResourceDir(getClass());
+        Path dirPath = resourceDir;
+        String fileName = "validateFile.json";
+
+        ResourceHelper.createFile(dirPath, fileName);
+
+        Path filePath = dirPath.resolve(fileName).toAbsolutePath();
+        assertTrue(ResourceHelper.validateFile(filePath).toFile().exists());
+
+        // preconditions
+        // file path points to a directory
+        ContractException contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.validateFile(resourceDir.toString());
+        });
+
+        assertEquals(ResourceError.FILE_PATH_IS_DIRECTORY, contractException.getErrorType());
+
         // file does not exist
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.validateFile(dirPath.resolve("unknwonfile.txt"));
+        });
+
+        assertEquals(ResourceError.UNKNOWN_FILE, contractException.getErrorType());
+
+        dirPath.resolve(fileName).toFile().delete();
     }
 
     @Test
@@ -223,6 +252,9 @@ public class AT_ResourceHelper {
         });
 
         assertEquals(ResourceError.FILE_PATH_IS_DIRECTORY, contractException.getErrorType());
+
+        resourceDir.resolve(fileName).toFile().delete();
+        dirPath.resolve(fileName).toFile().delete();
     }
 
     @Test
@@ -264,6 +296,9 @@ public class AT_ResourceHelper {
         });
 
         assertEquals(ResourceError.FILE_PATH_IS_DIRECTORY, contractException.getErrorType());
+
+        resourceDir.resolve(fileName).toFile().delete();
+        dirPath.resolve(fileName).toFile().delete();
     }
 
     @Test
@@ -283,12 +318,15 @@ public class AT_ResourceHelper {
 
         // preconditions
         // directory path points to a file
+        String fileName = "validateDirectoryPath.json";
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            String fileName = "validateFilePath.json";
-            ResourceHelper.validateDirectoryPath(dirPath.resolve(fileName));
+            ResourceHelper.createFile(dirPath, fileName);
+            ResourceHelper.validateDirectoryPath(dirPath.resolve(fileName).toString());
         });
 
         assertEquals(ResourceError.DIRECTORY_PATH_IS_FILE, contractException.getErrorType());
+
+        dirPath.resolve(fileName).toFile().delete();
     }
 
     @Test
@@ -308,11 +346,14 @@ public class AT_ResourceHelper {
 
         // preconditions
         // directory path points to a file
+        String fileName = "validateDirectoryPath.json";
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            String fileName = "validateFilePath.json";
+            ResourceHelper.createFile(dirPath, fileName);
             ResourceHelper.validateDirectoryPath(dirPath.resolve(fileName));
         });
 
         assertEquals(ResourceError.DIRECTORY_PATH_IS_FILE, contractException.getErrorType());
+
+        dirPath.resolve(fileName).toFile().delete();
     }
 }
