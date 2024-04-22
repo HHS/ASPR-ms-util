@@ -215,8 +215,6 @@ public class ResourceHelper {
      * 
      * @throws ContractException {@link ResourceError#DIRECTORY_PATH_IS_FILE} if the
      *                               directory path refers to a file
-     * @throws RuntimeException  if the directory does not exist, and the directory
-     *                               cannot be created
      */
     public static Path validateDirectoryPath(String directory) {
         Path maybePath = Path.of(directory);
@@ -231,8 +229,6 @@ public class ResourceHelper {
      * 
      * @throws ContractException {@link ResourceError#DIRECTORY_PATH_IS_FILE} if the
      *                               directory path refers to a file
-     * @throws RuntimeException  if the directory does not exist, and the directory
-     *                               cannot be created
      */
     public static Path validateDirectoryPath(Path directoryPath) {
         File maybeFile = directoryPath.toFile();
