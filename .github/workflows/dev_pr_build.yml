@@ -10,7 +10,7 @@ name: Util Development PR Build
 
 on:
   pull_request:
-    branches-ignore: ["main", "dev"]
+    branches-ignore: ["main"]
 
 jobs:
   dev-build:
