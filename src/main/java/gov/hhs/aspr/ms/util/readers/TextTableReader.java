@@ -144,7 +144,7 @@ public class TextTableReader {
                     for (int i = 0; i < lineValues.length; i++) {
                         int index = headerIndexLookup[i];
                         if (index != -1) {
-                            retValues[i] = lineValues[index];
+                            retValues[index] = lineValues[i];
                         }
                     }
                 }
