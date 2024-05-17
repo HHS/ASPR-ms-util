@@ -141,8 +141,13 @@ public class ResourceHelper {
      * <p>
      * calls {@link ResourceHelper#validateFilePath(Path)}
      * 
-     * @throws ContractException {@link ResourceError#FILE_PATH_IS_DIRECTORY} if the
-     *                               file path refers to a directory
+     * @throws ContractException
+     *                               <ul>
+     *                               <li>{@link ResourceError#FILE_PATH_IS_DIRECTORY}
+     *                               if the file path refers to a directory</li>
+     *                               <li>{@link ResourceError#UNKNOWN_FILE} if the
+     *                               file does not exist</li>
+     *                               </ul>
      */
     public static Path validateFile(String file) {
         Path filePath = Path.of(file);
@@ -155,8 +160,13 @@ public class ResourceHelper {
     /**
      * Given a file path, validates that the file exists.
      * 
-     * @throws ContractException {@link ResourceError#FILE_PATH_IS_DIRECTORY} if the
-     *                               file path refers to a directory
+     * @throws ContractException
+     *                               <ul>
+     *                               <li>{@link ResourceError#FILE_PATH_IS_DIRECTORY}
+     *                               if the file path refers to a directory</li>
+     *                               <li>{@link ResourceError#UNKNOWN_FILE} if the
+     *                               file does not exist</li>
+     *                               </ul>
      */
     public static Path validateFile(Path filePath) {
         File file = filePath.toFile();
@@ -173,7 +183,7 @@ public class ResourceHelper {
     }
 
     /**
-     * Given a file path, validates that the file exists.
+     * Given a file path, validates that the file path exists.
      * <p>
      * calls {@link ResourceHelper#validateFilePath(Path)}
      * 
@@ -189,7 +199,7 @@ public class ResourceHelper {
     }
 
     /**
-     * Given a file path, validates that the file exists.
+     * Given a file path, validates that the file path exists.
      * 
      * @throws ContractException {@link ResourceError#FILE_PATH_IS_DIRECTORY} if the
      *                               file path refers to a directory
@@ -209,7 +219,7 @@ public class ResourceHelper {
     }
 
     /**
-     * Given a directory path, validates that the directory exists.
+     * Given a directory path, validates that the directory path exists.
      * <p>
      * calls {@link ResourceHelper#validateDirectoryPath(Path)}
      * 
@@ -225,7 +235,9 @@ public class ResourceHelper {
     }
 
     /**
-     * Given a directory path, validates that the directory exists.
+     * Given a directory path, validates that the directory path exists.
+     * <p>
+     * If it does not exists, attempts to create it
      * 
      * @throws ContractException {@link ResourceError#DIRECTORY_PATH_IS_FILE} if the
      *                               directory path refers to a file
@@ -256,9 +268,7 @@ public class ResourceHelper {
     }
 
     /**
-     * Given a file, attempts to create the file
-     * 
-     * package access for testing
+     * Given a file, attempts to create the file package access for testing
      */
     static void _createFile(File file) {
         try {
