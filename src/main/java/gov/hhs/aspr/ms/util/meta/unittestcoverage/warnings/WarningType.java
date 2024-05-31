@@ -21,6 +21,10 @@ public enum WarningType {
 
 	SOURCE_CONSTRUCTOR_REQUIRES_TEST("Source constructor requires a test method but does not have one"),
 
+	UNIT_COVERAGE_ANNOTATION_WITHOUT_TEST_ANNOTATION(
+			"Test method is marked with @UnitTestForCoverage but does not have a corresponding @Test annotation"),
+
+	
 	UNIT_CONSTRUCTOR_ANNOTATION_WITHOUT_TEST_ANNOTATION(
 			"Test method is marked with @UnitTestConstructor but does not have a corresponding @Test annotation"),
 
