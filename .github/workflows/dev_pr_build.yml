@@ -6,11 +6,11 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Util Development Build
+name: Util Development PR Build
 
 on:
-  push:
-    branches: [ "dev" ]
+  pull_request:
+    branches-ignore: ["main"]
 
 jobs:
   dev-build:
