@@ -80,9 +80,9 @@ jobs:
 
       - name: Increment GCM Version
         run: |
-          gcm_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)
-          echo GCM Version: $gcm_version
-          parts=( ${gcm_version//./ } )
+          current_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)
+          echo GCM Version: $current_version
+          parts=( ${current_version//./ } )
           bv=$((parts[2] + 1))
           new_version="${parts[0]}.${parts[1]}.${bv}"
           echo New GCM Version: $new_version
@@ -128,9 +128,9 @@ jobs:
 
       - name: Increment Taskit Version
         run: |
-          taskit_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)
-          echo Taskit Version: $taskit_version
-          parts=( ${taskit_version//./ } )
+          current_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)
+          echo Taskit Version: $current_version
+          parts=( ${current_version//./ } )
           bv=$((parts[2] + 1))
           new_version="${parts[0]}.${parts[1]}.${bv}"
           echo New Taskit Version: $new_version
