@@ -97,7 +97,7 @@ jobs:
         run: |
           git checkout -b update-util-to-$VERSION
           git add pom.xml
-          git commit -m "Updated util to $VERSION"
+          git commit -m "Update util to $VERSION"
           git push --set-upstream origin update-util-to-$VERSION
       
       - name: Make PR in GCM
@@ -145,7 +145,7 @@ jobs:
         run: |
           git checkout -b update-util-to-$VERSION
           git add pom.xml
-          git commit -m "Updated util to $VERSION"
+          git commit -m "Update util to $VERSION"
           git push --set-upstream origin update-util-to-$VERSION
       
       - name: Make PR in Taskit
