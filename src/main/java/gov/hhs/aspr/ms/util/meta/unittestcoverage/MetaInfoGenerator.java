@@ -219,16 +219,9 @@ public class MetaInfoGenerator {
 
 	private void probeTestClass(Class<?> c) {
 
-		boolean debugClass = c.getSimpleName().equals("AT_BetaSampleDistribution");
-
 		final Method[] methods = c.getMethods();
 		for (final Method testMethod : methods) {
-
-			boolean debugMethod = debugClass && testMethod.getName().equals("testSample");
-			if(debugMethod) {
-				System.out.println("MetaInfoGenerator.probeTestClass()");
-			}
-
+			
 			final Test test = testMethod.getAnnotation(Test.class);
 			final UnitTestMethod unitTestMethod = testMethod.getAnnotation(UnitTestMethod.class);
 			final UnitTestConstructor unitTestConstructor = testMethod.getAnnotation(UnitTestConstructor.class);
