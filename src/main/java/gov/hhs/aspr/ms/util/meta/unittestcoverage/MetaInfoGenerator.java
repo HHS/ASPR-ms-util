@@ -219,8 +219,16 @@ public class MetaInfoGenerator {
 
 	private void probeTestClass(Class<?> c) {
 
+		boolean debugClass = c.getSimpleName().equals("AT_BetaSampleDistribution");
+
 		final Method[] methods = c.getMethods();
 		for (final Method testMethod : methods) {
+
+			boolean debugMethod = debugClass && testMethod.getName().equals("testSample");
+			if(debugMethod) {
+				System.out.println("MetaInfoGenerator.probeTestClass()");
+			}
+
 			final Test test = testMethod.getAnnotation(Test.class);
 			final UnitTestMethod unitTestMethod = testMethod.getAnnotation(UnitTestMethod.class);
 			final UnitTestConstructor unitTestConstructor = testMethod.getAnnotation(UnitTestConstructor.class);
@@ -228,10 +236,10 @@ public class MetaInfoGenerator {
 			final UnitTestForCoverage unitTestForCoverage = testMethod.getAnnotation(UnitTestForCoverage.class);
 
 			int caseIndex = 0;
-			if (test != null ) {
+			if (test != null) {
 				caseIndex += 16;
 			}
-			if (unitTestForCoverage == null) {
+			if (unitTestForCoverage != null) {
 				caseIndex += 8;
 			}
 			if (unitTestConstructor != null) {
@@ -249,30 +257,30 @@ public class MetaInfoGenerator {
 				warningContainerBuilder.addMethodWarning(
 						new MethodWarning(testMethod, WarningType.TEST_ANNOTATION_WITHOUT_UNIT_ANNOTATION));
 				break;
-			case 3://fall through				
-			case 5://fall through
-			case 6://fall through
-			case 7://fall through
-			case 9://fall through
-			case 10://fall through
-			case 11://fall through
-			case 12://fall through
-			case 13://fall through
-			case 14://fall through
-			case 15://fall through
-			case 19://fall through
-			case 21://fall through
-			case 22://fall through
-			case 23://fall through
-			case 25://fall through
-			case 26://fall through
-			case 27://fall through
-			case 28://fall through
-			case 29://fall through
-			case 30://fall through
+			case 3:// fall through
+			case 5:// fall through
+			case 6:// fall through
+			case 7:// fall through
+			case 9:// fall through
+			case 10:// fall through
+			case 11:// fall through
+			case 12:// fall through
+			case 13:// fall through
+			case 14:// fall through
+			case 15:// fall through
+			case 19:// fall through
+			case 21:// fall through
+			case 22:// fall through
+			case 23:// fall through
+			case 25:// fall through
+			case 26:// fall through
+			case 27:// fall through
+			case 28:// fall through
+			case 29:// fall through
+			case 30:// fall through
 			case 31:
-				warningContainerBuilder.addMethodWarning(
-						new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
+				warningContainerBuilder
+						.addMethodWarning(new MethodWarning(testMethod, WarningType.MULTIPLE_UNIT_ANNOTATIONS_PRESENT));
 				break;
 			case 1:
 				warningContainerBuilder.addMethodWarning(
@@ -282,20 +290,20 @@ public class MetaInfoGenerator {
 				warningContainerBuilder.addMethodWarning(
 						new MethodWarning(testMethod, WarningType.UNIT_METHOD_ANNOTATION_WITHOUT_TEST_ANNOTATION));
 				break;
-			
+
 			case 4:
 				warningContainerBuilder.addMethodWarning(
 						new MethodWarning(testMethod, WarningType.UNIT_CONSTRUCTOR_ANNOTATION_WITHOUT_TEST_ANNOTATION));
 				break;
-			
+
 			case 8:
 				warningContainerBuilder.addMethodWarning(
 						new MethodWarning(testMethod, WarningType.UNIT_COVERAGE_ANNOTATION_WITHOUT_TEST_ANNOTATION));
 				break;
-			
-			case 0://fall through				
+
+			case 0:// fall through
 			case 24:
-				//ignore
+				// ignore
 				break;
 			case 17:
 				probeFieldTest(testMethod, unitTestField);
