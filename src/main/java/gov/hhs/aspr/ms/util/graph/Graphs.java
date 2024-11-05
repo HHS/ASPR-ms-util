@@ -8,11 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-
-import gov.hhs.aspr.ms.util.path.Path;
-import gov.hhs.aspr.ms.util.path.Paths;
 
 public final class Graphs {
 
@@ -61,7 +57,7 @@ public final class Graphs {
 	 * edges removed. A non-cyclic edge is one where there is no path through the
 	 * graph from the edge's destination node to its source node.
 	 */
-	public static <N, E> Graph<N, E> getEdgeReducedGraph(Graph<N, E> graph) {
+	public static <N, E> Graph<N, E> getEdgeReducedGraph(Graph<N, E> graph) {		
 		MutableGraph<N, E> mutableGraph = new MutableGraph<>();
 		mutableGraph.addAll(graph);
 		List<E> edges = graph.getEdges();
@@ -69,46 +65,42 @@ public final class Graphs {
 		for (E edge : edges) {
 			N originNode = graph.getOriginNode(edge);
 			N destinationNode = graph.getDestinationNode(edge);
-			Optional<Path<E>> optional = Paths.getPath(graph, destinationNode, originNode, (e) -> 1, (a, b) -> 0);
-			if (optional.isEmpty()) {
+
+			/*
+			 * If there is no path from the destination node to the origin node then remove
+			 * the edge
+			 */
+			Deque<N> nodesToProcess = new ArrayDeque<>();
+			nodesToProcess.add(destinationNode);
+			Set<N> visited = new LinkedHashSet<>();
+
+			boolean pathFound = false;
+
+			loopLabel: while (!nodesToProcess.isEmpty()) {
+				N n = nodesToProcess.remove();
+				visited.add(n);
+				for (E e : mutableGraph.getOutboundEdges(n)) {
+
+					N n2 = mutableGraph.getDestinationNode(e);
+					if (n2.equals(originNode)) {
+						pathFound = true;
+						break loopLabel;
+					}
+					if (!visited.contains(n2)) {
+						nodesToProcess.add(n2);
+					}
+
+				}
+			}
+
+			// Optional<Path<E>> optional = Paths.getPath(graph, destinationNode,
+			// originNode, (e) -> 1, (a, b) -> 0);
+			if (!pathFound) {
 				mutableGraph.removeEdge(edge);
 			}
 		}
 		return mutableGraph.asGraph();
 	}
-
-//	private static <N, E> Graph<N, E> getEdgeReducedGraph2(Graph<N, E> graph) {
-//		MutableGraph<N, E> mutableGraph = new MutableGraph<>();
-//		mutableGraph.addAll(graph);
-//		List<E> edges = graph.getEdges();
-//
-//		for (E edge : edges) {
-//			N originNode = graph.getOriginNode(edge);
-//			N destinationNode = graph.getDestinationNode(edge);
-//
-//			/*
-//			 * If there is no path from the destination node to the origin node that does
-//			 * not use the edge, then remove the edge
-//			 */
-//			Deque<N> nodesToProcess = new ArrayDeque<>();
-//			nodesToProcess.add(destinationNode);
-//			
-//			while(!nodesToProcess.isEmpty()) {
-//				N n = nodesToProcess.remove();
-//				for(E e : mutableGraph.getOutboundEdges(n)) {
-//					if(!e.equals(edge)) {
-//						
-//					}
-//				}
-//			}
-//			
-//			Optional<Path<E>> optional = Paths.getPath(graph, destinationNode, originNode, (e) -> 1, (a, b) -> 0);
-//			if (optional.isEmpty()) {
-//				mutableGraph.removeEdge(edge);
-//			}
-//		}
-//		return mutableGraph.asGraph();
-//	}
 
 	/**
 	 * Returns the GraphCyclisity of the given graph
