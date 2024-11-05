@@ -11,7 +11,7 @@ import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.Pair;
 
 import gov.hhs.aspr.ms.util.dimensiontree.VolumetricDimensionTree;
-import gov.hhs.aspr.ms.util.spherical.Chirality;
+import gov.hhs.aspr.ms.util.vector.Chirality;
 import gov.hhs.aspr.ms.util.vector.MutableVector2D;
 import gov.hhs.aspr.ms.util.vector.Vector2D;
 

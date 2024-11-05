@@ -1,6 +1,8 @@
 package gov.hhs.aspr.ms.util.graph;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -74,6 +76,39 @@ public final class Graphs {
 		}
 		return mutableGraph.asGraph();
 	}
+
+//	private static <N, E> Graph<N, E> getEdgeReducedGraph2(Graph<N, E> graph) {
+//		MutableGraph<N, E> mutableGraph = new MutableGraph<>();
+//		mutableGraph.addAll(graph);
+//		List<E> edges = graph.getEdges();
+//
+//		for (E edge : edges) {
+//			N originNode = graph.getOriginNode(edge);
+//			N destinationNode = graph.getDestinationNode(edge);
+//
+//			/*
+//			 * If there is no path from the destination node to the origin node that does
+//			 * not use the edge, then remove the edge
+//			 */
+//			Deque<N> nodesToProcess = new ArrayDeque<>();
+//			nodesToProcess.add(destinationNode);
+//			
+//			while(!nodesToProcess.isEmpty()) {
+//				N n = nodesToProcess.remove();
+//				for(E e : mutableGraph.getOutboundEdges(n)) {
+//					if(!e.equals(edge)) {
+//						
+//					}
+//				}
+//			}
+//			
+//			Optional<Path<E>> optional = Paths.getPath(graph, destinationNode, originNode, (e) -> 1, (a, b) -> 0);
+//			if (optional.isEmpty()) {
+//				mutableGraph.removeEdge(edge);
+//			}
+//		}
+//		return mutableGraph.asGraph();
+//	}
 
 	/**
 	 * Returns the GraphCyclisity of the given graph
