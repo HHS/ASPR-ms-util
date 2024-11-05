@@ -2,7 +2,6 @@ package gov.hhs.aspr.ms.util.vector;
 
 import org.apache.commons.math3.util.FastMath;
 
-import gov.hhs.aspr.ms.util.spherical.Chirality;
 import net.jcip.annotations.Immutable;
 
 /**

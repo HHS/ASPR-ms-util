@@ -2,8 +2,6 @@ package gov.hhs.aspr.ms.util.vector;
 
 import org.apache.commons.math3.util.FastMath;
 
-import gov.hhs.aspr.ms.util.spherical.Chirality;
-
 /**
  * A mutable 2-dimensional vector class supporting common 2D transforms.
  */

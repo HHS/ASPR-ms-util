@@ -12,7 +12,6 @@ import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestField;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
 import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
-import gov.hhs.aspr.ms.util.spherical.Chirality;
 
 
 public class AT_Vector2D {

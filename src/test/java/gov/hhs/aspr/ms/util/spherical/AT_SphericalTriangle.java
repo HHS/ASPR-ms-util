@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
 import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
+import gov.hhs.aspr.ms.util.vector.Chirality;
 import gov.hhs.aspr.ms.util.vector.Vector3D;
 
 public class AT_SphericalTriangle {
