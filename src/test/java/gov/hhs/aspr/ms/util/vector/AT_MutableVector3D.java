@@ -26,7 +26,7 @@ public class AT_MutableVector3D {
 	@Test
 	@UnitTestField(target = MutableVector3D.class, name = "PERPENDICULAR_ANGLE_TOLERANCE")
 	public void testPerpendicularAngleTolerance() {
-		assertEquals(1E-13, MutableVector2D.PERPENDICULAR_ANGLE_TOLERANCE, 0);
+		assertEquals(1E-8, MutableVector2D.PERPENDICULAR_ANGLE_TOLERANCE, 0);
 	}
 
 	/**

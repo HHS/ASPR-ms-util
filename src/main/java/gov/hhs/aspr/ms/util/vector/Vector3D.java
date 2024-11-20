@@ -14,7 +14,7 @@ public final class Vector3D {
 
 	public final static double NORMAL_LENGTH_TOLERANCE = 1E-13;
 
-	public final static double PERPENDICULAR_ANGLE_TOLERANCE = 1E-13;
+	public final static double PERPENDICULAR_ANGLE_TOLERANCE = 1E-8;
 
 	/*
 	 * A function that returns the value if the value is in the interval [-1,1].

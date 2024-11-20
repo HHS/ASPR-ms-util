@@ -508,7 +508,7 @@ public final class MutableVector2D {
 		y = 0;
 	}
 
-	public final static double PERPENDICULAR_ANGLE_TOLERANCE = 1E-13;
+	public final static double PERPENDICULAR_ANGLE_TOLERANCE = 1E-8;
 
 	/**
 	 * Returns true if and only if this {@link MutableVector2D} is perpendicular to
