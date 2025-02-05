@@ -22,7 +22,7 @@ import gov.hhs.aspr.ms.util.errors.ContractException;
  * This solves the issues by obtaining an absolute reference to the resource
  * directory by using the class loader and an empty resource.
  * <p>
- * In addition to the above, this class also provides convience methods to
+ * In addition to the above, this class also provides convenience methods to
  * validate file paths and directory paths, and create directories and files.
  */
 public class ResourceHelper {
@@ -44,6 +44,9 @@ public class ResourceHelper {
      *                              {@link URISyntaxException}
      */
     public static Path getResourceDir(Class<?> classRef) {
+        if (classRef == null) {
+            throw new ContractException(ResourceError.NULL_CLASS_REF);
+        }
         return Path.of(getURI(classRef.getClassLoader().getResource("")));
     }
 
@@ -52,6 +55,10 @@ public class ResourceHelper {
      * dirPath.toFile().mkdirs().
      */
     public static Path createDirectory(Path dirPath) {
+        if (dirPath == null) {
+            throw new ContractException(ResourceError.NULL_DIRECTORY_PATH);
+        }
+
         if (dirPath.toFile().exists()) {
             return dirPath;
         }
@@ -67,6 +74,10 @@ public class ResourceHelper {
      * calls {@link ResourceHelper#createDirectory(Path)}
      */
     public static Path createDirectory(String directory) {
+        if (directory == null || directory.isEmpty()) {
+            throw new ContractException(ResourceError.NULL_DIRECTORY_STRING);
+        }
+
         Path dirPath = Path.of(directory);
 
         return createDirectory(dirPath);
@@ -79,6 +90,14 @@ public class ResourceHelper {
      * returns the resolved path
      */
     public static Path createDirectory(Path baseDirPath, String subDir) {
+        if (baseDirPath == null) {
+            throw new ContractException(ResourceError.NULL_DIRECTORY_PATH);
+        }
+
+        if (subDir == null || subDir.isEmpty()) {
+            throw new ContractException(ResourceError.NULL_DIRECTORY_STRING);
+        }
+
         Path dirPath = baseDirPath.resolve(subDir);
 
         return createDirectory(dirPath);
@@ -91,6 +110,14 @@ public class ResourceHelper {
      * returns the resolved path
      */
     public static Path createDirectory(String baseDir, String subDir) {
+        if (baseDir == null || baseDir.isEmpty()) {
+            throw new ContractException(ResourceError.NULL_DIRECTORY_STRING);
+        }
+
+        if (subDir == null || subDir.isEmpty()) {
+            throw new ContractException(ResourceError.NULL_DIRECTORY_STRING);
+        }
+
         Path dirPath = Path.of(baseDir, subDir);
 
         return createDirectory(dirPath);
@@ -105,6 +132,13 @@ public class ResourceHelper {
      *                              {@link IOException}
      */
     public static void createFile(Path directory, String fileName) {
+        if (directory == null) {
+            throw new ContractException(ResourceError.NULL_DIRECTORY_PATH);
+        }
+
+        if (fileName == null || fileName.isEmpty()) {
+            throw new ContractException(ResourceError.NULL_FILE_STRING);
+        }
 
         File file = directory.resolve(fileName).toFile();
 
@@ -126,6 +160,13 @@ public class ResourceHelper {
      *                              {@link IOException}
      */
     public static void createNewFile(Path directory, String fileName) {
+        if (directory == null) {
+            throw new ContractException(ResourceError.NULL_DIRECTORY_PATH);
+        }
+
+        if (fileName == null || fileName.isEmpty()) {
+            throw new ContractException(ResourceError.NULL_FILE_STRING);
+        }
 
         File file = directory.resolve(fileName).toFile();
 
@@ -150,6 +191,10 @@ public class ResourceHelper {
      *                               </ul>
      */
     public static Path validateFile(String file) {
+        if (file == null || file.isEmpty()) {
+            throw new ContractException(ResourceError.NULL_FILE_STRING);
+        }
+
         Path filePath = Path.of(file);
 
         validateFile(filePath);
@@ -169,6 +214,10 @@ public class ResourceHelper {
      *                               </ul>
      */
     public static Path validateFile(Path filePath) {
+        if (filePath == null) {
+            throw new ContractException(ResourceError.NULL_FILE_PATH);
+        }
+
         File file = filePath.toFile();
 
         if (file.isDirectory()) {
@@ -191,6 +240,10 @@ public class ResourceHelper {
      *                               file path refers to a directory
      */
     public static Path validateFilePath(String file) {
+        if (file == null || file.isEmpty()) {
+            throw new ContractException(ResourceError.NULL_FILE_STRING);
+        }
+
         Path filePath = Path.of(file);
 
         validateFilePath(filePath);
@@ -205,6 +258,10 @@ public class ResourceHelper {
      *                               file path refers to a directory
      */
     public static Path validateFilePath(Path filePath) {
+        if (filePath == null) {
+            throw new ContractException(ResourceError.NULL_FILE_PATH);
+        }
+
         File file = filePath.toFile();
 
         if (file.isDirectory()) {
@@ -227,6 +284,10 @@ public class ResourceHelper {
      *                               directory path refers to a file
      */
     public static Path validateDirectoryPath(String directory) {
+        if (directory == null || directory.isEmpty()) {
+            throw new ContractException(ResourceError.NULL_DIRECTORY_STRING);
+        }
+
         Path maybePath = Path.of(directory);
 
         validateDirectoryPath(maybePath);
@@ -243,6 +304,10 @@ public class ResourceHelper {
      *                               directory path refers to a file
      */
     public static Path validateDirectoryPath(Path directoryPath) {
+        if (directoryPath == null) {
+            throw new ContractException(ResourceError.NULL_DIRECTORY_PATH);
+        }
+
         File maybeFile = directoryPath.toFile();
 
         if (maybeFile.isFile()) {
