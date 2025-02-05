@@ -61,6 +61,14 @@ public class AT_ResourceHelper {
         });
 
         assertTrue(runtimeException.getCause() instanceof URISyntaxException);
+
+        // preconditions
+        // classRef is null
+        ContractException contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.getResourceDir(null);
+        });
+
+        assertEquals(ResourceError.NULL_CLASS_REF, contractException.getErrorType());
     }
 
     @Test
@@ -71,6 +79,15 @@ public class AT_ResourceHelper {
         Path newPath = ResourceHelper.createDirectory(path);
 
         assertTrue(newPath.toFile().exists());
+
+        // preconditions
+        // directory path is null
+        Path badPath = null;
+        ContractException contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createDirectory(badPath);
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_PATH, contractException.getErrorType());
     }
 
     @Test
@@ -81,6 +98,22 @@ public class AT_ResourceHelper {
         Path newPath = ResourceHelper.createDirectory(path.toString());
 
         assertTrue(newPath.toFile().exists());
+
+        // preconditions
+        // directory string is null
+        String badPath = null;
+        ContractException contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createDirectory(badPath);
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_STRING, contractException.getErrorType());
+
+        // directory string is empty
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createDirectory("");
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_STRING, contractException.getErrorType());
     }
 
     @Test
@@ -91,6 +124,29 @@ public class AT_ResourceHelper {
         Path newPath = ResourceHelper.createDirectory(path, "additional-folder");
 
         assertTrue(newPath.toFile().exists());
+
+        // preconditions
+        // sub directory path is null
+        ContractException contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createDirectory(path, null);
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_STRING, contractException.getErrorType());
+
+        // sub directory string is empty
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createDirectory(path, "");
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_STRING, contractException.getErrorType());
+
+        // directory path is null
+        Path badPath = null;
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createDirectory(badPath, "test");
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_PATH, contractException.getErrorType());
     }
 
     @Test
@@ -101,6 +157,35 @@ public class AT_ResourceHelper {
         Path newPath = ResourceHelper.createDirectory(path.toString(), "additional-folder");
 
         assertTrue(newPath.toFile().exists());
+
+        // preconditions
+        // sub directory path is null
+        ContractException contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createDirectory("test", null);
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_STRING, contractException.getErrorType());
+
+        // sub directory string is empty
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createDirectory("test", "");
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_STRING, contractException.getErrorType());
+
+        // directory string is null
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createDirectory("test", null);
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_STRING, contractException.getErrorType());
+
+        // directory string is empty
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createDirectory("", "test");
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_STRING, contractException.getErrorType());
     }
 
     @Test
@@ -126,6 +211,28 @@ public class AT_ResourceHelper {
         assertTrue(runtimeException.getCause() instanceof IOException);
 
         newPath.resolve(fileName).toFile().delete();
+
+        // file name path is null
+        ContractException contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createFile(path, null);
+        });
+
+        assertEquals(ResourceError.NULL_FILE_STRING, contractException.getErrorType());
+
+        // file name string is empty
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createFile(path, "");
+        });
+
+        assertEquals(ResourceError.NULL_FILE_STRING, contractException.getErrorType());
+
+        // directory path is null
+        Path badPath = null;
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createFile(badPath, "test");
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_PATH, contractException.getErrorType());
     }
 
     @Test
@@ -151,6 +258,28 @@ public class AT_ResourceHelper {
         assertTrue(runtimeException.getCause() instanceof IOException);
 
         newPath.resolve(fileName).toFile().delete();
+
+        // file name path is null
+        ContractException contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createNewFile(path, null);
+        });
+
+        assertEquals(ResourceError.NULL_FILE_STRING, contractException.getErrorType());
+
+        // file name string is empty
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createNewFile(path, "");
+        });
+
+        assertEquals(ResourceError.NULL_FILE_STRING, contractException.getErrorType());
+
+        // directory path is null
+        Path badPath = null;
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createNewFile(badPath, "test");
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_PATH, contractException.getErrorType());
     }
 
     @Test
@@ -175,12 +304,27 @@ public class AT_ResourceHelper {
 
         // file does not exist
         contractException = assertThrows(ContractException.class, () -> {
-            ResourceHelper.validateFile(dirPath.resolve("unknwonfile.txt"));
+            ResourceHelper.validateFile(dirPath.resolve("unknown_file.txt"));
         });
 
         assertEquals(ResourceError.UNKNOWN_FILE, contractException.getErrorType());
 
         dirPath.resolve(fileName).toFile().delete();
+
+        // file name path is null
+        String badPath = null;
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.validateFile(badPath);
+        });
+
+        assertEquals(ResourceError.NULL_FILE_STRING, contractException.getErrorType());
+
+        // file name string is empty
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.validateFile("");
+        });
+
+        assertEquals(ResourceError.NULL_FILE_STRING, contractException.getErrorType());
     }
 
     @Test
@@ -205,12 +349,20 @@ public class AT_ResourceHelper {
 
         // file does not exist
         contractException = assertThrows(ContractException.class, () -> {
-            ResourceHelper.validateFile(dirPath.resolve("unknwonfile.txt"));
+            ResourceHelper.validateFile(dirPath.resolve("unknown_file.txt"));
         });
 
         assertEquals(ResourceError.UNKNOWN_FILE, contractException.getErrorType());
 
         dirPath.resolve(fileName).toFile().delete();
+
+        // file name path is null
+        Path badPath = null;
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.validateFile(badPath);
+        });
+
+        assertEquals(ResourceError.NULL_FILE_PATH, contractException.getErrorType());
     }
 
     @Test
@@ -255,6 +407,21 @@ public class AT_ResourceHelper {
 
         resourceDir.resolve(fileName).toFile().delete();
         dirPath.resolve(fileName).toFile().delete();
+
+        // file name path is null
+        String badPath = null;
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.validateFile(badPath);
+        });
+
+        assertEquals(ResourceError.NULL_FILE_STRING, contractException.getErrorType());
+
+        // file name string is empty
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.validateFile("");
+        });
+
+        assertEquals(ResourceError.NULL_FILE_STRING, contractException.getErrorType());
     }
 
     @Test
@@ -299,6 +466,14 @@ public class AT_ResourceHelper {
 
         resourceDir.resolve(fileName).toFile().delete();
         dirPath.resolve(fileName).toFile().delete();
+
+        // file name path is null
+        Path badPath = null;
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.validateFile(badPath);
+        });
+
+        assertEquals(ResourceError.NULL_FILE_PATH, contractException.getErrorType());
     }
 
     @Test
@@ -327,6 +502,20 @@ public class AT_ResourceHelper {
         assertEquals(ResourceError.DIRECTORY_PATH_IS_FILE, contractException.getErrorType());
 
         dirPath.resolve(fileName).toFile().delete();
+
+        String badPath = null;
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createDirectory(badPath);
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_STRING, contractException.getErrorType());
+
+        // directory string is empty
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createDirectory("");
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_STRING, contractException.getErrorType());
     }
 
     @Test
@@ -355,5 +544,13 @@ public class AT_ResourceHelper {
         assertEquals(ResourceError.DIRECTORY_PATH_IS_FILE, contractException.getErrorType());
 
         dirPath.resolve(fileName).toFile().delete();
+
+        // directory path is null
+        Path badPath = null;
+        contractException = assertThrows(ContractException.class, () -> {
+            ResourceHelper.createDirectory(badPath);
+        });
+
+        assertEquals(ResourceError.NULL_DIRECTORY_PATH, contractException.getErrorType());
     }
 }
