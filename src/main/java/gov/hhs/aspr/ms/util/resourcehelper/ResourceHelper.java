@@ -221,11 +221,11 @@ public class ResourceHelper {
         File file = filePath.toFile();
 
         if (file.isDirectory()) {
-            throw new ContractException(ResourceError.FILE_PATH_IS_DIRECTORY);
+            throw new ContractException(ResourceError.FILE_PATH_IS_DIRECTORY,file);
         }
 
         if (!file.exists()) {
-            throw new ContractException(ResourceError.UNKNOWN_FILE);
+            throw new ContractException(ResourceError.UNKNOWN_FILE,file);
         }
 
         return filePath;
@@ -265,7 +265,7 @@ public class ResourceHelper {
         File file = filePath.toFile();
 
         if (file.isDirectory()) {
-            throw new ContractException(ResourceError.FILE_PATH_IS_DIRECTORY);
+            throw new ContractException(ResourceError.FILE_PATH_IS_DIRECTORY,file);
         }
 
         if (!file.exists()) {
@@ -311,7 +311,7 @@ public class ResourceHelper {
         File maybeFile = directoryPath.toFile();
 
         if (maybeFile.isFile()) {
-            throw new ContractException(ResourceError.DIRECTORY_PATH_IS_FILE);
+            throw new ContractException(ResourceError.DIRECTORY_PATH_IS_FILE,maybeFile);
         }
 
         if (!maybeFile.exists()) {
