@@ -7,11 +7,14 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
+import java.lang.reflect.RecordComponent;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -54,10 +57,37 @@ public class MetaInfoGenerator {
 	}
 
 	private MetaInfoContainer.Builder warningContainerBuilder = MetaInfoContainer.builder();
-
+	
 	private void probeClass(Class<?> c) {
 		final Method[] methods = c.getMethods();
 		boolean isEnum = c.isEnum();
+
+		Set<Method> recordMethods = new HashSet<>();
+		Constructor<?> recordConstructor = null;
+
+		if (c.isRecord()) {
+			RecordComponent[] recordComponents = c.getRecordComponents();
+
+			for (RecordComponent rc : recordComponents) {
+				recordMethods.add(rc.getAccessor());
+			}
+
+			for (Method m : methods) {
+				if (m.getName().equals("equals") || m.getName().equals("hashCode") || m.getName().equals("toString")) {
+					if(m.getAnnotation(Override.class) == null) {
+						recordMethods.add(m);
+					}
+				}
+			}
+
+			Class<?>[] componentTypes = Arrays.stream(recordComponents).map(rc -> rc.getType())
+					.toArray(Class<?>[]::new);
+			try {
+				recordConstructor = c.getDeclaredConstructor(componentTypes);
+			} catch (NoSuchMethodException | SecurityException e) {
+				throw new RuntimeException(e);
+			}
+		}
 
 		for (final Method method : methods) {
 
@@ -66,6 +96,7 @@ public class MetaInfoGenerator {
 			addRec &= !method.isBridge();
 			addRec &= !method.isSynthetic();
 			addRec &= !(Modifier.isAbstract(method.getModifiers()) && !isEnum);
+			addRec &= !recordMethods.contains(method);
 
 			if (isEnum) {
 				if (method.getName().equals("values")) {
@@ -92,6 +123,8 @@ public class MetaInfoGenerator {
 		for (final Constructor<?> constructor : constructors) {
 			boolean addRec = constructor.getDeclaringClass().equals(c);
 			addRec &= !constructor.isSynthetic();
+			addRec &= !(recordConstructor != null && constructor.equals(recordConstructor));
+
 			if (addRec) {
 				sourceConstructors.add(constructor);
 			}
@@ -221,7 +254,7 @@ public class MetaInfoGenerator {
 
 		final Method[] methods = c.getMethods();
 		for (final Method testMethod : methods) {
-			
+
 			final Test test = testMethod.getAnnotation(Test.class);
 			final UnitTestMethod unitTestMethod = testMethod.getAnnotation(UnitTestMethod.class);
 			final UnitTestConstructor unitTestConstructor = testMethod.getAnnotation(UnitTestConstructor.class);
