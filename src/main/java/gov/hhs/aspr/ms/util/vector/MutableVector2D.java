@@ -2,8 +2,6 @@ package gov.hhs.aspr.ms.util.vector;
 
 import org.apache.commons.math3.util.FastMath;
 
-import gov.hhs.aspr.ms.util.spherical.Chirality;
-
 /**
  * A mutable 2-dimensional vector class supporting common 2D transforms.
  */
@@ -510,7 +508,7 @@ public final class MutableVector2D {
 		y = 0;
 	}
 
-	public final static double PERPENDICULAR_ANGLE_TOLERANCE = 1E-13;
+	public final static double PERPENDICULAR_ANGLE_TOLERANCE = 1E-8;
 
 	/**
 	 * Returns true if and only if this {@link MutableVector2D} is perpendicular to

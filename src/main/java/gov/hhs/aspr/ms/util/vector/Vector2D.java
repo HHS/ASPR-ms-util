@@ -2,7 +2,6 @@ package gov.hhs.aspr.ms.util.vector;
 
 import org.apache.commons.math3.util.FastMath;
 
-import gov.hhs.aspr.ms.util.spherical.Chirality;
 import net.jcip.annotations.Immutable;
 
 /**
@@ -384,7 +383,7 @@ public final class Vector2D {
 		return "Vector2D [x=" + x + ", y=" + y + "]";
 	}
 
-	public final static double PERPENDICULAR_ANGLE_TOLERANCE = 1E-13;
+	public final static double PERPENDICULAR_ANGLE_TOLERANCE = 1E-8;
 
 	/**
 	 * Returns true if and only if this {@link Vector2D} is perpendicular to the

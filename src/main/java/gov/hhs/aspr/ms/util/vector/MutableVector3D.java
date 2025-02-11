@@ -942,7 +942,7 @@ public final class MutableVector3D {
 		assign(0, 0, 0);
 	}
 
-	public final static double PERPENDICULAR_ANGLE_TOLERANCE = 1E-13;
+	public final static double PERPENDICULAR_ANGLE_TOLERANCE = 1E-8;
 
 	/**
 	 * Returns true if and only if this {@link MutableVector3D} is perpendicular to

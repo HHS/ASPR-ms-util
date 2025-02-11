@@ -12,7 +12,6 @@ import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestField;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
 import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
-import gov.hhs.aspr.ms.util.spherical.Chirality;
 
 
 public class AT_Vector2D {
@@ -28,7 +27,7 @@ public class AT_Vector2D {
 	@Test
 	@UnitTestField(target = Vector2D.class, name = "PERPENDICULAR_ANGLE_TOLERANCE")
 	public void testPerpendicularAngleTolerance() {
-		assertEquals(1E-13, MutableVector2D.PERPENDICULAR_ANGLE_TOLERANCE, 0);
+		assertEquals(1E-8, MutableVector2D.PERPENDICULAR_ANGLE_TOLERANCE, 0);
 	}
 
 	/**

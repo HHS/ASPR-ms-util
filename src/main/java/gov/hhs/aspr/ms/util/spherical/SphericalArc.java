@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.apache.commons.math3.util.FastMath;
 
+import gov.hhs.aspr.ms.util.vector.Chirality;
 import gov.hhs.aspr.ms.util.vector.MutableVector3D;
 import gov.hhs.aspr.ms.util.vector.Vector3D;
 import net.jcip.annotations.Immutable;

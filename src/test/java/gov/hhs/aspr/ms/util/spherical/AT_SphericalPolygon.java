@@ -18,6 +18,7 @@ import gov.hhs.aspr.ms.util.annotations.UnitTag;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
 import gov.hhs.aspr.ms.util.earth.Earth;
 import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
+import gov.hhs.aspr.ms.util.vector.Chirality;
 import gov.hhs.aspr.ms.util.vector.Vector3D;
 import gov.hhs.aspr.ms.util.earth.LatLon;
 
