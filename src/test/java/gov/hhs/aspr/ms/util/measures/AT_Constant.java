@@ -26,9 +26,9 @@ public class AT_Constant {
 	public void testConstant() {
 		// postcondition tests covered by the remaining tests
 
-		Measure LENGTH = new Measure("length");
+		UnitType LENGTH = new UnitType("length");
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 
 		Quantity quantity = new Quantity(METER, 103.34778);
 		// precondition test: if the long name is null
@@ -67,50 +67,50 @@ public class AT_Constant {
 	 */
 	private Constant getRandomConstant(long seed) {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		Measure MASS = new Measure("mass");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
-		List<BaseUnit> timeUnits = new ArrayList<>();
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
+		List<Unit> timeUnits = new ArrayList<>();
 		timeUnits.add(SECOND);
 		timeUnits.add(MINUTE);
 		timeUnits.add(HOUR);
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
-		List<BaseUnit> distanceUnits = new ArrayList<>();
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
+		List<Unit> distanceUnits = new ArrayList<>();
 		distanceUnits.add(METER);
 		distanceUnits.add(CM);
 		distanceUnits.add(INCH);
 		distanceUnits.add(FOOT);
 		distanceUnits.add(MILE);
 
-		BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
-		BaseUnit POUND = new BaseUnit(KILOGRAM, 0.45359237, "pound", "lb");
-		BaseUnit OUNCE = new BaseUnit(POUND, 1.0 / 16, "ounce", "oz");
-		List<BaseUnit> massUnits = new ArrayList<>();
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
+		Unit POUND = new Unit(KILOGRAM, 0.45359237, "pound", "lb");
+		Unit OUNCE = new Unit(POUND, 1.0 / 16, "ounce", "oz");
+		List<Unit> massUnits = new ArrayList<>();
 		massUnits.add(KILOGRAM);
 		massUnits.add(POUND);
 		massUnits.add(OUNCE);
 
-		BaseUnit timeUnit = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
-		BaseUnit distanceUnit = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
-		BaseUnit massUnit = massUnits.get(randomGenerator.nextInt(massUnits.size()));
+		Unit timeUnit = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
+		Unit distanceUnit = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
+		Unit massUnit = massUnits.get(randomGenerator.nextInt(massUnits.size()));
 
 		int timePower = randomGenerator.nextInt(5) + 1 * (randomGenerator.nextInt(2) * 2 - 1);
 		int distancePower = randomGenerator.nextInt(5) + 1 * (randomGenerator.nextInt(2) * 2 - 1);
 		int massPower = randomGenerator.nextInt(5) + 1 * (randomGenerator.nextInt(2) * 2 - 1);
 
 		ComposedUnit composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(timeUnit, timePower)//
-				.setBaseUnit(distanceUnit, distancePower)//
-				.setBaseUnit(massUnit, massPower)//
+				.setUnit(timeUnit, timePower)//
+				.setUnit(distanceUnit, distancePower)//
+				.setUnit(massUnit, massPower)//
 				.build();
 
 		double value = randomGenerator.nextDouble();
@@ -162,64 +162,64 @@ public class AT_Constant {
 	/*
 	 * Creates two randomized quantities using several time, length and mass units
 	 * to powers in [-5,-1]U[1,5]. They will have random values, but will agree on
-	 * measures and powers.
+	 * unitTypes and powers.
 	 */
 	private Pair<Quantity, Quantity> getRandomCompatibleQuanties(long seed) {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		Measure MASS = new Measure("mass");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
-		List<BaseUnit> timeUnits = new ArrayList<>();
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
+		List<Unit> timeUnits = new ArrayList<>();
 		timeUnits.add(SECOND);
 		timeUnits.add(MINUTE);
 		timeUnits.add(HOUR);
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
-		List<BaseUnit> distanceUnits = new ArrayList<>();
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
+		List<Unit> distanceUnits = new ArrayList<>();
 		distanceUnits.add(METER);
 		distanceUnits.add(CM);
 		distanceUnits.add(INCH);
 		distanceUnits.add(FOOT);
 		distanceUnits.add(MILE);
 
-		BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
-		BaseUnit POUND = new BaseUnit(KILOGRAM, 0.45359237, "pound", "lb");
-		BaseUnit OUNCE = new BaseUnit(POUND, 1.0 / 16, "ounce", "oz");
-		List<BaseUnit> massUnits = new ArrayList<>();
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
+		Unit POUND = new Unit(KILOGRAM, 0.45359237, "pound", "lb");
+		Unit OUNCE = new Unit(POUND, 1.0 / 16, "ounce", "oz");
+		List<Unit> massUnits = new ArrayList<>();
 		massUnits.add(KILOGRAM);
 		massUnits.add(POUND);
 		massUnits.add(OUNCE);
 
-		BaseUnit timeUnit1 = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
-		BaseUnit distanceUnit1 = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
-		BaseUnit massUnit1 = massUnits.get(randomGenerator.nextInt(massUnits.size()));
+		Unit timeUnit1 = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
+		Unit distanceUnit1 = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
+		Unit massUnit1 = massUnits.get(randomGenerator.nextInt(massUnits.size()));
 
-		BaseUnit timeUnit2 = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
-		BaseUnit distanceUnit2 = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
-		BaseUnit massUnit2 = massUnits.get(randomGenerator.nextInt(massUnits.size()));
+		Unit timeUnit2 = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
+		Unit distanceUnit2 = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
+		Unit massUnit2 = massUnits.get(randomGenerator.nextInt(massUnits.size()));
 
 		int timePower = randomGenerator.nextInt(5) + 1 * (randomGenerator.nextInt(2) * 2 - 1);
 		int distancePower = randomGenerator.nextInt(5) + 1 * (randomGenerator.nextInt(2) * 2 - 1);
 		int massPower = randomGenerator.nextInt(5) + 1 * (randomGenerator.nextInt(2) * 2 - 1);
 
 		ComposedUnit composedUnit1 = ComposedUnit.builder()//
-				.setBaseUnit(timeUnit1, timePower)//
-				.setBaseUnit(distanceUnit1, distancePower)//
-				.setBaseUnit(massUnit1, massPower)//
+				.setUnit(timeUnit1, timePower)//
+				.setUnit(distanceUnit1, distancePower)//
+				.setUnit(massUnit1, massPower)//
 				.build();
 
 		ComposedUnit composedUnit2 = ComposedUnit.builder()//
-				.setBaseUnit(timeUnit2, timePower)//
-				.setBaseUnit(distanceUnit2, distancePower)//
-				.setBaseUnit(massUnit2, massPower)//
+				.setUnit(timeUnit2, timePower)//
+				.setUnit(distanceUnit2, distancePower)//
+				.setUnit(massUnit2, massPower)//
 				.build();
 
 		double value1 = randomGenerator.nextDouble();
@@ -259,21 +259,21 @@ public class AT_Constant {
 	 */
 	private Quantity getRandomizedTimeQuanity(long seed) {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
-		Measure measure = new Measure("TIME");
+		UnitType unitType = new UnitType("TIME");
 		
-		BaseUnit SECOND = new BaseUnit(measure, "second", "sec");
-		BaseUnit MINUTE = new BaseUnit(SECOND,60,"minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE,60,"hour", "hr");
-		BaseUnit DAY = new BaseUnit(HOUR,24,"day", "dy");
+		Unit SECOND = new Unit(unitType, "second", "sec");
+		Unit MINUTE = new Unit(SECOND,60,"minute", "min");
+		Unit HOUR = new Unit(MINUTE,60,"hour", "hr");
+		Unit DAY = new Unit(HOUR,24,"day", "dy");
 		
-		List<BaseUnit> baseUnits = new ArrayList<>();
-		baseUnits.add(SECOND);
-		baseUnits.add(MINUTE);
-		baseUnits.add(HOUR);
-		baseUnits.add(DAY);
+		List<Unit> units = new ArrayList<>();
+		units.add(SECOND);
+		units.add(MINUTE);
+		units.add(HOUR);
+		units.add(DAY);
 		
-		BaseUnit baseUnit = baseUnits.get(randomGenerator.nextInt(baseUnits.size()));
-		return new Quantity(baseUnit, randomGenerator.nextDouble()/10+0.9);
+		Unit unit = units.get(randomGenerator.nextInt(units.size()));
+		return new Quantity(unit, randomGenerator.nextDouble()/10+0.9);
 	}
 
 	@Test
@@ -399,16 +399,16 @@ public class AT_Constant {
 	@UnitTestMethod(target = Constant.class, name = "toString", args = {})
 	public void testToString() {
 
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		ComposedUnit MPSS = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).build();
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		ComposedUnit MPSS = ComposedUnit.builder().setUnit(METER, 1).setUnit(SECOND, -2).build();
 		Quantity quantity = new Quantity(MPSS, 9.80665);
 
 		Constant EARTH_GRAVITY = new Constant(quantity, "earth_gravity", "g");
 
-		String expectedValue = "Constant [longName=earth_gravity, shortName=g, quantity=Quantity [composedUnit=ComposedUnit [value=1.0, longName=null, shortName=null, measures={Measure [name=length]=UnitPower [baseUnit=BaseUnit [measure=Measure [name=length], value=1.0, name=meter, shortName=m], power=1], Measure [name=time]=UnitPower [baseUnit=BaseUnit [measure=Measure [name=time], value=1.0, name=second, shortName=s], power=-2]}], value=9.80665]]";
+		String expectedValue = "Constant [longName=earth_gravity, shortName=g, quantity=Quantity [composedUnit=ComposedUnit [value=1.0, longName=null, shortName=null, unitTypes={UnitType [name=length]=UnitPower [unit=Unit [unitType=UnitType [name=length], value=1.0, name=meter, shortName=m], power=1], UnitType [name=time]=UnitPower [unit=Unit [unitType=UnitType [name=time], value=1.0, name=second, shortName=s], power=-2]}], value=9.80665]]";
 		String actualValue = EARTH_GRAVITY.toString();
 		assertEquals(expectedValue, actualValue);
 	}
