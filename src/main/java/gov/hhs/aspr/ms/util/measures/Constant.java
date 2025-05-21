@@ -3,7 +3,7 @@ package gov.hhs.aspr.ms.util.measures;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
- * Represents a constant quantity with long and short names.
+ * Represents a constant Quantity with long and short names.
  */
 public final class Constant {
 	private final String longName;
@@ -11,23 +11,23 @@ public final class Constant {
 	private final Quantity quantity;
 
 	/**
-	 * Constructs the Constant from the quantity and names
+	 * Constructs the Constant from the Quantity and names
 	 * 
 	 * @throws ContractException
-	 *                           <ul>
-	 *                           <li>{@linkplain MeasuresError#NULL_UNIT_NAME } if
-	 *                           the long longName is null</li>
-	 *                           <li>{@linkplain MeasuresError#BLANK_UNIT_NAME } if
-	 *                           the long longName is empty or contains only white
-	 *                           space characters</li>
-	 *                           <li>{@linkplain MeasuresError#NULL_UNIT_NAME } if
-	 *                           the short longName is null</li>
-	 *                           <li>{@linkplain MeasuresError#BLANK_UNIT_NAME } if
-	 *                           the short longName is empty or contains only white
-	 *                           space characters</li>
-	 *                           <li>{@linkplain MeasuresError#NULL_QUANTITY } if
-	 *                           the quantity is null</li>
-	 *                           </ul>
+	 *                               <ul>
+	 *                               <li>{@linkplain MeasuresError#NULL_UNIT_NAME }
+	 *                               if the long longName is null</li>
+	 *                               <li>{@linkplain MeasuresError#BLANK_UNIT_NAME }
+	 *                               if the long longName is empty or contains only
+	 *                               white space characters</li>
+	 *                               <li>{@linkplain MeasuresError#NULL_UNIT_NAME }
+	 *                               if the short longName is null</li>
+	 *                               <li>{@linkplain MeasuresError#BLANK_UNIT_NAME }
+	 *                               if the short longName is empty or contains only
+	 *                               white space characters</li>
+	 *                               <li>{@linkplain MeasuresError#NULL_QUANTITY }
+	 *                               if the quantity is null</li>
+	 *                               </ul>
 	 */
 	public Constant(Quantity quantity, String longName, String shortName) {
 
@@ -71,7 +71,7 @@ public final class Constant {
 	}
 
 	/**
-	 * Returns the quantity
+	 * Returns the Quantity
 	 */
 	public Quantity getQuantity() {
 		return quantity;
@@ -91,7 +91,7 @@ public final class Constant {
 	}
 
 	/**
-	 * Two constants are equal if and only if their quantities and names are equal
+	 * Two Constants are equal if and only if their Quantities and names are equal
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -127,15 +127,15 @@ public final class Constant {
 	}
 
 	/**
-	 * Returns the string representation of this constant. Example: earth gravity =
+	 * Returns the string representation of this Constant. Example: earth gravity =
 	 * 9.80665 meters per second squared.
-	 * 
+	 * <p>
 	 * Constant [longName=earth_gravity, shortName=g, quantity=Quantity
 	 * [composedUnit=ComposedUnit [value=1.0, longName=null, shortName=null,
-	 * measures={Measure [name=length]=UnitPower [baseUnit=BaseUnit [measure=Measure
+	 * unitTypes={Measure [name=length]=UnitPower [unit=Unit [unitType=Measure
 	 * [name=length], value=1.0, name=meter, shortName=m], power=1], Measure
-	 * [name=time]=UnitPower [baseUnit=BaseUnit [measure=Measure [name=time],
-	 * value=1.0, name=second, shortName=s], power=-2]}], value=9.80665]]
+	 * [name=time]=UnitPower [unit=Unit [unitType=Measure [name=time], value=1.0,
+	 * name=second, shortName=s], power=-2]}], value=9.80665]]
 	 */
 	@Override
 	public String toString() {
@@ -151,7 +151,7 @@ public final class Constant {
 	}
 
 	/**
-	 * Returns the constant represented as its value concatenated with its short
+	 * Returns the Constant represented as its value concatenated with its short
 	 * name. Example, 12 mph
 	 */
 	public String getShortString(Quantity quantity) {
@@ -160,7 +160,7 @@ public final class Constant {
 	}
 
 	/**
-	 * Returns the constant represented as its value concatenated with its short
+	 * Returns the Constant represented as its value concatenated with its short
 	 * name. Example, 12 miles per hour
 	 */
 	public String getLongString(Quantity quantity) {
@@ -169,24 +169,24 @@ public final class Constant {
 	}
 
 	/**
-	 * Returns the value of the quantity resulting from the division of the given
-	 * quantity and the quantity contained in this constant.
+	 * Returns the value of the Quantity resulting from the division of the given
+	 * Quantity and the Quantity contained in this Constant.
 	 * 
 	 * @throws ContractException
-	 *                           <ul>
-	 *                           <li>{@linkplain MeasuresError#NULL_QUANTITY} if the
-	 *                           quantity is null</li>
-	 *                           <li>{@linkplain MeasuresError#INCOMPATIBLE_MEASURES}
-	 *                           if the quantity does not have the same measures to
-	 *                           the same powers</li>
-	 *                           </ul>
+	 *                               <ul>
+	 *                               <li>{@linkplain MeasuresError#NULL_QUANTITY} if
+	 *                               the quantity is null</li>
+	 *                               <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
+	 *                               if the quantity does not have the same
+	 *                               UnitTypes to the same powers</li>
+	 *                               </ul>
 	 */
 	public double getConvertedValue(Quantity quantity) {
 		if (quantity == null) {
 			throw new ContractException(MeasuresError.NULL_QUANTITY);
 		}
 		if (!quantity.getComposedUnit().isCompatible(this.quantity.getComposedUnit())) {
-			throw new ContractException(MeasuresError.INCOMPATIBLE_MEASURES);
+			throw new ContractException(MeasuresError.INCOMPATIBLE_UNIT_TYPES);
 		}
 
 		double v1 = this.quantity.getValue() * this.quantity.getComposedUnit().getValue();

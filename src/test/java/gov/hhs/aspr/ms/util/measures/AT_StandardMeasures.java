@@ -231,20 +231,20 @@ public class AT_StandardMeasures {
 	@UnitTestField(target = StandardMeasures.class, name = "MPH")
 	public void test_MPH() {
 		assertInstanceOf(ComposedUnit.class, StandardMeasures.MPH);
-		assertEquals(2, StandardMeasures.MPH.getBaseUnits().size());
+		assertEquals(2, StandardMeasures.MPH.getUnits().size());
 		// mile
-		Optional<Unit> optionalUnit = StandardMeasures.MPH.getBaseUnit(StandardMeasures.MILE.getMeasure());
+		Optional<Unit> optionalUnit = StandardMeasures.MPH.getUnit(StandardMeasures.MILE.getUnitType());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.MILE, optionalUnit.get());
-		Optional<Integer> optionalPower = StandardMeasures.MPH.getPower(StandardMeasures.MILE.getMeasure());
+		Optional<Integer> optionalPower = StandardMeasures.MPH.getPower(StandardMeasures.MILE.getUnitType());
 		assertTrue(optionalPower.isPresent());
 		assertEquals(1, optionalPower.get());
 
 		// hour
-		optionalUnit = StandardMeasures.MPH.getBaseUnit(StandardMeasures.HOUR.getMeasure());
+		optionalUnit = StandardMeasures.MPH.getUnit(StandardMeasures.HOUR.getUnitType());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.HOUR, optionalUnit.get());
-		optionalPower = StandardMeasures.MPH.getPower(StandardMeasures.HOUR.getMeasure());
+		optionalPower = StandardMeasures.MPH.getPower(StandardMeasures.HOUR.getUnitType());
 		assertTrue(optionalPower.isPresent());
 		assertEquals(-1, optionalPower.get());
 	}
@@ -253,20 +253,20 @@ public class AT_StandardMeasures {
 	@UnitTestField(target = StandardMeasures.class, name = "MPS")
 	public void test_MPS() {
 		assertInstanceOf(ComposedUnit.class, StandardMeasures.MPS);
-		assertEquals(2, StandardMeasures.MPS.getBaseUnits().size());
+		assertEquals(2, StandardMeasures.MPS.getUnits().size());
 		// meter
-		Optional<Unit> optionalUnit = StandardMeasures.MPS.getBaseUnit(StandardMeasures.METER.getMeasure());
+		Optional<Unit> optionalUnit = StandardMeasures.MPS.getUnit(StandardMeasures.METER.getUnitType());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.METER, optionalUnit.get());
-		Optional<Integer> optionalPower = StandardMeasures.MPS.getPower(StandardMeasures.METER.getMeasure());
+		Optional<Integer> optionalPower = StandardMeasures.MPS.getPower(StandardMeasures.METER.getUnitType());
 		assertTrue(optionalPower.isPresent());
 		assertEquals(1, optionalPower.get());
 
 		// second
-		optionalUnit = StandardMeasures.MPS.getBaseUnit(StandardMeasures.SECOND.getMeasure());
+		optionalUnit = StandardMeasures.MPS.getUnit(StandardMeasures.SECOND.getUnitType());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.SECOND, optionalUnit.get());
-		optionalPower = StandardMeasures.MPS.getPower(StandardMeasures.SECOND.getMeasure());
+		optionalPower = StandardMeasures.MPS.getPower(StandardMeasures.SECOND.getUnitType());
 		assertTrue(optionalPower.isPresent());
 		assertEquals(-1, optionalPower.get());
 	}
@@ -275,22 +275,22 @@ public class AT_StandardMeasures {
 	@UnitTestField(target = StandardMeasures.class, name = "ACCELERATION_MPSS")
 	public void test_ACCELERATION_MPSS() {
 		assertInstanceOf(ComposedUnit.class, StandardMeasures.ACCELERATION_MPSS);
-		assertEquals(2, StandardMeasures.ACCELERATION_MPSS.getBaseUnits().size());
+		assertEquals(2, StandardMeasures.ACCELERATION_MPSS.getUnits().size());
 		// meter
 		Optional<Unit> optionalUnit = StandardMeasures.ACCELERATION_MPSS
-				.getBaseUnit(StandardMeasures.METER.getMeasure());
+				.getUnit(StandardMeasures.METER.getUnitType());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.METER, optionalUnit.get());
 		Optional<Integer> optionalPower = StandardMeasures.ACCELERATION_MPSS
-				.getPower(StandardMeasures.METER.getMeasure());
+				.getPower(StandardMeasures.METER.getUnitType());
 		assertTrue(optionalPower.isPresent());
 		assertEquals(1, optionalPower.get());
 
 		// second
-		optionalUnit = StandardMeasures.ACCELERATION_MPSS.getBaseUnit(StandardMeasures.SECOND.getMeasure());
+		optionalUnit = StandardMeasures.ACCELERATION_MPSS.getUnit(StandardMeasures.SECOND.getUnitType());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.SECOND, optionalUnit.get());
-		optionalPower = StandardMeasures.ACCELERATION_MPSS.getPower(StandardMeasures.SECOND.getMeasure());
+		optionalPower = StandardMeasures.ACCELERATION_MPSS.getPower(StandardMeasures.SECOND.getUnitType());
 		assertTrue(optionalPower.isPresent());
 		assertEquals(-2, optionalPower.get());
 	}
@@ -304,22 +304,22 @@ public class AT_StandardMeasures {
 
 		assertEquals(9.80665, quantity.getValue());
 
-		assertEquals(2, composedUnit.getBaseUnits().size());
+		assertEquals(2, composedUnit.getUnits().size());
 
 		// meter
-		Optional<Unit> optionalUnit = composedUnit.getBaseUnit(StandardMeasures.METER.getMeasure());
+		Optional<Unit> optionalUnit = composedUnit.getUnit(StandardMeasures.METER.getUnitType());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.METER, optionalUnit.get());
 		Optional<Integer> optionalPower = StandardMeasures.ACCELERATION_MPSS
-				.getPower(StandardMeasures.METER.getMeasure());
+				.getPower(StandardMeasures.METER.getUnitType());
 		assertTrue(optionalPower.isPresent());
 		assertEquals(1, optionalPower.get());
 
 		// second
-		optionalUnit = composedUnit.getBaseUnit(StandardMeasures.SECOND.getMeasure());
+		optionalUnit = composedUnit.getUnit(StandardMeasures.SECOND.getUnitType());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.SECOND, optionalUnit.get());
-		optionalPower = StandardMeasures.ACCELERATION_MPSS.getPower(StandardMeasures.SECOND.getMeasure());
+		optionalPower = StandardMeasures.ACCELERATION_MPSS.getPower(StandardMeasures.SECOND.getUnitType());
 		assertTrue(optionalPower.isPresent());
 		assertEquals(-2, optionalPower.get());
 	}
@@ -328,12 +328,12 @@ public class AT_StandardMeasures {
 	@UnitTestField(target = StandardMeasures.class, name = "ML")
 	public void test_ML() {
 		assertInstanceOf(ComposedUnit.class, StandardMeasures.ML);
-		assertEquals(1, StandardMeasures.ML.getBaseUnits().size());
+		assertEquals(1, StandardMeasures.ML.getUnits().size());
 		// centimeter
-		Optional<Unit> optionalUnit = StandardMeasures.ML.getBaseUnit(StandardMeasures.CM.getMeasure());
+		Optional<Unit> optionalUnit = StandardMeasures.ML.getUnit(StandardMeasures.CM.getUnitType());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.CM, optionalUnit.get());
-		Optional<Integer> optionalPower = StandardMeasures.ML.getPower(StandardMeasures.CM.getMeasure());
+		Optional<Integer> optionalPower = StandardMeasures.ML.getPower(StandardMeasures.CM.getUnitType());
 		assertTrue(optionalPower.isPresent());
 		assertEquals(3, optionalPower.get());
 
@@ -343,12 +343,12 @@ public class AT_StandardMeasures {
 	@UnitTestField(target = StandardMeasures.class, name = "LITER")
 	public void test_LITER() {
 		assertInstanceOf(ComposedUnit.class, StandardMeasures.LITER);
-		assertEquals(1, StandardMeasures.LITER.getBaseUnits().size());
+		assertEquals(1, StandardMeasures.LITER.getUnits().size());
 		// decimeter
-		Optional<Unit> optionalUnit = StandardMeasures.LITER.getBaseUnit(StandardMeasures.DM.getMeasure());
+		Optional<Unit> optionalUnit = StandardMeasures.LITER.getUnit(StandardMeasures.DM.getUnitType());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.DM, optionalUnit.get());
-		Optional<Integer> optionalPower = StandardMeasures.LITER.getPower(StandardMeasures.DM.getMeasure());
+		Optional<Integer> optionalPower = StandardMeasures.LITER.getPower(StandardMeasures.DM.getUnitType());
 		assertTrue(optionalPower.isPresent());
 		assertEquals(3, optionalPower.get());
 

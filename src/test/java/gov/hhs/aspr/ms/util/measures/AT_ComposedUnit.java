@@ -24,8 +24,8 @@ import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
 public class AT_ComposedUnit {
 
 	@Test
-	@UnitTestMethod(target = ComposedUnit.class, name = "getBaseUnits", args = {})
-	public void testGetBaseUnits() {
+	@UnitTestMethod(target = ComposedUnit.class, name = "getUnits", args = {})
+	public void testGetUnits() {
 
 		UnitType TIME = new UnitType("time");
 		UnitType LENGTH = new UnitType("length");
@@ -46,32 +46,32 @@ public class AT_ComposedUnit {
 		Unit OUNCE = new Unit(POUND, 1.0 / 16, "ounce", "oz");
 
 		// case 1
-		ComposedUnit composedUnit = ComposedUnit.builder().setBaseUnit(OUNCE, 2).setBaseUnit(HOUR, 3).build();
-		List<Unit> expectedBaseUnits = new ArrayList<>();
-		expectedBaseUnits.add(OUNCE);
-		expectedBaseUnits.add(HOUR);
+		ComposedUnit composedUnit = ComposedUnit.builder().setUnit(OUNCE, 2).setUnit(HOUR, 3).build();
+		List<Unit> expectedUnits = new ArrayList<>();
+		expectedUnits.add(OUNCE);
+		expectedUnits.add(HOUR);
 
-		List<Unit> actualBaseUnits = composedUnit.getBaseUnits();
-		assertEquals(expectedBaseUnits, actualBaseUnits);
+		List<Unit> actualUnits = composedUnit.getUnits();
+		assertEquals(expectedUnits, actualUnits);
 
 		// case 2
-		composedUnit = ComposedUnit.builder().setBaseUnit(HOUR, -2).setBaseUnit(MILE, 2).build();
-		expectedBaseUnits = new ArrayList<>();
-		expectedBaseUnits.add(MILE);
-		expectedBaseUnits.add(HOUR);
+		composedUnit = ComposedUnit.builder().setUnit(HOUR, -2).setUnit(MILE, 2).build();
+		expectedUnits = new ArrayList<>();
+		expectedUnits.add(MILE);
+		expectedUnits.add(HOUR);
 
-		actualBaseUnits = composedUnit.getBaseUnits();
-		assertEquals(expectedBaseUnits, actualBaseUnits);
+		actualUnits = composedUnit.getUnits();
+		assertEquals(expectedUnits, actualUnits);
 
 		// case 3
-		composedUnit = ComposedUnit.builder().setBaseUnit(KILOGRAM, 1).setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).build();
-		expectedBaseUnits = new ArrayList<>();
-		expectedBaseUnits.add(METER);
-		expectedBaseUnits.add(KILOGRAM);
-		expectedBaseUnits.add(SECOND);
+		composedUnit = ComposedUnit.builder().setUnit(KILOGRAM, 1).setUnit(METER, 1).setUnit(SECOND, -2).build();
+		expectedUnits = new ArrayList<>();
+		expectedUnits.add(METER);
+		expectedUnits.add(KILOGRAM);
+		expectedUnits.add(SECOND);
 
-		actualBaseUnits = composedUnit.getBaseUnits();
-		assertEquals(expectedBaseUnits, actualBaseUnits);
+		actualUnits = composedUnit.getUnits();
+		assertEquals(expectedUnits, actualUnits);
 
 	}
 
@@ -100,23 +100,23 @@ public class AT_ComposedUnit {
 		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
 
 		ComposedUnit MPS1 = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, -1)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, -1)//
 				.build();
 
 		ComposedUnit MPS2 = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, -1)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, -1)//
 				.build();
 
 		ComposedUnit MPH1 = ComposedUnit.builder()//
-				.setBaseUnit(MILE, 1)//
-				.setBaseUnit(HOUR, -1)//
+				.setUnit(MILE, 1)//
+				.setUnit(HOUR, -1)//
 				.build();
 
 		ComposedUnit MPH2 = ComposedUnit.builder()//
-				.setBaseUnit(MILE, 1)//
-				.setBaseUnit(HOUR, -1)//
+				.setUnit(MILE, 1)//
+				.setUnit(HOUR, -1)//
 				.setNames("miles per hour", "mph")//
 				.build();
 
@@ -170,8 +170,8 @@ public class AT_ComposedUnit {
 
 		// sample 1
 		String actualValue = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, -1)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, -1)//
 				.build().getLongLabel();
 
 		String expectedValue = "meter^1 second^-1";
@@ -179,8 +179,8 @@ public class AT_ComposedUnit {
 
 		// sample 2
 		actualValue = ComposedUnit.builder()//
-				.setBaseUnit(MILE, 1)//
-				.setBaseUnit(HOUR, -1)//
+				.setUnit(MILE, 1)//
+				.setUnit(HOUR, -1)//
 				.build().getLongLabel();
 
 		expectedValue = "mile^1 hour^-1";
@@ -188,9 +188,9 @@ public class AT_ComposedUnit {
 
 		// sample 2
 		actualValue = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(KILOGRAM, 1)//
-				.setBaseUnit(SECOND, -2)//
+				.setUnit(METER, 1)//
+				.setUnit(KILOGRAM, 1)//
+				.setUnit(SECOND, -2)//
 				.build().getLongLabel();
 
 		expectedValue = "meter^1 kilogram^1 second^-2";
@@ -216,8 +216,8 @@ public class AT_ComposedUnit {
 
 		// sample 1 -- without setting long name
 		ComposedUnit composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, -1)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, -1)//
 				.build();
 		String actualValue = composedUnit.getLongName();
 		String expectedValue = composedUnit.getLongLabel();
@@ -226,8 +226,8 @@ public class AT_ComposedUnit {
 		// sample 2 -- with setting long name
 		expectedValue = "miles_per_hour";
 		composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(MILE, 1)//
-				.setBaseUnit(HOUR, -1)//
+				.setUnit(MILE, 1)//
+				.setUnit(HOUR, -1)//
 				.setLongName(expectedValue).build();
 		actualValue = composedUnit.getLongName();
 		assertEquals(expectedValue, actualValue);
@@ -251,8 +251,8 @@ public class AT_ComposedUnit {
 
 		// sample 1 -- without setting short name
 		ComposedUnit composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, -1)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, -1)//
 				.build();
 		String actualValue = composedUnit.getShortName();
 		String expectedValue = composedUnit.getShortLabel();
@@ -261,8 +261,8 @@ public class AT_ComposedUnit {
 		// sample 2 -- with setting short name
 		expectedValue = "mph";
 		composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(MILE, 1)//
-				.setBaseUnit(HOUR, -1)//
+				.setUnit(MILE, 1)//
+				.setUnit(HOUR, -1)//
 				.setShortName(expectedValue).build();
 		actualValue = composedUnit.getShortName();
 		assertEquals(expectedValue, actualValue);
@@ -281,9 +281,9 @@ public class AT_ComposedUnit {
 		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
 
 		ComposedUnit composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(KILOGRAM, 1)//
-				.setBaseUnit(METER, 2)//
-				.setBaseUnit(SECOND, -3)//
+				.setUnit(KILOGRAM, 1)//
+				.setUnit(METER, 2)//
+				.setUnit(SECOND, -3)//
 				.build();
 
 		Optional<Integer> optional = composedUnit.getPower(MASS);
@@ -301,14 +301,14 @@ public class AT_ComposedUnit {
 		optional = composedUnit.getPower(AMPERE);
 		assertFalse(optional.isPresent());
 
-		// precondition test: if the measure is null
+		// precondition test: if the unitType is null
 		ContractException contractException = assertThrows(ContractException.class, () -> {
 			ComposedUnit.builder()//
-					.setBaseUnit(METER, 1)//
+					.setUnit(METER, 1)//
 					.build().getPower(null);
 		});
 
-		assertEquals(MeasuresError.NULL_MEASURE, contractException.getErrorType());
+		assertEquals(MeasuresError.NULL_UNIT_TYPE, contractException.getErrorType());
 	}
 
 	@Test
@@ -332,8 +332,8 @@ public class AT_ComposedUnit {
 
 		// sample 1
 		String actualValue = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, -1)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, -1)//
 				.build().getShortLabel();
 
 		String expectedValue = "m^1 s^-1";
@@ -341,8 +341,8 @@ public class AT_ComposedUnit {
 
 		// sample 2
 		actualValue = ComposedUnit.builder()//
-				.setBaseUnit(MILE, 1)//
-				.setBaseUnit(HOUR, -1)//
+				.setUnit(MILE, 1)//
+				.setUnit(HOUR, -1)//
 				.build().getShortLabel();
 
 		expectedValue = "mi^1 h^-1";
@@ -350,9 +350,9 @@ public class AT_ComposedUnit {
 
 		// sample 3
 		actualValue = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(KILOGRAM, 1)//
-				.setBaseUnit(SECOND, -2)//
+				.setUnit(METER, 1)//
+				.setUnit(KILOGRAM, 1)//
+				.setUnit(SECOND, -2)//
 				.build().getShortLabel();
 
 		expectedValue = "m^1 kg^1 s^-2";
@@ -360,8 +360,8 @@ public class AT_ComposedUnit {
 	}
 
 	@Test
-	@UnitTestMethod(target = ComposedUnit.class, name = "getBaseUnit", args = { UnitType.class })
-	public void testGetBaseUnit() {
+	@UnitTestMethod(target = ComposedUnit.class, name = "getUnit", args = { UnitType.class })
+	public void testGetUnit() {
 		UnitType TIME = new UnitType("time");
 		UnitType LENGTH = new UnitType("length");
 		UnitType MASS = new UnitType("mass");
@@ -372,34 +372,34 @@ public class AT_ComposedUnit {
 		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
 
 		ComposedUnit composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(KILOGRAM, 1)//
-				.setBaseUnit(METER, 2)//
-				.setBaseUnit(SECOND, -3)//
+				.setUnit(KILOGRAM, 1)//
+				.setUnit(METER, 2)//
+				.setUnit(SECOND, -3)//
 				.build();
 
-		Optional<Unit> optional = composedUnit.getBaseUnit(MASS);
+		Optional<Unit> optional = composedUnit.getUnit(MASS);
 		assertTrue(optional.isPresent());
 		assertEquals(KILOGRAM, optional.get());
 
-		optional = composedUnit.getBaseUnit(LENGTH);
+		optional = composedUnit.getUnit(LENGTH);
 		assertTrue(optional.isPresent());
 		assertEquals(METER, optional.get());
 
-		optional = composedUnit.getBaseUnit(TIME);
+		optional = composedUnit.getUnit(TIME);
 		assertTrue(optional.isPresent());
 		assertEquals(SECOND, optional.get());
 
-		optional = composedUnit.getBaseUnit(AMPERE);
+		optional = composedUnit.getUnit(AMPERE);
 		assertFalse(optional.isPresent());
 
-		// precondition test: if the measure is null
+		// precondition test: if the unitType is null
 		ContractException contractException = assertThrows(ContractException.class, () -> {
 			ComposedUnit.builder()//
-					.setBaseUnit(METER, 1)//
-					.build().getBaseUnit(null);
+					.setUnit(METER, 1)//
+					.build().getUnit(null);
 		});
 
-		assertEquals(MeasuresError.NULL_MEASURE, contractException.getErrorType());
+		assertEquals(MeasuresError.NULL_UNIT_TYPE, contractException.getErrorType());
 
 	}
 
@@ -429,8 +429,8 @@ public class AT_ComposedUnit {
 
 		// example 1: miles per hour
 		ComposedUnit composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(MILE, 1)//
-				.setBaseUnit(HOUR, -1)//
+				.setUnit(MILE, 1)//
+				.setUnit(HOUR, -1)//
 				.setNames("miles per hour", "mph")//
 				.build();
 
@@ -445,8 +445,8 @@ public class AT_ComposedUnit {
 
 		// example 2
 		composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(POUND, 1)//
-				.setBaseUnit(INCH, -2)//
+				.setUnit(POUND, 1)//
+				.setUnit(INCH, -2)//
 				.setNames("pounds per square foot", "psi")//
 				.build();
 
@@ -505,9 +505,9 @@ public class AT_ComposedUnit {
 		int massPower = randomGenerator.nextInt(5) + 1 * (randomGenerator.nextInt(2) * 2 - 1);
 
 		return ComposedUnit.builder()//
-				.setBaseUnit(timeUnit, timePower)//
-				.setBaseUnit(distanceUnit, distancePower)//
-				.setBaseUnit(massUnit, massPower)//
+				.setUnit(timeUnit, timePower)//
+				.setUnit(distanceUnit, distancePower)//
+				.setUnit(massUnit, massPower)//
 				.build();
 	}
 
@@ -555,23 +555,23 @@ public class AT_ComposedUnit {
 		Unit POUND = new Unit(KILOGRAM, 0.45359237, "pound", "lb");
 		Unit OUNCE = new Unit(POUND, 1.0 / 16, "ounce", "oz");
 
-		ComposedUnit composedUnit1 = ComposedUnit.builder().setBaseUnit(HOUR, 1).setBaseUnit(METER, -1).build();
-		ComposedUnit composedUnit2 = ComposedUnit.builder().setBaseUnit(MINUTE, 1).setBaseUnit(FOOT, -1).build();
+		ComposedUnit composedUnit1 = ComposedUnit.builder().setUnit(HOUR, 1).setUnit(METER, -1).build();
+		ComposedUnit composedUnit2 = ComposedUnit.builder().setUnit(MINUTE, 1).setUnit(FOOT, -1).build();
 		assertTrue(composedUnit1.isCompatible(composedUnit2));
 		assertTrue(composedUnit2.isCompatible(composedUnit1));
 
-		composedUnit1 = ComposedUnit.builder().setBaseUnit(MILE, 1).setBaseUnit(HOUR, -1).build();
-		composedUnit2 = ComposedUnit.builder().setBaseUnit(FOOT, 1).setBaseUnit(SECOND, -2).build();
+		composedUnit1 = ComposedUnit.builder().setUnit(MILE, 1).setUnit(HOUR, -1).build();
+		composedUnit2 = ComposedUnit.builder().setUnit(FOOT, 1).setUnit(SECOND, -2).build();
 		assertFalse(composedUnit1.isCompatible(composedUnit2));
 		assertFalse(composedUnit2.isCompatible(composedUnit1));
 
-		composedUnit1 = ComposedUnit.builder().setBaseUnit(OUNCE, 1).build();
-		composedUnit2 = ComposedUnit.builder().setBaseUnit(POUND, 1).build();
+		composedUnit1 = ComposedUnit.builder().setUnit(OUNCE, 1).build();
+		composedUnit2 = ComposedUnit.builder().setUnit(POUND, 1).build();
 		assertTrue(composedUnit1.isCompatible(composedUnit2));
 		assertTrue(composedUnit2.isCompatible(composedUnit1));
 
-		composedUnit1 = ComposedUnit.builder().setBaseUnit(OUNCE, 1).build();
-		composedUnit2 = ComposedUnit.builder().setBaseUnit(POUND, 2).build();
+		composedUnit1 = ComposedUnit.builder().setUnit(OUNCE, 1).build();
+		composedUnit2 = ComposedUnit.builder().setUnit(POUND, 2).build();
 		assertFalse(composedUnit1.isCompatible(composedUnit2));
 		assertFalse(composedUnit2.isCompatible(composedUnit1));
 
@@ -589,18 +589,18 @@ public class AT_ComposedUnit {
 		Unit SECOND = new Unit(TIME, "second", "s");
 		Unit METER = new Unit(LENGTH, "meter", "m");
 		ComposedUnit composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(METER, 0)//
-				.setBaseUnit(SECOND, 0)//
+				.setUnit(METER, 1)//
+				.setUnit(METER, 0)//
+				.setUnit(SECOND, 0)//
 				.setNames("long_name", "short_name").build();
 
-		assertTrue(composedUnit.isMeasureLess());
+		assertTrue(composedUnit.isUnitLess());
 
 		composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, 0)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, 0)//
 				.setNames("long_name", "short_name").build();
-		assertFalse(composedUnit.isMeasureLess());
+		assertFalse(composedUnit.isUnitLess());
 	}
 
 	@Test
@@ -611,12 +611,12 @@ public class AT_ComposedUnit {
 		Unit SECOND = new Unit(TIME, "second", "s");
 		Unit METER = new Unit(LENGTH, "meter", "m");
 		ComposedUnit MPS = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, -1)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, -1)//
 				.setNames("meters per second", "mps").build();
 		String actualValue = MPS.toString();
 
-		String expectedValue = "ComposedUnit [value=1.0, longName=meters per second, shortName=mps, measures={Measure [name=length]=UnitPower [baseUnit=BaseUnit [measure=Measure [name=length], value=1.0, name=meter, shortName=m], power=1], Measure [name=time]=UnitPower [baseUnit=BaseUnit [measure=Measure [name=time], value=1.0, name=second, shortName=s], power=-1]}]";
+		String expectedValue = "ComposedUnit [value=1.0, longName=meters per second, shortName=mps, unitTypes={Measure [name=length]=UnitPower [unit=Unit [unitType=Measure [name=length], value=1.0, name=meter, shortName=m], power=1], Measure [name=time]=UnitPower [unit=Unit [unitType=Measure [name=time], value=1.0, name=second, shortName=s], power=-1]}]";
 		assertEquals(expectedValue, actualValue);
 	}
 
@@ -627,8 +627,8 @@ public class AT_ComposedUnit {
 	}
 
 	@Test
-	@UnitTestMethod(target = ComposedUnit.Builder.class, name = "setBaseUnit", args = { Unit.class, int.class })
-	public void testSetBaseUnit() {
+	@UnitTestMethod(target = ComposedUnit.Builder.class, name = "setUnit", args = { Unit.class, int.class })
+	public void testSetUnit() {
 		UnitType TIME = new UnitType("time");
 		UnitType LENGTH = new UnitType("length");
 		UnitType MASS = new UnitType("mass");
@@ -638,36 +638,36 @@ public class AT_ComposedUnit {
 		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
 
 		ComposedUnit composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(KILOGRAM, 1)//
-				.setBaseUnit(METER, 2)//
-				.setBaseUnit(SECOND, -3)//
+				.setUnit(KILOGRAM, 1)//
+				.setUnit(METER, 2)//
+				.setUnit(SECOND, -3)//
 				.build();
 
-		Optional<Unit> optionalUnit = composedUnit.getBaseUnit(MASS);
+		Optional<Unit> optionalUnit = composedUnit.getUnit(MASS);
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(KILOGRAM, optionalUnit.get());
 		Optional<Integer> optionalPower = composedUnit.getPower(MASS);
 		assertTrue(optionalPower.isPresent());
 		assertEquals(1, optionalPower.get());
 
-		optionalUnit = composedUnit.getBaseUnit(LENGTH);
+		optionalUnit = composedUnit.getUnit(LENGTH);
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(METER, optionalUnit.get());
 		optionalPower = composedUnit.getPower(LENGTH);
 		assertTrue(optionalPower.isPresent());
 		assertEquals(2, optionalPower.get());
 
-		optionalUnit = composedUnit.getBaseUnit(TIME);
+		optionalUnit = composedUnit.getUnit(TIME);
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(SECOND, optionalUnit.get());
 		optionalPower = composedUnit.getPower(TIME);
 		assertTrue(optionalPower.isPresent());
 		assertEquals(-3, optionalPower.get());
 
-		// precondition test: if the base unit is null
+		// precondition test: if the unit is null
 		ContractException contractException = assertThrows(ContractException.class, () -> {
 			ComposedUnit.builder()//
-					.setBaseUnit(null, 1)//
+					.setUnit(null, 1)//
 					.build();
 		});
 
@@ -693,8 +693,8 @@ public class AT_ComposedUnit {
 
 		// sample 1 -- without setting long name
 		ComposedUnit composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, -1)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, -1)//
 				.build();
 		String actualValue = composedUnit.getLongName();
 		String expectedValue = composedUnit.getLongLabel();
@@ -703,16 +703,16 @@ public class AT_ComposedUnit {
 		// sample 2 -- with setting long name
 		expectedValue = "miles_per_hour";
 		composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(MILE, 1)//
-				.setBaseUnit(HOUR, -1)//
+				.setUnit(MILE, 1)//
+				.setUnit(HOUR, -1)//
 				.setLongName(expectedValue).build();
 		actualValue = composedUnit.getLongName();
 		assertEquals(expectedValue, actualValue);
 
 		// sample 3 -- with setting long name to null
 		composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(MILE, 1)//
-				.setBaseUnit(HOUR, -1)//
+				.setUnit(MILE, 1)//
+				.setUnit(HOUR, -1)//
 				.setLongName(null).build();
 		expectedValue = composedUnit.getLongLabel();
 		actualValue = composedUnit.getLongName();
@@ -737,8 +737,8 @@ public class AT_ComposedUnit {
 
 		// sample 1 -- without setting short name
 		ComposedUnit composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, -1)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, -1)//
 				.build();
 		String actualValue = composedUnit.getShortName();
 		String expectedValue = composedUnit.getShortLabel();
@@ -747,16 +747,16 @@ public class AT_ComposedUnit {
 		// sample 2 -- with setting short name
 		expectedValue = "mph";
 		composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(MILE, 1)//
-				.setBaseUnit(HOUR, -1)//
+				.setUnit(MILE, 1)//
+				.setUnit(HOUR, -1)//
 				.setShortName(expectedValue).build();
 		actualValue = composedUnit.getShortName();
 		assertEquals(expectedValue, actualValue);
 
 		// sample 3 -- with setting short name to null
 		composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, -1)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, -1)//
 				.setShortName(null).build();
 		actualValue = composedUnit.getShortName();
 		expectedValue = composedUnit.getShortLabel();
@@ -773,8 +773,8 @@ public class AT_ComposedUnit {
 
 		// case 1 -- null long name, null short name
 		ComposedUnit composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, -1)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, -1)//
 				.setNames(null, null)//
 				.build();
 
@@ -788,8 +788,8 @@ public class AT_ComposedUnit {
 
 		// case 2 -- null long name, non-null short name
 		composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, -1)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, -1)//
 				.setNames(null, "short_name").build();
 
 		actualValue = composedUnit.getLongName();
@@ -802,8 +802,8 @@ public class AT_ComposedUnit {
 
 		// case 3 -- non-null long name, null short name
 		composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, -1)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, -1)//
 				.setNames("long_name", null).build();
 
 		actualValue = composedUnit.getLongName();
@@ -816,8 +816,8 @@ public class AT_ComposedUnit {
 
 		// case 4 -- non-null long name, non-null short name
 		composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(METER, 1)//
-				.setBaseUnit(SECOND, -1)//
+				.setUnit(METER, 1)//
+				.setUnit(SECOND, -1)//
 				.setNames("long_name", "short_name").build();
 
 		actualValue = composedUnit.getLongName();

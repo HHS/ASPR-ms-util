@@ -108,9 +108,9 @@ public class AT_Constant {
 		int massPower = randomGenerator.nextInt(5) + 1 * (randomGenerator.nextInt(2) * 2 - 1);
 
 		ComposedUnit composedUnit = ComposedUnit.builder()//
-				.setBaseUnit(timeUnit, timePower)//
-				.setBaseUnit(distanceUnit, distancePower)//
-				.setBaseUnit(massUnit, massPower)//
+				.setUnit(timeUnit, timePower)//
+				.setUnit(distanceUnit, distancePower)//
+				.setUnit(massUnit, massPower)//
 				.build();
 
 		double value = randomGenerator.nextDouble();
@@ -162,7 +162,7 @@ public class AT_Constant {
 	/*
 	 * Creates two randomized quantities using several time, length and mass units
 	 * to powers in [-5,-1]U[1,5]. They will have random values, but will agree on
-	 * measures and powers.
+	 * unitTypes and powers.
 	 */
 	private Pair<Quantity, Quantity> getRandomCompatibleQuanties(long seed) {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
@@ -211,15 +211,15 @@ public class AT_Constant {
 		int massPower = randomGenerator.nextInt(5) + 1 * (randomGenerator.nextInt(2) * 2 - 1);
 
 		ComposedUnit composedUnit1 = ComposedUnit.builder()//
-				.setBaseUnit(timeUnit1, timePower)//
-				.setBaseUnit(distanceUnit1, distancePower)//
-				.setBaseUnit(massUnit1, massPower)//
+				.setUnit(timeUnit1, timePower)//
+				.setUnit(distanceUnit1, distancePower)//
+				.setUnit(massUnit1, massPower)//
 				.build();
 
 		ComposedUnit composedUnit2 = ComposedUnit.builder()//
-				.setBaseUnit(timeUnit2, timePower)//
-				.setBaseUnit(distanceUnit2, distancePower)//
-				.setBaseUnit(massUnit2, massPower)//
+				.setUnit(timeUnit2, timePower)//
+				.setUnit(distanceUnit2, distancePower)//
+				.setUnit(massUnit2, massPower)//
 				.build();
 
 		double value1 = randomGenerator.nextDouble();
@@ -259,21 +259,21 @@ public class AT_Constant {
 	 */
 	private Quantity getRandomizedTimeQuanity(long seed) {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
-		UnitType measure = new UnitType("TIME");
+		UnitType unitType = new UnitType("TIME");
 		
-		Unit SECOND = new Unit(measure, "second", "sec");
+		Unit SECOND = new Unit(unitType, "second", "sec");
 		Unit MINUTE = new Unit(SECOND,60,"minute", "min");
 		Unit HOUR = new Unit(MINUTE,60,"hour", "hr");
 		Unit DAY = new Unit(HOUR,24,"day", "dy");
 		
-		List<Unit> baseUnits = new ArrayList<>();
-		baseUnits.add(SECOND);
-		baseUnits.add(MINUTE);
-		baseUnits.add(HOUR);
-		baseUnits.add(DAY);
+		List<Unit> units = new ArrayList<>();
+		units.add(SECOND);
+		units.add(MINUTE);
+		units.add(HOUR);
+		units.add(DAY);
 		
-		Unit baseUnit = baseUnits.get(randomGenerator.nextInt(baseUnits.size()));
-		return new Quantity(baseUnit, randomGenerator.nextDouble()/10+0.9);
+		Unit unit = units.get(randomGenerator.nextInt(units.size()));
+		return new Quantity(unit, randomGenerator.nextDouble()/10+0.9);
 	}
 
 	@Test
@@ -403,12 +403,12 @@ public class AT_Constant {
 		UnitType LENGTH = new UnitType("length");
 		Unit SECOND = new Unit(TIME, "second", "s");
 		Unit METER = new Unit(LENGTH, "meter", "m");
-		ComposedUnit MPSS = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).build();
+		ComposedUnit MPSS = ComposedUnit.builder().setUnit(METER, 1).setUnit(SECOND, -2).build();
 		Quantity quantity = new Quantity(MPSS, 9.80665);
 
 		Constant EARTH_GRAVITY = new Constant(quantity, "earth_gravity", "g");
 
-		String expectedValue = "Constant [longName=earth_gravity, shortName=g, quantity=Quantity [composedUnit=ComposedUnit [value=1.0, longName=null, shortName=null, measures={Measure [name=length]=UnitPower [baseUnit=BaseUnit [measure=Measure [name=length], value=1.0, name=meter, shortName=m], power=1], Measure [name=time]=UnitPower [baseUnit=BaseUnit [measure=Measure [name=time], value=1.0, name=second, shortName=s], power=-2]}], value=9.80665]]";
+		String expectedValue = "Constant [longName=earth_gravity, shortName=g, quantity=Quantity [composedUnit=ComposedUnit [value=1.0, longName=null, shortName=null, unitTypes={Measure [name=length]=UnitPower [unit=Unit [unitType=Measure [name=length], value=1.0, name=meter, shortName=m], power=1], Measure [name=time]=UnitPower [unit=Unit [unitType=Measure [name=time], value=1.0, name=second, shortName=s], power=-2]}], value=9.80665]]";
 		String actualValue = EARTH_GRAVITY.toString();
 		assertEquals(expectedValue, actualValue);
 	}

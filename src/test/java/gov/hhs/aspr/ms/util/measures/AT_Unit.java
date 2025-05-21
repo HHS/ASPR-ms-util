@@ -16,10 +16,10 @@ import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
 
-public class AT_BaseUnit {
+public class AT_Unit {
 	@Test
 	@UnitTestConstructor(target = Unit.class, args = { UnitType.class, String.class, String.class })
-	public void testUnit_Measure() {
+	public void testUnit_UnitType() {
 
 		// postcondition tests are covered by the remaining tests
 
@@ -50,7 +50,7 @@ public class AT_BaseUnit {
 
 		// precondition test: if the measure is null
 		contractException = assertThrows(ContractException.class, () -> new Unit(null, "long_name", "short_name"));
-		assertEquals(MeasuresError.NULL_MEASURE, contractException.getErrorType());
+		assertEquals(MeasuresError.NULL_UNIT_TYPE, contractException.getErrorType());
 	}
 
 	@Test
@@ -85,13 +85,11 @@ public class AT_BaseUnit {
 		assertEquals(MeasuresError.BLANK_UNIT_NAME, contractException.getErrorType());
 
 		// precondition test: if the unit is null
-		contractException = assertThrows(ContractException.class,
-				() -> new Unit(null, 10, "long_name", "short_name"));
+		contractException = assertThrows(ContractException.class, () -> new Unit(null, 10, "long_name", "short_name"));
 		assertEquals(MeasuresError.NULL_UNIT, contractException.getErrorType());
 
 		// precondition test: if the scalar is not positive
-		contractException = assertThrows(ContractException.class,
-				() -> new Unit(METER, -2, "long_name", "short_name"));
+		contractException = assertThrows(ContractException.class, () -> new Unit(METER, -2, "long_name", "short_name"));
 		assertEquals(MeasuresError.NON_POSITIVE_SCALAR_VALUE, contractException.getErrorType());
 	}
 
@@ -146,21 +144,21 @@ public class AT_BaseUnit {
 	}
 
 	@Test
-	@UnitTestMethod(target = Unit.class, name = "getMeasure", args = {})
-	public void testGetMeasure() {
+	@UnitTestMethod(target = Unit.class, name = "getUnitType", args = {})
+	public void testGetUnitType() {
 		UnitType LENGTH = new UnitType("length");
 		UnitType TIME = new UnitType("time");
-		
+
 		Unit METER = new Unit(LENGTH, "meter", "m");
 		Unit SECOND = new Unit(TIME, "second", "s");
-		
+
 		Unit YARD = new Unit(METER, 3.0, "yard", "yd");
 		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
-		
-		assertEquals(LENGTH, METER.getMeasure());
-		assertEquals(LENGTH, YARD.getMeasure());
-		assertEquals(TIME, SECOND.getMeasure());
-		assertEquals(TIME, MINUTE.getMeasure());
+
+		assertEquals(LENGTH, METER.getUnitType());
+		assertEquals(LENGTH, YARD.getUnitType());
+		assertEquals(TIME, SECOND.getUnitType());
+		assertEquals(TIME, MINUTE.getUnitType());
 	}
 
 	@Test
@@ -168,18 +166,18 @@ public class AT_BaseUnit {
 	public void tetsGetLongName() {
 		UnitType LENGTH = new UnitType("length");
 		UnitType TIME = new UnitType("time");
-		
+
 		Unit METER = new Unit(LENGTH, "meter", "m");
 		Unit SECOND = new Unit(TIME, "second", "s");
-		
+
 		Unit YARD = new Unit(METER, 3.0, "yard", "yd");
 		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
-		
+
 		assertEquals("meter", METER.getLongName());
 		assertEquals("second", SECOND.getLongName());
 		assertEquals("yard", YARD.getLongName());
 		assertEquals("minute", MINUTE.getLongName());
-		
+
 	}
 
 	@Test
@@ -187,13 +185,13 @@ public class AT_BaseUnit {
 	public void testGetShortName() {
 		UnitType LENGTH = new UnitType("length");
 		UnitType TIME = new UnitType("time");
-		
+
 		Unit METER = new Unit(LENGTH, "meter", "m");
 		Unit SECOND = new Unit(TIME, "second", "s");
-		
+
 		Unit YARD = new Unit(METER, 3.0, "yard", "yd");
 		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
-		
+
 		assertEquals("m", METER.getShortName());
 		assertEquals("s", SECOND.getShortName());
 		assertEquals("yd", YARD.getShortName());
@@ -205,13 +203,13 @@ public class AT_BaseUnit {
 	public void testGetValue() {
 		UnitType LENGTH = new UnitType("length");
 		UnitType TIME = new UnitType("time");
-		
+
 		Unit METER = new Unit(LENGTH, "meter", "m");
 		Unit SECOND = new Unit(TIME, "second", "s");
-		
+
 		Unit YARD = new Unit(METER, 3.0, "yard", "yd");
 		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
-		
+
 		assertEquals(1, METER.getValue());
 		assertEquals(1, SECOND.getValue());
 		assertEquals(3.0, YARD.getValue());
@@ -222,8 +220,8 @@ public class AT_BaseUnit {
 	@UnitTestMethod(target = Unit.class, name = "hashCode", args = {})
 	public void testHashCode() {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(6170924863472890528L);
-		
-		//equal objects have equal hash codes
+
+		// equal objects have equal hash codes
 		UnitType LENGTH = new UnitType("length");
 		UnitType TIME = new UnitType("time");
 
@@ -232,27 +230,28 @@ public class AT_BaseUnit {
 		Unit METER2 = new Unit(LENGTH, "meter", "m");
 		assertEquals(METER1, METER2);
 		assertEquals(METER1.hashCode(), METER2.hashCode());
-		
+
 		Unit SECOND1 = new Unit(TIME, "second", "s");
 		Unit SECOND2 = new Unit(TIME, "second", "s");
 		assertEquals(SECOND1, SECOND2);
 		assertEquals(SECOND1.hashCode(), SECOND2.hashCode());
-		
-		
-		//hash codes are reasonably distributed
-		Set<Integer>hashcodes = new LinkedHashSet<>();
-		
-		for(int i= 0;i<100;i++) {
+
+		// hash codes are reasonably distributed
+		Set<Integer> hashcodes = new LinkedHashSet<>();
+
+		for (int i = 0; i < 100; i++) {
 			Unit baseUnit;
-			if(randomGenerator.nextBoolean()) {
-				baseUnit = new Unit(LENGTH, "name"+randomGenerator.nextInt(1000000), "n"+randomGenerator.nextInt(1000000));
-			}else {
-				baseUnit = new Unit(TIME, "name"+randomGenerator.nextInt(1000000), "n"+randomGenerator.nextInt(1000000));
+			if (randomGenerator.nextBoolean()) {
+				baseUnit = new Unit(LENGTH, "name" + randomGenerator.nextInt(1000000),
+						"n" + randomGenerator.nextInt(1000000));
+			} else {
+				baseUnit = new Unit(TIME, "name" + randomGenerator.nextInt(1000000),
+						"n" + randomGenerator.nextInt(1000000));
 			}
 			hashcodes.add(baseUnit.hashCode());
 		}
 		assertEquals(100, hashcodes.size());
-		
+
 	}
 
 	@Test
@@ -262,25 +261,24 @@ public class AT_BaseUnit {
 		Unit METER = new Unit(LENGTH, "meter", "m");
 		Unit KILOMETER = new Unit(METER, 1000, "kilometer", "km");
 		String actualValue = KILOMETER.toString();
-		String expectedValue = "BaseUnit [measure=Measure [name=length], value=1000.0, name=kilometer, shortName=km]";
+		String expectedValue = "BaseUnit [measure=UnitType [name=length], value=1000.0, name=kilometer, shortName=km]";
 		assertEquals(expectedValue, actualValue);
 	}
-	
+
 	@Test
-	@UnitTestMethod(target = Unit.class, name = "asComposedUnit", args = {})
-	public void testAsComposedUnit() {
+	@UnitTestMethod(target = Unit.class, name = "asComposite", args = {})
+	public void testAsComposite() {
 		UnitType LENGTH = new UnitType("length");
 		Unit METER = new Unit(LENGTH, "meter", "m");
-		Unit CM = new Unit(METER, 0.01,"centimeter", "cm");
-		
-		ComposedUnit expectedValue = ComposedUnit.builder().setBaseUnit(METER, 1).build();
-		ComposedUnit actualValue = METER.asComposedUnit();
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+
+		ComposedUnit expectedValue = ComposedUnit.builder().setUnit(METER, 1).build();
+		ComposedUnit actualValue = METER.asComposite();
 		assertEquals(expectedValue, actualValue);
-		
-		expectedValue = ComposedUnit.builder().setBaseUnit(CM, 1).build();
-		actualValue = CM.asComposedUnit();
+
+		expectedValue = ComposedUnit.builder().setUnit(CM, 1).build();
+		actualValue = CM.asComposite();
 		assertEquals(expectedValue, actualValue);
-		
 
 	}
 }

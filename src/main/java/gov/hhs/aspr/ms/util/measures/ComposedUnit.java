@@ -12,21 +12,21 @@ import org.apache.commons.math3.util.FastMath;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
- * Represents the composition of multiple base units raised to non-zero integer
+ * Represents the composition of multiple Units raised to non-zero integer
  * powers.
  */
 public final class ComposedUnit {
 	/*
-	 * Internal class for mapping a measure to a base unit raised to a non-zero
-	 * integer power.
+	 * Internal class for mapping a UnitType to a Unit raised to a non-zero integer
+	 * power.
 	 */
 	private static class UnitPower {
-		private final Unit baseUnit;
+		private final Unit unit;
 		private final Integer power;
 
-		public UnitPower(Unit baseUnit, Integer power) {
+		public UnitPower(Unit unit, Integer power) {
 			super();
-			this.baseUnit = baseUnit;
+			this.unit = unit;
 			this.power = power;
 		}
 
@@ -35,7 +35,7 @@ public final class ComposedUnit {
 			final int prime = 31;
 			int result = 1;
 			result = prime * result + ((power == null) ? 0 : power.hashCode());
-			result = prime * result + ((baseUnit == null) ? 0 : baseUnit.hashCode());
+			result = prime * result + ((unit == null) ? 0 : unit.hashCode());
 			return result;
 		}
 
@@ -55,11 +55,11 @@ public final class ComposedUnit {
 			} else if (!power.equals(other.power)) {
 				return false;
 			}
-			if (baseUnit == null) {
-				if (other.baseUnit != null) {
+			if (unit == null) {
+				if (other.unit != null) {
 					return false;
 				}
-			} else if (!baseUnit.equals(other.baseUnit)) {
+			} else if (!unit.equals(other.unit)) {
 				return false;
 			}
 			return true;
@@ -68,8 +68,8 @@ public final class ComposedUnit {
 		@Override
 		public String toString() {
 			StringBuilder builder = new StringBuilder();
-			builder.append("UnitPower [baseUnit=");
-			builder.append(baseUnit);
+			builder.append("UnitPower [unit=");
+			builder.append(unit);
 			builder.append(", power=");
 			builder.append(power);
 			builder.append("]");
@@ -81,10 +81,10 @@ public final class ComposedUnit {
 	private final double value;
 	private final String longName;
 	private final String shortName;
-	private final Map<UnitType, UnitPower> measures = new LinkedHashMap<>();
+	private final Map<UnitType, UnitPower> unitTypes = new LinkedHashMap<>();
 
 	private static class Data {
-		private Map<UnitType, UnitPower> measures = new TreeMap<>((m1, m2) -> m1.getName().compareTo(m2.getName()));
+		private Map<UnitType, UnitPower> unitTypes = new TreeMap<>((m1, m2) -> m1.getName().compareTo(m2.getName()));
 		private String shortName;
 		private String longName;
 	}
@@ -92,74 +92,73 @@ public final class ComposedUnit {
 	private ComposedUnit(Data data) {
 		shortName = data.shortName;
 		longName = data.longName;
-		measures.putAll(data.measures);
+		unitTypes.putAll(data.unitTypes);
 
 		double product = 1;
-		for (UnitType measure : measures.keySet()) {
-			UnitPower unitPower = measures.get(measure);
-			product *= FastMath.pow(unitPower.baseUnit.getValue(), unitPower.power);
+		for (UnitType unitType : unitTypes.keySet()) {
+			UnitPower unitPower = unitTypes.get(unitType);
+			product *= FastMath.pow(unitPower.unit.getValue(), unitPower.power);
 		}
 		value = product;
 	}
 
 	/**
-	 * Returns the normalized value that is the product of one and its base unit's
-	 * values raised to their associated powers.
+	 * Returns the normalized value that is the product of one and its Unit's values
+	 * raised to their associated powers.
 	 */
 	public double getValue() {
 		return value;
 	}
 
 	/**
-	 * Returns the power for the given measure in this composed unit. Powers that
+	 * Returns the power for the given UnitType in this ComposedUnit. Powers that
 	 * are either not set or set to zero in the builder are not present.
 	 * 
 	 * @throws ContractException
-	 *                           <ul>
-	 *                           <li>{@linkplain MeasuresError#NULL_MEASURE} if the
-	 *                           measure is null</li>
-	 *                           </ul>
+	 *                               <ul>
+	 *                               <li>{@linkplain MeasuresError#NULL_UNIT_TYPE}
+	 *                               if the unitType is null</li>
+	 *                               </ul>
 	 */
-	public Optional<Integer> getPower(UnitType measure) {
-		if (measure == null) {
-			throw new ContractException(MeasuresError.NULL_MEASURE);
+	public Optional<Integer> getPower(UnitType unitType) {
+		if (unitType == null) {
+			throw new ContractException(MeasuresError.NULL_UNIT_TYPE);
 		}
-		UnitPower unitPower = measures.get(measure);
+		UnitPower unitPower = unitTypes.get(unitType);
 		if (unitPower != null) {
 			return Optional.of(unitPower.power);
 		}
 		return Optional.ofNullable(null);
 	}
-	
+
 	/**
-	 * Returns the base units for this composed unit ordered by measure name.
-	 * 
+	 * Returns the Units for this ComposedUnit ordered by UnitType name.
 	 */
-	public List<Unit> getBaseUnits() {
+	public List<Unit> getUnits() {
 		List<Unit> result = new ArrayList<>();
-		for (UnitPower unitPower : measures.values()) {
-			result.add(unitPower.baseUnit);
+		for (UnitPower unitPower : unitTypes.values()) {
+			result.add(unitPower.unit);
 		}
 		return result;
 	}
 
 	/**
-	 * Returns the b for the given measure in this composed unit. Powers that are
+	 * Returns the Unit for the given UnitType in this ComposedUnit. Powers that are
 	 * either not set or set to zero in the builder are not present.
 	 * 
 	 * @throws ContractException
-	 *                           <ul>
-	 *                           <li>{@linkplain MeasuresError#NULL_MEASURE} if the
-	 *                           measure is null</li>
-	 *                           </ul>
+	 *                               <ul>
+	 *                               <li>{@linkplain MeasuresError#NULL_UNIT_TYPE}
+	 *                               if the unitType is null</li>
+	 *                               </ul>
 	 */
-	public Optional<Unit> getBaseUnit(UnitType measure) {
-		if (measure == null) {
-			throw new ContractException(MeasuresError.NULL_MEASURE);
+	public Optional<Unit> getUnit(UnitType unitType) {
+		if (unitType == null) {
+			throw new ContractException(MeasuresError.NULL_UNIT_TYPE);
 		}
-		UnitPower unitPower = measures.get(measure);
+		UnitPower unitPower = unitTypes.get(unitType);
 		if (unitPower != null) {
-			return Optional.of(unitPower.baseUnit);
+			return Optional.of(unitPower.unit);
 		}
 		return Optional.ofNullable(null);
 	}
@@ -181,30 +180,30 @@ public final class ComposedUnit {
 		}
 
 		/**
-		 * Sets the unit for the unit's measure. If the power is non-zero, the base unit
-		 * and power replace the current unit and power for the unit's measure. If the
-		 * power is zero, then the current unit for the unit's measure is removed.
+		 * Sets the Unit for the Unit's UnitType. If the power is non-zero, the Unit and
+		 * power replace the current Unit and power for the Unit's UnitType. If the
+		 * power is zero, then the current Unit for the Unit's unitType is removed.
 		 * 
 		 * @throws ContractException
-		 *                           <ul>
-		 *                           <li>{@linkplain MeasuresError#NULL_UNIT} if the
-		 *                           base unit is null</li>
-		 *                           </ul>
+		 *                               <ul>
+		 *                               <li>{@linkplain MeasuresError#NULL_UNIT} if the
+		 *                               unit is null</li>
+		 *                               </ul>
 		 */
-		public Builder setBaseUnit(Unit baseUnit, int power) {
-			if (baseUnit == null) {
+		public Builder setUnit(Unit unit, int power) {
+			if (unit == null) {
 				throw new ContractException(MeasuresError.NULL_UNIT);
 			}
 			if (power != 0) {
-				data.measures.put(baseUnit.getMeasure(), new UnitPower(baseUnit, power));
+				data.unitTypes.put(unit.getUnitType(), new UnitPower(unit, power));
 			} else {
-				data.measures.remove(baseUnit.getMeasure());
+				data.unitTypes.remove(unit.getUnitType());
 			}
 			return this;
 		}
 
 		/**
-		 * Sets the long name for the composed unit. Defaults to null. If the long name
+		 * Sets the long name for the ComposedUnit. Defaults to null. If the long name
 		 * is not set or is set to null, the long name is replaced by the long label.
 		 */
 		public Builder setLongName(String longName) {
@@ -213,9 +212,8 @@ public final class ComposedUnit {
 		}
 
 		/**
-		 * Sets the short name for the composed unit. Defaults to null. If the short
-		 * name is not set or is set to null, the long name is replaced by the long
-		 * label.
+		 * Sets the short name for the ComposedUnit. Defaults to null. If the short name
+		 * is not set or is set to null, the long name is replaced by the long label.
 		 */
 		public Builder setShortName(String shortName) {
 			data.shortName = shortName;
@@ -223,7 +221,7 @@ public final class ComposedUnit {
 		}
 
 		/**
-		 * Sets the long and short names for the composed unit. Defaults to null. If the
+		 * Sets the long and short names for the ComposedUnit. Defaults to null. If the
 		 * long or short name is not set or is set to null, they are replaced by the
 		 * long or short labels respectively.
 		 */
@@ -234,7 +232,7 @@ public final class ComposedUnit {
 		}
 
 		/**
-		 * Returns the composed unit from the collected input.
+		 * Returns the ComposedUnit from the collected input.
 		 */
 		public ComposedUnit build() {
 			return new ComposedUnit(data);
@@ -242,34 +240,33 @@ public final class ComposedUnit {
 	}
 
 	/**
-	 * Returns true if and only if there are no base units associated with this
-	 * composed unit. The composed unit is simply the scalar value of 1.
+	 * Returns true if and only if there are no units associated with this
+	 * ComposedUnit. The ComposedUnit is simply the scalar value of 1.
 	 */
-	public boolean isMeasureLess() {
-		return measures.isEmpty();
+	public boolean isUnitLess() {
+		return unitTypes.isEmpty();
 	}
 
 	/**
-	 * Returns true if and only if this composed unit and the given composed unit
-	 * have the same measures(but perhaps different base units) to the same integer
-	 * powers.
+	 * Returns true if and only if this ComposedUnit and the given ComposedUnit have
+	 * the same UnitTypes(but perhaps different Units) to the same integer powers.
 	 * 
 	 * @throws ContractException
-	 *                           <ul>
-	 *                           <li>{@linkplain MeasuresError#NULL_COMPOSITE} if
-	 *                           the composed unit is null</li>
-	 *                           </ul>
+	 *                               <ul>
+	 *                               <li>{@linkplain MeasuresError#NULL_COMPOSITE}
+	 *                               if the ComposedUnit is null</li>
+	 *                               </ul>
 	 */
 	public boolean isCompatible(ComposedUnit composedUnit) {
 		if (composedUnit == null) {
 			throw new ContractException(MeasuresError.NULL_COMPOSITE);
 		}
-		if (!measures.keySet().equals(composedUnit.measures.keySet())) {
+		if (!unitTypes.keySet().equals(composedUnit.unitTypes.keySet())) {
 			return false;
 		}
-		for (UnitType measure : measures.keySet()) {
-			Integer power1 = measures.get(measure).power;
-			Integer power2 = composedUnit.measures.get(measure).power;
+		for (UnitType unitType : unitTypes.keySet()) {
+			Integer power1 = unitTypes.get(unitType).power;
+			Integer power2 = composedUnit.unitTypes.get(unitType).power;
 			if (!power1.equals(power2)) {
 				return false;
 			}
@@ -285,13 +282,13 @@ public final class ComposedUnit {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((longName == null) ? 0 : longName.hashCode());
-		result = prime * result + ((measures == null) ? 0 : measures.hashCode());
+		result = prime * result + ((unitTypes == null) ? 0 : unitTypes.hashCode());
 		result = prime * result + ((shortName == null) ? 0 : shortName.hashCode());
 		return result;
 	}
 
 	/**
-	 * Two composed units are equal if and only if their units and powers are equal
+	 * Two ComposedUnits are equal if and only if their Units and powers are equal
 	 * and their assigned long and short names are equal.
 	 */
 	@Override
@@ -310,11 +307,11 @@ public final class ComposedUnit {
 		} else if (!longName.equals(other.longName)) {
 			return false;
 		}
-		if (measures == null) {
-			if (other.measures != null) {
+		if (unitTypes == null) {
+			if (other.unitTypes != null) {
 				return false;
 			}
-		} else if (!measures.equals(other.measures)) {
+		} else if (!unitTypes.equals(other.unitTypes)) {
 			return false;
 		}
 		if (shortName == null) {
@@ -328,14 +325,14 @@ public final class ComposedUnit {
 	}
 
 	/**
-	 * Returns the string representation of this composed unit. Example of meter per
-	 * second. Measures are listed in alphabetical order.
-	 * 
+	 * Returns the string representation of this ComposedUnit. Example of meter per
+	 * second. UnitTypes are listed in alphabetical order.
+	 * <p>
 	 * ComposedUnit [value=1.0, longName=meters per second, shortName=mps,
-	 * measures={Measure [name=length]=UnitPower [baseUnit=BaseUnit [measure=Measure
-	 * [name=length], value=1.0, name=meter, shortName=m], power=1], Measure
-	 * [name=time]=UnitPower [baseUnit=BaseUnit [measure=Measure [name=time],
-	 * value=1.0, name=second, shortName=s], power=-1]}]
+	 * unitTypes={UnitType [name=length]=UnitPower [unit=Unit [unitType=UnitType
+	 * [name=length], value=1.0, name=meter, shortName=m], power=1], UnitType
+	 * [name=time]=UnitPower [unit=Unit [unitType=UnitType [name=time], value=1.0,
+	 * name=second, shortName=s], power=-1]}]
 	 */
 	@Override
 	public String toString() {
@@ -346,28 +343,28 @@ public final class ComposedUnit {
 		builder2.append(longName);
 		builder2.append(", shortName=");
 		builder2.append(shortName);
-		builder2.append(", measures=");
-		builder2.append(measures);
+		builder2.append(", unitTypes=");
+		builder2.append(unitTypes);
 		builder2.append("]");
 		return builder2.toString();
 	}
 
 	/**
-	 * Returns the label for this composed unit based on the short names of the
-	 * corresponding units. Power values are displayed after a ^ symbol. Example for
+	 * Returns the label for this ComposedUnit based on the short names of the
+	 * corresponding Units. Power values are displayed after a ^ symbol. Example for
 	 * meters per second: m^1 s^-1
 	 */
 	public String getShortLabel() {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;
-		for (UnitType measure : measures.keySet()) {
-			UnitPower unitPower = measures.get(measure);
+		for (UnitType unitType : unitTypes.keySet()) {
+			UnitPower unitPower = unitTypes.get(unitType);
 			if (first) {
 				first = false;
 			} else {
 				sb.append(" ");
 			}
-			sb.append(unitPower.baseUnit.getShortName());
+			sb.append(unitPower.unit.getShortName());
 			sb.append("^");
 			sb.append(unitPower.power);
 		}
@@ -375,8 +372,8 @@ public final class ComposedUnit {
 	}
 
 	/**
-	 * Returns the long name of this composed unit if one was assigned. Otherwise,
-	 * the short label is returned.
+	 * Returns the long name of this ComposedUnit if one was assigned. Otherwise,
+	 * the long label is returned.
 	 */
 	public String getLongName() {
 		if (longName != null) {
@@ -386,7 +383,7 @@ public final class ComposedUnit {
 	}
 
 	/**
-	 * Returns the short name of this composed unit if one was assigned. Otherwise,
+	 * Returns the short name of this ComposedUnit if one was assigned. Otherwise,
 	 * the short label is returned.
 	 */
 	public String getShortName() {
@@ -397,21 +394,21 @@ public final class ComposedUnit {
 	}
 
 	/**
-	 * Returns the label for this composed unit based on the long names of the
-	 * corresponding units. Power values are displayed after a ^ symbol. Example for
+	 * Returns the label for this ComposedUnit based on the long names of the
+	 * corresponding Units. Power values are displayed after a ^ symbol. Example for
 	 * meters per second: meter^1 second^-1
 	 */
 	public String getLongLabel() {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;
-		for (UnitType measure : measures.keySet()) {
-			UnitPower unitPower = measures.get(measure);
+		for (UnitType unitType : unitTypes.keySet()) {
+			UnitPower unitPower = unitTypes.get(unitType);
 			if (first) {
 				first = false;
 			} else {
 				sb.append(" ");
 			}
-			sb.append(unitPower.baseUnit.getLongName());
+			sb.append(unitPower.unit.getLongName());
 			sb.append("^");
 			sb.append(unitPower.power);
 		}
@@ -426,23 +423,23 @@ public final class ComposedUnit {
 		Builder builder = builder();
 
 		// Favor the units of the base
-		for (UnitType measure : baseComposite.measures.keySet()) {
-			UnitPower baseUnitPower = baseComposite.measures.get(measure);
-			int power = baseUnitPower.power;
-			UnitPower auxUnitPower = auxComposite.measures.get(measure);
+		for (UnitType unitType : baseComposite.unitTypes.keySet()) {
+			UnitPower unitPower = baseComposite.unitTypes.get(unitType);
+			int power = unitPower.power;
+			UnitPower auxUnitPower = auxComposite.unitTypes.get(unitType);
 			if (auxUnitPower != null) {
 				power += auxUnitPower.power;
 			}
-			builder.setBaseUnit(baseUnitPower.baseUnit, power);
+			builder.setUnit(unitPower.unit, power);
 		}
 
-		// Any measures not in the base need to be captured
-		for (UnitType measure : auxComposite.measures.keySet()) {
-			UnitPower auxUnitPower = auxComposite.measures.get(measure);
+		// Any unitTypes not in the base need to be captured
+		for (UnitType unitType : auxComposite.unitTypes.keySet()) {
+			UnitPower auxUnitPower = auxComposite.unitTypes.get(unitType);
 			int power = auxUnitPower.power;
-			UnitPower baseUnitPower = baseComposite.measures.get(measure);
-			if (baseUnitPower == null) {
-				builder.setBaseUnit(auxUnitPower.baseUnit, power);
+			UnitPower unitPower = baseComposite.unitTypes.get(unitType);
+			if (unitPower == null) {
+				builder.setUnit(auxUnitPower.unit, power);
 			}
 		}
 
@@ -458,23 +455,23 @@ public final class ComposedUnit {
 		Builder builder = builder();
 
 		// Favor the units of the base
-		for (UnitType measure : baseComposite.measures.keySet()) {
-			UnitPower baseUnitPower = baseComposite.measures.get(measure);
-			int power = baseUnitPower.power;
-			UnitPower auxUnitPower = auxComposite.measures.get(measure);
+		for (UnitType unitType : baseComposite.unitTypes.keySet()) {
+			UnitPower unitPower = baseComposite.unitTypes.get(unitType);
+			int power = unitPower.power;
+			UnitPower auxUnitPower = auxComposite.unitTypes.get(unitType);
 			if (auxUnitPower != null) {
 				power -= auxUnitPower.power;
 			}
-			builder.setBaseUnit(baseUnitPower.baseUnit, power);
+			builder.setUnit(unitPower.unit, power);
 		}
 
-		// Any measures not in the base need to be captured
-		for (UnitType measure : auxComposite.measures.keySet()) {
-			UnitPower auxUnitPower = auxComposite.measures.get(measure);
+		// Any unitTypes not in the base need to be captured
+		for (UnitType unitType : auxComposite.unitTypes.keySet()) {
+			UnitPower auxUnitPower = auxComposite.unitTypes.get(unitType);
 			int power = auxUnitPower.power;
-			UnitPower baseUnitPower = baseComposite.measures.get(measure);
-			if (baseUnitPower == null) {
-				builder.setBaseUnit(auxUnitPower.baseUnit, -power);
+			UnitPower unitPower = baseComposite.unitTypes.get(unitType);
+			if (unitPower == null) {
+				builder.setUnit(auxUnitPower.unit, -power);
 			}
 		}
 
@@ -484,18 +481,18 @@ public final class ComposedUnit {
 
 	static ComposedUnit getInverse(ComposedUnit composedUnit) {
 		Builder builder = builder();
-		for (UnitType measure : composedUnit.measures.keySet()) {
-			UnitPower unitPower = composedUnit.measures.get(measure);
-			builder.setBaseUnit(unitPower.baseUnit, -unitPower.power);
+		for (UnitType unitType : composedUnit.unitTypes.keySet()) {
+			UnitPower unitPower = composedUnit.unitTypes.get(unitType);
+			builder.setUnit(unitPower.unit, -unitPower.power);
 		}
 		return builder.build();
 	}
 
 	static ComposedUnit getPowerComposite(ComposedUnit composedUnit, int power) {
 		Builder builder = builder();
-		for (UnitType measure : composedUnit.measures.keySet()) {
-			UnitPower unitPower = composedUnit.measures.get(measure);
-			builder.setBaseUnit(unitPower.baseUnit, unitPower.power * power);
+		for (UnitType unitType : composedUnit.unitTypes.keySet()) {
+			UnitPower unitPower = composedUnit.unitTypes.get(unitType);
+			builder.setUnit(unitPower.unit, unitPower.power * power);
 		}
 		return builder.build();
 	}
@@ -508,14 +505,13 @@ public final class ComposedUnit {
 			return composedUnit;
 		}
 		Builder builder = builder();
-		for (UnitType measure : composedUnit.measures.keySet()) {
-			UnitPower unitPower = composedUnit.measures.get(measure);
+		for (UnitType unitType : composedUnit.unitTypes.keySet()) {
+			UnitPower unitPower = composedUnit.unitTypes.get(unitType);
 			if (unitPower.power % root != 0) {
 				throw new ContractException(MeasuresError.POWER_IS_NOT_ROOT_COMPATIBLE);
 			}
-			builder.setBaseUnit(unitPower.baseUnit, unitPower.power / root);
+			builder.setUnit(unitPower.unit, unitPower.power / root);
 		}
 		return builder.build();
 	}
-
 }

@@ -17,7 +17,7 @@ import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
 
-public class AT_Measure {
+public class AT_UnitType {
 
 	@Test
 	@UnitTestConstructor(target = UnitType.class, args = { String.class })
@@ -26,15 +26,15 @@ public class AT_Measure {
 
 		// precondition test: if the name is null
 		ContractException contractException = assertThrows(ContractException.class, () -> new UnitType(null));
-		assertEquals(MeasuresError.NULL_MEASURE_NAME, contractException.getErrorType());
+		assertEquals(MeasuresError.NULL_UNIT_TYPE_NAME, contractException.getErrorType());
 
 		// precondition test: if the name is blank
 		contractException = assertThrows(ContractException.class, () -> new UnitType(""));
-		assertEquals(MeasuresError.BLANK_MEASURE_NAME, contractException.getErrorType());
+		assertEquals(MeasuresError.BLANK_UNIT_TYPE_NAME, contractException.getErrorType());
 
 		// precondition test: if the name is blank
 		contractException = assertThrows(ContractException.class, () -> new UnitType(" "));
-		assertEquals(MeasuresError.BLANK_MEASURE_NAME, contractException.getErrorType());
+		assertEquals(MeasuresError.BLANK_UNIT_TYPE_NAME, contractException.getErrorType());
 
 	}
 
@@ -42,7 +42,7 @@ public class AT_Measure {
 	@UnitTestMethod(target = UnitType.class, name = "equals", args = { Object.class })
 	public void testEquals() {
 
-		// only measures with the same name are equal
+		// only unitTypes with the same name are equal
 		assertEquals(new UnitType("a"), new UnitType("a"));
 		assertNotEquals(new UnitType("a"), new UnitType("b"));
 		assertNotEquals(new UnitType("a"), new UnitType("A"));
@@ -75,8 +75,8 @@ public class AT_Measure {
 
 		for (int i = 0; i < 30; i++) {
 			String expectedValue = "name" + i;
-			UnitType measure = new UnitType(expectedValue);
-			String actualValue = measure.getName();
+			UnitType unitType = new UnitType(expectedValue);
+			String actualValue = unitType.getName();
 			assertEquals(expectedValue, actualValue);
 		}
 	}
@@ -98,8 +98,8 @@ public class AT_Measure {
 		// hash codes are reasonably distributed
 		Set<Integer> hashCodes = new LinkedHashSet<>();
 		for (int i = 0; i < 100; i++) {			
-			UnitType measure = new UnitType("name"+randomGenerator.nextInt(1000000000));
-			hashCodes.add(measure.hashCode());
+			UnitType unitType = new UnitType("name"+randomGenerator.nextInt(1000000000));
+			hashCodes.add(unitType.hashCode());
 		}
 		assertEquals(100, hashCodes.size());
 		
@@ -109,8 +109,8 @@ public class AT_Measure {
 	@Test
 	@UnitTestMethod(target = UnitType.class, name = "toString", args = {})
 	public void testToString() {
-		UnitType measure = new UnitType("someMeasure");
-		String actualValue = measure.toString();
+		UnitType unitType = new UnitType("someMeasure");
+		String actualValue = unitType.toString();
 		String expectedValue = "Measure [name=someMeasure]";
 		assertEquals(expectedValue, actualValue);
 	}

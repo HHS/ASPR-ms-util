@@ -3,39 +3,39 @@ package gov.hhs.aspr.ms.util.measures;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
- * A BaseUnit represents a unit of measure for some particular measure. For
- * example, meter, foot, mile all measure length and second, minute and hour all
- * measure time.
+ * A Unit represents a unit of measure for some particular UnitType. For
+ * example, meter, foot, and mile all measure length, and second, minute and
+ * hour all measure time.
  */
 public final class Unit {
 	private final String name;
 	private final double value;
 	private final String shortName;
-	private final UnitType measure;
+	private final UnitType unitType;
 
 	/**
-	 * Creates a unit from another unit and applies a scalar to that unit. The name
+	 * Creates a Unit from another Unit and applies a scalar to that Unit. The name
 	 * and short name are used in labeling.
 	 * 
 	 * @throws ContractException
-	 *                           <ul>
-	 *                           <li>{@linkplain MeasuresError#NULL_UNIT_NAME} if
-	 *                           the name is null</li>
-	 *                           <li>{@linkplain MeasuresError#BLANK_UNIT_NAME} if
-	 *                           the name is empty or contains only white space
-	 *                           characters</li>
-	 *                           <li>{@linkplain MeasuresError#NULL_UNIT_NAME} if
-	 *                           the short name is null</li>
-	 *                           <li>{@linkplain MeasuresError#BLANK_UNIT_NAME} if
-	 *                           the short name is empty or contains only white
-	 *                           space characters</li>
-	 *                           <li>{@linkplain MeasuresError#NULL_UNIT} if the
-	 *                           unit is null</li>
-	 *                           <li>{@linkplain MeasuresError#NON_POSITIVE_SCALAR_VALUE}
-	 *                           if the scalar is not positive</li>
-	 *                           </ul>
+	 *                               <ul>
+	 *                               <li>{@linkplain MeasuresError#NULL_UNIT_NAME}
+	 *                               if the name is null</li>
+	 *                               <li>{@linkplain MeasuresError#BLANK_UNIT_NAME}
+	 *                               if the name is empty or contains only white
+	 *                               space characters</li>
+	 *                               <li>{@linkplain MeasuresError#NULL_UNIT_NAME}
+	 *                               if the short name is null</li>
+	 *                               <li>{@linkplain MeasuresError#BLANK_UNIT_NAME}
+	 *                               if the short name is empty or contains only
+	 *                               white space characters</li>
+	 *                               <li>{@linkplain MeasuresError#NULL_UNIT} if the
+	 *                               unit is null</li>
+	 *                               <li>{@linkplain MeasuresError#NON_POSITIVE_SCALAR_VALUE}
+	 *                               if the scalar is not positive</li>
+	 *                               </ul>
 	 */
-	public Unit(Unit baseUnit, double scalar, String name, String shortName) {
+	public Unit(Unit unit, double scalar, String name, String shortName) {
 		if (name == null) {
 			throw new ContractException(MeasuresError.NULL_UNIT_NAME);
 		}
@@ -52,7 +52,7 @@ public final class Unit {
 			throw new ContractException(MeasuresError.BLANK_UNIT_NAME);
 		}
 
-		if (baseUnit == null) {
+		if (unit == null) {
 			throw new ContractException(MeasuresError.NULL_UNIT);
 		}
 
@@ -60,33 +60,33 @@ public final class Unit {
 			throw new ContractException(MeasuresError.NON_POSITIVE_SCALAR_VALUE);
 		}
 
-		this.measure = baseUnit.getMeasure();
+		this.unitType = unit.getUnitType();
 		this.name = name;
 		this.shortName = shortName;
-		this.value = baseUnit.getValue() * scalar;
+		this.value = unit.getValue() * scalar;
 	}
 
 	/**
-	 * Creates a unit based on the give measure to that unit. The name and short
-	 * name are used in labeling. The unit's value will be 1.
+	 * Creates a Unit based on the given UnitType. The name and short name are used
+	 * in labeling. The Unit's value will be 1.
 	 * 
 	 * @throws ContractException
-	 *                           <ul>
-	 *                           <li>{@linkplain MeasuresError#NULL_UNIT_NAME} if
-	 *                           the name is null</li>
-	 *                           <li>{@linkplain MeasuresError#BLANK_UNIT_NAME} if
-	 *                           the name is empty or contains only white space
-	 *                           characters</li>
-	 *                           <li>{@linkplain MeasuresError#NULL_UNIT_NAME} if
-	 *                           the short name is null</li>
-	 *                           <li>{@linkplain MeasuresError#BLANK_UNIT_NAME} if
-	 *                           the short name is empty or contains only white
-	 *                           space characters</li>
-	 *                           <li>{@linkplain MeasuresError#NULL_MEASURE} if the
-	 *                           measure is null</li>
-	 *                           </ul>
+	 *                               <ul>
+	 *                               <li>{@linkplain MeasuresError#NULL_UNIT_NAME}
+	 *                               if the name is null</li>
+	 *                               <li>{@linkplain MeasuresError#BLANK_UNIT_NAME}
+	 *                               if the name is empty or contains only white
+	 *                               space characters</li>
+	 *                               <li>{@linkplain MeasuresError#NULL_UNIT_NAME}
+	 *                               if the short name is null</li>
+	 *                               <li>{@linkplain MeasuresError#BLANK_UNIT_NAME}
+	 *                               if the short name is empty or contains only
+	 *                               white space characters</li>
+	 *                               <li>{@linkplain MeasuresError#NULL_UNIT_TYPE}
+	 *                               if the unitType is null</li>
+	 *                               </ul>
 	 */
-	public Unit(UnitType measure, String name, String shortName) {
+	public Unit(UnitType unitType, String name, String shortName) {
 		if (name == null) {
 			throw new ContractException(MeasuresError.NULL_UNIT_NAME);
 		}
@@ -103,40 +103,40 @@ public final class Unit {
 			throw new ContractException(MeasuresError.BLANK_UNIT_NAME);
 		}
 
-		if (measure == null) {
-			throw new ContractException(MeasuresError.NULL_MEASURE);
+		if (unitType == null) {
+			throw new ContractException(MeasuresError.NULL_UNIT_TYPE);
 		}
 
-		this.measure = measure;
+		this.unitType = unitType;
 		this.name = name;
 		this.shortName = shortName;
 		this.value = 1;
 	}
 
 	/**
-	 * Returns the name of this unit
+	 * Returns the name of this Unit
 	 */
 	public String getLongName() {
 		return name;
 	}
 
 	/**
-	 * Returns the short name of this unit
+	 * Returns the short name of this Unit
 	 */
 	public String getShortName() {
 		return shortName;
 	}
 
 	/**
-	 * Returns the measure of this unit
+	 * Returns the UnitType of this Unit
 	 */
-	public UnitType getMeasure() {
-		return measure;
+	public UnitType getUnitType() {
+		return unitType;
 	}
 
 	/**
-	 * Returns the value of this unit. Typically, one unit for each measure has a
-	 * value of 1 and is the basis for all other units sharing that measure.
+	 * Returns the value of this Unit. Typically, one Unit for each UnitType has a
+	 * value of 1 and is the basis for all other Units sharing that UnitType.
 	 */
 	public double getValue() {
 		return value;
@@ -149,7 +149,7 @@ public final class Unit {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((measure == null) ? 0 : measure.hashCode());
+		result = prime * result + ((unitType == null) ? 0 : unitType.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((shortName == null) ? 0 : shortName.hashCode());
 		long temp;
@@ -159,7 +159,7 @@ public final class Unit {
 	}
 
 	/**
-	 * Two units are equal if and only if the have equal measures, equal names,
+	 * Two Units are equal if and only if the have equal UnitTypes, equal names,
 	 * equal short names and equal values.
 	 */
 	@Override
@@ -171,11 +171,11 @@ public final class Unit {
 			return false;
 		}
 		Unit other = (Unit) obj;
-		if (measure == null) {
-			if (other.measure != null) {
+		if (unitType == null) {
+			if (other.unitType != null) {
 				return false;
 			}
-		} else if (!measure.equals(other.measure)) {
+		} else if (!unitType.equals(other.unitType)) {
 			return false;
 		}
 		if (name == null) {
@@ -200,17 +200,16 @@ public final class Unit {
 
 	/**
 	 * Returns the string representation of this unit in the form:
-	 * 
-	 * BaseUnit [measure=Measure [name=length], value=1000.0, name=kilometer,
+	 * <p>
+	 * Unit [unitType=UnitType [name=length], value=1000.0, name=kilometer,
 	 * shortName=km]
-	 * 
 	 */
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("BaseUnit [measure=");
-		builder.append(measure);
+		builder.append("Unit [unitType=");
+		builder.append(unitType);
 		builder.append(", value=");
 		builder.append(value);
 		builder.append(", name=");
@@ -222,11 +221,10 @@ public final class Unit {
 	}
 
 	/**
-	 * Returns the ComposedUnit formed from this base unit.
+	 * Returns this Unit as a ComposedUnit
 	 */
-	public ComposedUnit asComposedUnit() {
-		return ComposedUnit.builder().setBaseUnit(this, 1).build();
-
+	public ComposedUnit asComposite() {
+		return ComposedUnit.builder().setUnit(this, 1).build();
 	}
 
 }
