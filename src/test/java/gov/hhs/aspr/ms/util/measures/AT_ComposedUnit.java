@@ -616,7 +616,7 @@ public class AT_ComposedUnit {
 				.setNames("meters per second", "mps").build();
 		String actualValue = MPS.toString();
 
-		String expectedValue = "ComposedUnit [value=1.0, longName=meters per second, shortName=mps, unitTypes={Measure [name=length]=UnitPower [unit=Unit [unitType=Measure [name=length], value=1.0, name=meter, shortName=m], power=1], Measure [name=time]=UnitPower [unit=Unit [unitType=Measure [name=time], value=1.0, name=second, shortName=s], power=-1]}]";
+		String expectedValue = "ComposedUnit [value=1.0, longName=meters per second, shortName=mps, unitTypes={UnitType [name=length]=UnitPower [unit=Unit [unitType=UnitType [name=length], value=1.0, name=meter, shortName=m], power=1], UnitType [name=time]=UnitPower [unit=Unit [unitType=UnitType [name=time], value=1.0, name=second, shortName=s], power=-1]}]";
 		assertEquals(expectedValue, actualValue);
 	}
 

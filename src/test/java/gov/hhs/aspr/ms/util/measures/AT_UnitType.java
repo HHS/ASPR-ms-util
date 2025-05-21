@@ -109,9 +109,9 @@ public class AT_UnitType {
 	@Test
 	@UnitTestMethod(target = UnitType.class, name = "toString", args = {})
 	public void testToString() {
-		UnitType unitType = new UnitType("someMeasure");
+		UnitType unitType = new UnitType("someUnitType");
 		String actualValue = unitType.toString();
-		String expectedValue = "Measure [name=someMeasure]";
+		String expectedValue = "UnitType [name=someUnitType]";
 		assertEquals(expectedValue, actualValue);
 	}
 

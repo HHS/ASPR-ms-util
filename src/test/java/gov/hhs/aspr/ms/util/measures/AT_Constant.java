@@ -408,7 +408,7 @@ public class AT_Constant {
 
 		Constant EARTH_GRAVITY = new Constant(quantity, "earth_gravity", "g");
 
-		String expectedValue = "Constant [longName=earth_gravity, shortName=g, quantity=Quantity [composedUnit=ComposedUnit [value=1.0, longName=null, shortName=null, unitTypes={Measure [name=length]=UnitPower [unit=Unit [unitType=Measure [name=length], value=1.0, name=meter, shortName=m], power=1], Measure [name=time]=UnitPower [unit=Unit [unitType=Measure [name=time], value=1.0, name=second, shortName=s], power=-2]}], value=9.80665]]";
+		String expectedValue = "Constant [longName=earth_gravity, shortName=g, quantity=Quantity [composedUnit=ComposedUnit [value=1.0, longName=null, shortName=null, unitTypes={UnitType [name=length]=UnitPower [unit=Unit [unitType=UnitType [name=length], value=1.0, name=meter, shortName=m], power=1], UnitType [name=time]=UnitPower [unit=Unit [unitType=UnitType [name=time], value=1.0, name=second, shortName=s], power=-2]}], value=9.80665]]";
 		String actualValue = EARTH_GRAVITY.toString();
 		assertEquals(expectedValue, actualValue);
 	}

@@ -1283,8 +1283,8 @@ public class AT_Quantity {
 		String actualValue = quantity.toString();
 		String expectedValue = "Quantity [composedUnit="
 				+ "ComposedUnit [value=1.0, longName=acceleration, shortName=acc, "
-				+ "unitTypes={Measure [name=length]=UnitPower [unit=Unit [unitType=Measure [name=length], value=1.0, name=meter, shortName=m], power=1],"
-				+ " Measure [name=time]=UnitPower [unit=Unit [unitType=Measure [name=time], value=1.0, name=second, shortName=s], power=-2]}],"
+				+ "unitTypes={UnitType [name=length]=UnitPower [unit=Unit [unitType=UnitType [name=length], value=1.0, name=meter, shortName=m], power=1],"
+				+ " UnitType [name=time]=UnitPower [unit=Unit [unitType=UnitType [name=time], value=1.0, name=second, shortName=s], power=-2]}],"
 				+ " value=14.5]";
 		assertEquals(expectedValue, actualValue);
 	}

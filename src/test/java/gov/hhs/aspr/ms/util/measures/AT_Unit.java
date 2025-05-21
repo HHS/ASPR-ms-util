@@ -261,7 +261,7 @@ public class AT_Unit {
 		Unit METER = new Unit(LENGTH, "meter", "m");
 		Unit KILOMETER = new Unit(METER, 1000, "kilometer", "km");
 		String actualValue = KILOMETER.toString();
-		String expectedValue = "BaseUnit [measure=UnitType [name=length], value=1000.0, name=kilometer, shortName=km]";
+		String expectedValue = "Unit [unitType=UnitType [name=length], value=1000.0, name=kilometer, shortName=km]";
 		assertEquals(expectedValue, actualValue);
 	}
 
