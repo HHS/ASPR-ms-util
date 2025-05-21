@@ -34,7 +34,7 @@ public final class Quantity {
 	 *                           base unit is null</li>
 	 *                           </ul>
 	 */
-	public Quantity(BaseUnit baseUnit, double value) {
+	public Quantity(Unit baseUnit, double value) {
 		if (baseUnit == null) {
 			throw new ContractException(MeasuresError.NULL_UNIT);
 		}

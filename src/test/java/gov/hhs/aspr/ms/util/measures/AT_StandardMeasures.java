@@ -14,63 +14,63 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "LENGTH")
 	public void test_LENGTH() {
-		assertInstanceOf(Measure.class, StandardMeasures.LENGTH);
+		assertInstanceOf(UnitType.class, StandardMeasures.LENGTH);
 		assertEquals("length", StandardMeasures.LENGTH.getName());
 	}
 
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "MASS")
 	public void test_MASS() {
-		assertInstanceOf(Measure.class, StandardMeasures.MASS);
+		assertInstanceOf(UnitType.class, StandardMeasures.MASS);
 		assertEquals("mass", StandardMeasures.MASS.getName());
 	}
 
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "TIME")
 	public void test_TIME() {
-		assertInstanceOf(Measure.class, StandardMeasures.TIME);
+		assertInstanceOf(UnitType.class, StandardMeasures.TIME);
 		assertEquals("time", StandardMeasures.TIME.getName());
 	}
 
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "CURRENT")
 	public void test_CURRENT() {
-		assertInstanceOf(Measure.class, StandardMeasures.CURRENT);
+		assertInstanceOf(UnitType.class, StandardMeasures.CURRENT);
 		assertEquals("current", StandardMeasures.CURRENT.getName());
 	}
 
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "TEMPERATURE")
 	public void test_TEMPERATURE() {
-		assertInstanceOf(Measure.class, StandardMeasures.TEMPERATURE);
+		assertInstanceOf(UnitType.class, StandardMeasures.TEMPERATURE);
 		assertEquals("temperature", StandardMeasures.TEMPERATURE.getName());
 	}
 
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "LUMINOSITY")
 	public void test_LUMINOSITY() {
-		assertInstanceOf(Measure.class, StandardMeasures.LUMINOSITY);
+		assertInstanceOf(UnitType.class, StandardMeasures.LUMINOSITY);
 		assertEquals("luminosity", StandardMeasures.LUMINOSITY.getName());
 	}
 
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "ANGLE")
 	public void test_ANGLE() {
-		assertInstanceOf(Measure.class, StandardMeasures.ANGLE);
+		assertInstanceOf(UnitType.class, StandardMeasures.ANGLE);
 		assertEquals("angle", StandardMeasures.ANGLE.getName());
 	}
 
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "SOLID_ANGLE")
 	public void test_SOLID_ANGLE() {
-		assertInstanceOf(Measure.class, StandardMeasures.SOLID_ANGLE);
+		assertInstanceOf(UnitType.class, StandardMeasures.SOLID_ANGLE);
 		assertEquals("solid_angle", StandardMeasures.SOLID_ANGLE.getName());
 	}
 
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "METER")
 	public void test_METER() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.METER);
+		assertInstanceOf(Unit.class, StandardMeasures.METER);
 		assertEquals("meter", StandardMeasures.METER.getLongName());
 		assertEquals("m", StandardMeasures.METER.getShortName());
 	}
@@ -78,7 +78,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "CM")
 	public void test_CM() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.CM);
+		assertInstanceOf(Unit.class, StandardMeasures.CM);
 		assertEquals("centimeter", StandardMeasures.CM.getLongName());
 		assertEquals("cm", StandardMeasures.CM.getShortName());
 	}
@@ -86,7 +86,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "DM")
 	public void test_DM() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.DM);
+		assertInstanceOf(Unit.class, StandardMeasures.DM);
 		assertEquals("decimeter", StandardMeasures.DM.getLongName());
 		assertEquals("dm", StandardMeasures.DM.getShortName());
 	}
@@ -94,7 +94,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "INCH")
 	public void test_INCH() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.INCH);
+		assertInstanceOf(Unit.class, StandardMeasures.INCH);
 		assertEquals("inch", StandardMeasures.INCH.getLongName());
 		assertEquals("in", StandardMeasures.INCH.getShortName());
 	}
@@ -102,7 +102,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "FOOT")
 	public void test_FOOT() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.FOOT);
+		assertInstanceOf(Unit.class, StandardMeasures.FOOT);
 		assertEquals("foot", StandardMeasures.FOOT.getLongName());
 		assertEquals("ft", StandardMeasures.FOOT.getShortName());
 	}
@@ -110,7 +110,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "MILE")
 	public void test_MILE() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.MILE);
+		assertInstanceOf(Unit.class, StandardMeasures.MILE);
 		assertEquals("mile", StandardMeasures.MILE.getLongName());
 		assertEquals("mi", StandardMeasures.MILE.getShortName());
 	}
@@ -118,7 +118,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "SECOND")
 	public void test_SECOND() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.SECOND);
+		assertInstanceOf(Unit.class, StandardMeasures.SECOND);
 		assertEquals("second", StandardMeasures.SECOND.getLongName());
 		assertEquals("s", StandardMeasures.SECOND.getShortName());
 	}
@@ -126,7 +126,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "MINUTE")
 	public void test_MINUTE() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.MINUTE);
+		assertInstanceOf(Unit.class, StandardMeasures.MINUTE);
 		assertEquals("minute", StandardMeasures.MINUTE.getLongName());
 		assertEquals("min", StandardMeasures.MINUTE.getShortName());
 	}
@@ -134,7 +134,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "HOUR")
 	public void test_HOUR() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.HOUR);
+		assertInstanceOf(Unit.class, StandardMeasures.HOUR);
 		assertEquals("hour", StandardMeasures.HOUR.getLongName());
 		assertEquals("h", StandardMeasures.HOUR.getShortName());
 	}
@@ -142,7 +142,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "DAY")
 	public void test_DAY() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.DAY);
+		assertInstanceOf(Unit.class, StandardMeasures.DAY);
 		assertEquals("day", StandardMeasures.DAY.getLongName());
 		assertEquals("d", StandardMeasures.DAY.getShortName());
 	}
@@ -150,7 +150,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "KILOGRAM")
 	public void test_KILOGRAM() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.KILOGRAM);
+		assertInstanceOf(Unit.class, StandardMeasures.KILOGRAM);
 		assertEquals("kilogram", StandardMeasures.KILOGRAM.getLongName());
 		assertEquals("kg", StandardMeasures.KILOGRAM.getShortName());
 	}
@@ -158,7 +158,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "GRAM")
 	public void test_GRAM() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.GRAM);
+		assertInstanceOf(Unit.class, StandardMeasures.GRAM);
 		assertEquals("gram", StandardMeasures.GRAM.getLongName());
 		assertEquals("g", StandardMeasures.GRAM.getShortName());
 	}
@@ -166,7 +166,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "MILLIGRAM")
 	public void test_MILLIGRAM() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.MILLIGRAM);
+		assertInstanceOf(Unit.class, StandardMeasures.MILLIGRAM);
 		assertEquals("milligram", StandardMeasures.MILLIGRAM.getLongName());
 		assertEquals("mg", StandardMeasures.MILLIGRAM.getShortName());
 	}
@@ -174,7 +174,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "MICROGRAM")
 	public void test_MICROGRAM() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.MICROGRAM);
+		assertInstanceOf(Unit.class, StandardMeasures.MICROGRAM);
 		assertEquals("microgram", StandardMeasures.MICROGRAM.getLongName());
 		assertEquals("mcg", StandardMeasures.MICROGRAM.getShortName());
 	}
@@ -182,7 +182,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "AMPERE")
 	public void test_AMPERE() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.AMPERE);
+		assertInstanceOf(Unit.class, StandardMeasures.AMPERE);
 		assertEquals("ampere", StandardMeasures.AMPERE.getLongName());
 		assertEquals("A", StandardMeasures.AMPERE.getShortName());
 	}
@@ -190,7 +190,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "KELVIN")
 	public void test_KELVIN() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.KELVIN);
+		assertInstanceOf(Unit.class, StandardMeasures.KELVIN);
 		assertEquals("kelvin", StandardMeasures.KELVIN.getLongName());
 		assertEquals("K", StandardMeasures.KELVIN.getShortName());
 	}
@@ -198,7 +198,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "CANDELA")
 	public void test_CANDELA() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.CANDELA);
+		assertInstanceOf(Unit.class, StandardMeasures.CANDELA);
 		assertEquals("candela", StandardMeasures.CANDELA.getLongName());
 		assertEquals("cd", StandardMeasures.CANDELA.getShortName());
 	}
@@ -206,7 +206,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "RADIAN")
 	public void test_RADIAN() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.RADIAN);
+		assertInstanceOf(Unit.class, StandardMeasures.RADIAN);
 		assertEquals("raidan", StandardMeasures.RADIAN.getLongName());
 		assertEquals("rad", StandardMeasures.RADIAN.getShortName());
 	}
@@ -214,7 +214,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "DEGREE")
 	public void test_DEGREE() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.DEGREE);
+		assertInstanceOf(Unit.class, StandardMeasures.DEGREE);
 		assertEquals("degree", StandardMeasures.DEGREE.getLongName());
 		assertEquals("deg", StandardMeasures.DEGREE.getShortName());
 	}
@@ -222,7 +222,7 @@ public class AT_StandardMeasures {
 	@Test
 	@UnitTestField(target = StandardMeasures.class, name = "STERADIAN")
 	public void test_STERADIAN() {
-		assertInstanceOf(BaseUnit.class, StandardMeasures.STERADIAN);
+		assertInstanceOf(Unit.class, StandardMeasures.STERADIAN);
 		assertEquals("steradian", StandardMeasures.STERADIAN.getLongName());
 		assertEquals("st", StandardMeasures.STERADIAN.getShortName());
 	}
@@ -233,7 +233,7 @@ public class AT_StandardMeasures {
 		assertInstanceOf(ComposedUnit.class, StandardMeasures.MPH);
 		assertEquals(2, StandardMeasures.MPH.getBaseUnits().size());
 		// mile
-		Optional<BaseUnit> optionalUnit = StandardMeasures.MPH.getBaseUnit(StandardMeasures.MILE.getMeasure());
+		Optional<Unit> optionalUnit = StandardMeasures.MPH.getBaseUnit(StandardMeasures.MILE.getMeasure());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.MILE, optionalUnit.get());
 		Optional<Integer> optionalPower = StandardMeasures.MPH.getPower(StandardMeasures.MILE.getMeasure());
@@ -255,7 +255,7 @@ public class AT_StandardMeasures {
 		assertInstanceOf(ComposedUnit.class, StandardMeasures.MPS);
 		assertEquals(2, StandardMeasures.MPS.getBaseUnits().size());
 		// meter
-		Optional<BaseUnit> optionalUnit = StandardMeasures.MPS.getBaseUnit(StandardMeasures.METER.getMeasure());
+		Optional<Unit> optionalUnit = StandardMeasures.MPS.getBaseUnit(StandardMeasures.METER.getMeasure());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.METER, optionalUnit.get());
 		Optional<Integer> optionalPower = StandardMeasures.MPS.getPower(StandardMeasures.METER.getMeasure());
@@ -277,7 +277,7 @@ public class AT_StandardMeasures {
 		assertInstanceOf(ComposedUnit.class, StandardMeasures.ACCELERATION_MPSS);
 		assertEquals(2, StandardMeasures.ACCELERATION_MPSS.getBaseUnits().size());
 		// meter
-		Optional<BaseUnit> optionalUnit = StandardMeasures.ACCELERATION_MPSS
+		Optional<Unit> optionalUnit = StandardMeasures.ACCELERATION_MPSS
 				.getBaseUnit(StandardMeasures.METER.getMeasure());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.METER, optionalUnit.get());
@@ -307,7 +307,7 @@ public class AT_StandardMeasures {
 		assertEquals(2, composedUnit.getBaseUnits().size());
 
 		// meter
-		Optional<BaseUnit> optionalUnit = composedUnit.getBaseUnit(StandardMeasures.METER.getMeasure());
+		Optional<Unit> optionalUnit = composedUnit.getBaseUnit(StandardMeasures.METER.getMeasure());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.METER, optionalUnit.get());
 		Optional<Integer> optionalPower = StandardMeasures.ACCELERATION_MPSS
@@ -330,7 +330,7 @@ public class AT_StandardMeasures {
 		assertInstanceOf(ComposedUnit.class, StandardMeasures.ML);
 		assertEquals(1, StandardMeasures.ML.getBaseUnits().size());
 		// centimeter
-		Optional<BaseUnit> optionalUnit = StandardMeasures.ML.getBaseUnit(StandardMeasures.CM.getMeasure());
+		Optional<Unit> optionalUnit = StandardMeasures.ML.getBaseUnit(StandardMeasures.CM.getMeasure());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.CM, optionalUnit.get());
 		Optional<Integer> optionalPower = StandardMeasures.ML.getPower(StandardMeasures.CM.getMeasure());
@@ -345,7 +345,7 @@ public class AT_StandardMeasures {
 		assertInstanceOf(ComposedUnit.class, StandardMeasures.LITER);
 		assertEquals(1, StandardMeasures.LITER.getBaseUnits().size());
 		// decimeter
-		Optional<BaseUnit> optionalUnit = StandardMeasures.LITER.getBaseUnit(StandardMeasures.DM.getMeasure());
+		Optional<Unit> optionalUnit = StandardMeasures.LITER.getBaseUnit(StandardMeasures.DM.getMeasure());
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(StandardMeasures.DM, optionalUnit.get());
 		Optional<Integer> optionalPower = StandardMeasures.LITER.getPower(StandardMeasures.DM.getMeasure());

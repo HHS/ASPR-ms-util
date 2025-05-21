@@ -31,41 +31,41 @@ public class AT_Quantity {
 	 */
 	private ComposedUnit getRandomComposedUnit(long seed) {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		Measure MASS = new Measure("mass");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
-		List<BaseUnit> timeUnits = new ArrayList<>();
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
+		List<Unit> timeUnits = new ArrayList<>();
 		timeUnits.add(SECOND);
 		timeUnits.add(MINUTE);
 		timeUnits.add(HOUR);
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
-		List<BaseUnit> distanceUnits = new ArrayList<>();
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
+		List<Unit> distanceUnits = new ArrayList<>();
 		distanceUnits.add(METER);
 		distanceUnits.add(CM);
 		distanceUnits.add(INCH);
 		distanceUnits.add(FOOT);
 		distanceUnits.add(MILE);
 
-		BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
-		BaseUnit POUND = new BaseUnit(KILOGRAM, 0.45359237, "pound", "lb");
-		BaseUnit OUNCE = new BaseUnit(POUND, 1.0 / 16, "ounce", "oz");
-		List<BaseUnit> massUnits = new ArrayList<>();
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
+		Unit POUND = new Unit(KILOGRAM, 0.45359237, "pound", "lb");
+		Unit OUNCE = new Unit(POUND, 1.0 / 16, "ounce", "oz");
+		List<Unit> massUnits = new ArrayList<>();
 		massUnits.add(KILOGRAM);
 		massUnits.add(POUND);
 		massUnits.add(OUNCE);
 
-		BaseUnit timeUnit = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
-		BaseUnit distanceUnit = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
-		BaseUnit massUnit = massUnits.get(randomGenerator.nextInt(massUnits.size()));
+		Unit timeUnit = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
+		Unit distanceUnit = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
+		Unit massUnit = massUnits.get(randomGenerator.nextInt(massUnits.size()));
 
 		int timePower = randomGenerator.nextInt(5) + 1 * (randomGenerator.nextInt(2) * 2 - 1);
 		int distancePower = randomGenerator.nextInt(5) + 1 * (randomGenerator.nextInt(2) * 2 - 1);
@@ -123,41 +123,41 @@ public class AT_Quantity {
 	 */
 	private Quantity getRandomQuantity(long seed) {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		Measure MASS = new Measure("mass");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
-		List<BaseUnit> timeUnits = new ArrayList<>();
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
+		List<Unit> timeUnits = new ArrayList<>();
 		timeUnits.add(SECOND);
 		timeUnits.add(MINUTE);
 		timeUnits.add(HOUR);
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
-		List<BaseUnit> distanceUnits = new ArrayList<>();
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
+		List<Unit> distanceUnits = new ArrayList<>();
 		distanceUnits.add(METER);
 		distanceUnits.add(CM);
 		distanceUnits.add(INCH);
 		distanceUnits.add(FOOT);
 		distanceUnits.add(MILE);
 
-		BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
-		BaseUnit POUND = new BaseUnit(KILOGRAM, 0.45359237, "pound", "lb");
-		BaseUnit OUNCE = new BaseUnit(POUND, 1.0 / 16, "ounce", "oz");
-		List<BaseUnit> massUnits = new ArrayList<>();
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
+		Unit POUND = new Unit(KILOGRAM, 0.45359237, "pound", "lb");
+		Unit OUNCE = new Unit(POUND, 1.0 / 16, "ounce", "oz");
+		List<Unit> massUnits = new ArrayList<>();
 		massUnits.add(KILOGRAM);
 		massUnits.add(POUND);
 		massUnits.add(OUNCE);
 
-		BaseUnit timeUnit = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
-		BaseUnit distanceUnit = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
-		BaseUnit massUnit = massUnits.get(randomGenerator.nextInt(massUnits.size()));
+		Unit timeUnit = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
+		Unit distanceUnit = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
+		Unit massUnit = massUnits.get(randomGenerator.nextInt(massUnits.size()));
 
 		int[] selectedPowers = selectPowers(randomGenerator);
 
@@ -182,45 +182,45 @@ public class AT_Quantity {
 	 */
 	private Pair<Quantity, Quantity> getRandomCompatibleQuanties(long seed) {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		Measure MASS = new Measure("mass");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
-		List<BaseUnit> timeUnits = new ArrayList<>();
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
+		List<Unit> timeUnits = new ArrayList<>();
 		timeUnits.add(SECOND);
 		timeUnits.add(MINUTE);
 		timeUnits.add(HOUR);
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
-		List<BaseUnit> distanceUnits = new ArrayList<>();
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
+		List<Unit> distanceUnits = new ArrayList<>();
 		distanceUnits.add(METER);
 		distanceUnits.add(CM);
 		distanceUnits.add(INCH);
 		distanceUnits.add(FOOT);
 		distanceUnits.add(MILE);
 
-		BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
-		BaseUnit POUND = new BaseUnit(KILOGRAM, 0.45359237, "pound", "lb");
-		BaseUnit OUNCE = new BaseUnit(POUND, 1.0 / 16, "ounce", "oz");
-		List<BaseUnit> massUnits = new ArrayList<>();
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
+		Unit POUND = new Unit(KILOGRAM, 0.45359237, "pound", "lb");
+		Unit OUNCE = new Unit(POUND, 1.0 / 16, "ounce", "oz");
+		List<Unit> massUnits = new ArrayList<>();
 		massUnits.add(KILOGRAM);
 		massUnits.add(POUND);
 		massUnits.add(OUNCE);
 
-		BaseUnit timeUnit1 = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
-		BaseUnit distanceUnit1 = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
-		BaseUnit massUnit1 = massUnits.get(randomGenerator.nextInt(massUnits.size()));
+		Unit timeUnit1 = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
+		Unit distanceUnit1 = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
+		Unit massUnit1 = massUnits.get(randomGenerator.nextInt(massUnits.size()));
 
-		BaseUnit timeUnit2 = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
-		BaseUnit distanceUnit2 = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
-		BaseUnit massUnit2 = massUnits.get(randomGenerator.nextInt(massUnits.size()));
+		Unit timeUnit2 = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
+		Unit distanceUnit2 = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
+		Unit massUnit2 = massUnits.get(randomGenerator.nextInt(massUnits.size()));
 
 		int[] selectedPowers = selectPowers(randomGenerator);
 
@@ -263,13 +263,13 @@ public class AT_Quantity {
 	}
 
 	@Test
-	@UnitTestConstructor(target = Quantity.class, args = { BaseUnit.class, double.class })
+	@UnitTestConstructor(target = Quantity.class, args = { Unit.class, double.class })
 	public void testQuantity_Unit() {
 		// postcontition tests covered by the other tests
 
 		// precondition test: if the base unit is null
 		ContractException contractException = assertThrows(ContractException.class, () -> {
-			BaseUnit baseUnit = null;
+			Unit baseUnit = null;
 			new Quantity(baseUnit, 1.2);
 		});
 		assertEquals(MeasuresError.NULL_UNIT, contractException.getErrorType());
@@ -283,12 +283,12 @@ public class AT_Quantity {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
 
 		ComposedUnit composedUnit = quantity.getComposedUnit();
-		List<BaseUnit> baseUnits = composedUnit.getBaseUnits();
-		BaseUnit alteredBaseUnit = baseUnits.get(randomGenerator.nextInt(baseUnits.size()));
+		List<Unit> baseUnits = composedUnit.getBaseUnits();
+		Unit alteredBaseUnit = baseUnits.get(randomGenerator.nextInt(baseUnits.size()));
 		int alteredPower = composedUnit.getPower(alteredBaseUnit.getMeasure()).get() + 1;
 
 		ComposedUnit.Builder builder = ComposedUnit.builder();
-		for (BaseUnit baseUnit : baseUnits) {
+		for (Unit baseUnit : baseUnits) {
 			if (baseUnit != alteredBaseUnit) {
 				int power = composedUnit.getPower(baseUnit.getMeasure()).get();
 				builder.setBaseUnit(baseUnit, power);
@@ -354,16 +354,16 @@ public class AT_Quantity {
 
 			// the resultant composed unit should primarily match q1 and secondarily match
 			// q2
-			Map<Measure, Pair<BaseUnit, MutableInteger>> measureMap = new LinkedHashMap<>();
+			Map<UnitType, Pair<Unit, MutableInteger>> measureMap = new LinkedHashMap<>();
 			ComposedUnit c1 = q1.getComposedUnit();
-			for (BaseUnit baseUnit : c1.getBaseUnits()) {
+			for (Unit baseUnit : c1.getBaseUnits()) {
 				int power = c1.getPower(baseUnit.getMeasure()).get();
 				measureMap.put(baseUnit.getMeasure(), new Pair<>(baseUnit, new MutableInteger(power)));
 			}
 			ComposedUnit c2 = q2.getComposedUnit();
-			for (BaseUnit baseUnit : c2.getBaseUnits()) {
+			for (Unit baseUnit : c2.getBaseUnits()) {
 				int power = c2.getPower(baseUnit.getMeasure()).get();
-				Pair<BaseUnit, MutableInteger> pair = measureMap.get(baseUnit.getMeasure());
+				Pair<Unit, MutableInteger> pair = measureMap.get(baseUnit.getMeasure());
 				if (pair != null) {
 					pair.getSecond().decrement(power);
 				} else {
@@ -372,8 +372,8 @@ public class AT_Quantity {
 			}
 
 			ComposedUnit.Builder builder = ComposedUnit.builder();
-			for (Pair<BaseUnit, MutableInteger> pair : measureMap.values()) {
-				BaseUnit baseUnit = pair.getFirst();
+			for (Pair<Unit, MutableInteger> pair : measureMap.values()) {
+				Unit baseUnit = pair.getFirst();
 				MutableInteger power = pair.getSecond();
 				builder.setBaseUnit(baseUnit, power.getValue());
 			}
@@ -441,12 +441,12 @@ public class AT_Quantity {
 		 * and equal values. For example, the quantities q1 = new Quantity(FOOT,1) and
 		 * q2 = new Quantity(INCH,12) are not equal even though they are equivalent.
 		 */
-		Measure LENGTH = new Measure("length");
-		Measure TIME = new Measure("time");
-		BaseUnit INCH = new BaseUnit(LENGTH, "foot", "ft");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "sec");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
+		UnitType LENGTH = new UnitType("length");
+		UnitType TIME = new UnitType("time");
+		Unit INCH = new Unit(LENGTH, "foot", "ft");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit SECOND = new Unit(TIME, "second", "sec");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
 
 		// these are identical and so should be equal
 		Quantity q1 = new Quantity(MINUTE, 37.5);
@@ -506,10 +506,10 @@ public class AT_Quantity {
 	public void testGetValue() {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(1368153997671183276L);
 
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 		ComposedUnit MPSS = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).build();
 
 		for (int i = 0; i < 100; i++) {
@@ -639,16 +639,16 @@ public class AT_Quantity {
 
 			// the resultant composed unit should primarily match q1 and secondarily match
 			// q2
-			Map<Measure, Pair<BaseUnit, MutableInteger>> measureMap = new LinkedHashMap<>();
+			Map<UnitType, Pair<Unit, MutableInteger>> measureMap = new LinkedHashMap<>();
 			ComposedUnit c1 = q1.getComposedUnit();
-			for (BaseUnit baseUnit : c1.getBaseUnits()) {
+			for (Unit baseUnit : c1.getBaseUnits()) {
 				int power = c1.getPower(baseUnit.getMeasure()).get();
 				measureMap.put(baseUnit.getMeasure(), new Pair<>(baseUnit, new MutableInteger(power)));
 			}
 			ComposedUnit c2 = q2.getComposedUnit();
-			for (BaseUnit baseUnit : c2.getBaseUnits()) {
+			for (Unit baseUnit : c2.getBaseUnits()) {
 				int power = c2.getPower(baseUnit.getMeasure()).get();
-				Pair<BaseUnit, MutableInteger> pair = measureMap.get(baseUnit.getMeasure());
+				Pair<Unit, MutableInteger> pair = measureMap.get(baseUnit.getMeasure());
 				if (pair != null) {
 					pair.getSecond().increment(power);
 				} else {
@@ -657,8 +657,8 @@ public class AT_Quantity {
 			}
 
 			ComposedUnit.Builder builder = ComposedUnit.builder();
-			for (Pair<BaseUnit, MutableInteger> pair : measureMap.values()) {
-				BaseUnit baseUnit = pair.getFirst();
+			for (Pair<Unit, MutableInteger> pair : measureMap.values()) {
+				Unit baseUnit = pair.getFirst();
 				MutableInteger power = pair.getSecond();
 				builder.setBaseUnit(baseUnit, power.getValue());
 			}
@@ -774,7 +774,7 @@ public class AT_Quantity {
 
 			ComposedUnit composedUnit = quantity.getComposedUnit();
 			ComposedUnit.Builder builder = ComposedUnit.builder();
-			for (BaseUnit baseUnit : composedUnit.getBaseUnits()) {
+			for (Unit baseUnit : composedUnit.getBaseUnits()) {
 				builder.setBaseUnit(baseUnit, -composedUnit.getPower(baseUnit.getMeasure()).get());
 			}
 			ComposedUnit expectedComposedUnit = builder.build();
@@ -788,8 +788,8 @@ public class AT_Quantity {
 	@UnitTestMethod(target = Quantity.class, name = "isFinite", args = {})
 	public void testIsFinite() {
 
-		Measure TIME = new Measure("time");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
+		UnitType TIME = new UnitType("time");
+		Unit SECOND = new Unit(TIME, "second", "s");
 
 		Quantity quantity = new Quantity(SECOND, 1);
 		assertTrue(quantity.isFinite());
@@ -814,10 +814,10 @@ public class AT_Quantity {
 	@Test
 	@UnitTestMethod(target = Quantity.class, name = "isNegative", args = {})
 	public void testIsNegative() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 		ComposedUnit MPSS = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).build();
 
 		Quantity quantity = new Quantity(SECOND, 0.001);
@@ -852,10 +852,10 @@ public class AT_Quantity {
 	@Test
 	@UnitTestMethod(target = Quantity.class, name = "isNonNegative", args = {})
 	public void testIsNonNegative() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 		ComposedUnit MPSS = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).build();
 
 		Quantity quantity = new Quantity(SECOND, 0.001);
@@ -889,10 +889,10 @@ public class AT_Quantity {
 	@Test
 	@UnitTestMethod(target = Quantity.class, name = "isNonPositive", args = {})
 	public void testIsNonPositive() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 		ComposedUnit MPSS = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).build();
 
 		Quantity quantity = new Quantity(SECOND, 0.001);
@@ -926,10 +926,10 @@ public class AT_Quantity {
 	@Test
 	@UnitTestMethod(target = Quantity.class, name = "isPositive", args = {})
 	public void testIsPositive() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 		ComposedUnit MPSS = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).build();
 
 		Quantity quantity = new Quantity(SECOND, 0.001);
@@ -964,10 +964,10 @@ public class AT_Quantity {
 	@Test
 	@UnitTestMethod(target = Quantity.class, name = "isMeasureLess", args = {})
 	public void testIsMeasureLess() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 
 		Quantity quantity = new Quantity(SECOND, 1);
 		assertFalse(quantity.isMeasureLess());
@@ -983,10 +983,10 @@ public class AT_Quantity {
 	@Test
 	@UnitTestMethod(target = Quantity.class, name = "isZero", args = {})
 	public void testIsZero() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 		ComposedUnit MPSS = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).build();
 
 		Quantity quantity = new Quantity(SECOND, 0.001);
@@ -1021,7 +1021,7 @@ public class AT_Quantity {
 				Quantity q2 = q1.pow(power);
 				ComposedUnit composedUnit = q1.getComposedUnit();
 				ComposedUnit.Builder builder = ComposedUnit.builder();
-				for (BaseUnit baseUnit : composedUnit.getBaseUnits()) {
+				for (Unit baseUnit : composedUnit.getBaseUnits()) {
 					int p = composedUnit.getPower(baseUnit.getMeasure()).get();
 					builder.setBaseUnit(baseUnit, power * p);
 				}
@@ -1099,12 +1099,12 @@ public class AT_Quantity {
 
 		// precondition test: if the root is not positive
 		ContractException contractException = assertThrows(ContractException.class, () -> {
-			Measure LENGTH = new Measure("length");
-			Measure TIME = new Measure("time");
-			BaseUnit INCH = new BaseUnit(LENGTH, "foot", "ft");
-			BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-			BaseUnit SECOND = new BaseUnit(TIME, "second", "sec");
-			BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
+			UnitType LENGTH = new UnitType("length");
+			UnitType TIME = new UnitType("time");
+			Unit INCH = new Unit(LENGTH, "foot", "ft");
+			Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+			Unit SECOND = new Unit(TIME, "second", "sec");
+			Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
 			
 			ComposedUnit FSPMS = ComposedUnit.builder().setBaseUnit(FOOT, 2).setBaseUnit(MINUTE, -2).build();
 			Quantity q = new Quantity(FSPMS, 3.6);
@@ -1114,12 +1114,12 @@ public class AT_Quantity {
 
 		// precondition test: if any of the measure powers is not divisible by the root
 		contractException = assertThrows(ContractException.class, () -> {
-			Measure LENGTH = new Measure("length");
-			Measure TIME = new Measure("time");
-			BaseUnit INCH = new BaseUnit(LENGTH, "foot", "ft");
-			BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-			BaseUnit SECOND = new BaseUnit(TIME, "second", "sec");
-			BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
+			UnitType LENGTH = new UnitType("length");
+			UnitType TIME = new UnitType("time");
+			Unit INCH = new Unit(LENGTH, "foot", "ft");
+			Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+			Unit SECOND = new Unit(TIME, "second", "sec");
+			Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
 			
 			ComposedUnit FSPMS = ComposedUnit.builder().setBaseUnit(FOOT, 2).setBaseUnit(MINUTE, -2).build();
 			Quantity q = new Quantity(FSPMS, 3.6);
@@ -1149,10 +1149,10 @@ public class AT_Quantity {
 	public void testSetValue() {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(6407582171193740886L);
 
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 		ComposedUnit MPSS = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).build();
 
 		for (int i = 0; i < 100; i++) {
@@ -1174,10 +1174,10 @@ public class AT_Quantity {
 	@Test
 	@UnitTestMethod(target = Quantity.class, name = "getLongName", args = {})
 	public void testGetLongName() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 
 		// we create two composed units, one with and one without names
 		ComposedUnit MPSS1 = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).build();
@@ -1199,10 +1199,10 @@ public class AT_Quantity {
 	@Test
 	@UnitTestMethod(target = Quantity.class, name = "getLongLabel", args = {})
 	public void testGetLongLabel() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 
 		// we create two composed units, one with and one without names
 		ComposedUnit MPSS1 = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).build();
@@ -1224,10 +1224,10 @@ public class AT_Quantity {
 	@Test
 	@UnitTestMethod(target = Quantity.class, name = "getShortLabel", args = {})
 	public void testGetShortLabel() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 
 		// we create two composed units, one with and one without names
 		ComposedUnit MPSS1 = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).build();
@@ -1249,10 +1249,10 @@ public class AT_Quantity {
 	@Test
 	@UnitTestMethod(target = Quantity.class, name = "getShortName", args = {})
 	public void testGetShortName() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 		ComposedUnit MPSS1 = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).build();
 		ComposedUnit MPSS2 = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).setShortName("acc")
 				.setLongName("acceleration").build();
@@ -1271,10 +1271,10 @@ public class AT_Quantity {
 	@Test
 	@UnitTestMethod(target = Quantity.class, name = "toString", args = {})
 	public void testToString() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 
 		ComposedUnit MPSS = ComposedUnit.builder().setBaseUnit(METER, 1).setBaseUnit(SECOND, -2).setShortName("acc")
 				.setLongName("acceleration").build();

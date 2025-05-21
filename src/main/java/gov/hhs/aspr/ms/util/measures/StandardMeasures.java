@@ -7,51 +7,51 @@ import org.apache.commons.math3.util.FastMath;
  */
 public final class StandardMeasures {
 
-	public static Measure LENGTH = new Measure("length");
-	public static Measure MASS = new Measure("mass");
-	public static Measure TIME = new Measure("time");
-	public static Measure CURRENT = new Measure("current");
-	public static Measure TEMPERATURE = new Measure("temperature");
-	public static Measure LUMINOSITY = new Measure("luminosity");
-	public static Measure ANGLE = new Measure("angle");
-	public static Measure SOLID_ANGLE = new Measure("solid_angle");
+	public static UnitType LENGTH = new UnitType("length");
+	public static UnitType MASS = new UnitType("mass");
+	public static UnitType TIME = new UnitType("time");
+	public static UnitType CURRENT = new UnitType("current");
+	public static UnitType TEMPERATURE = new UnitType("temperature");
+	public static UnitType LUMINOSITY = new UnitType("luminosity");
+	public static UnitType ANGLE = new UnitType("angle");
+	public static UnitType SOLID_ANGLE = new UnitType("solid_angle");
 	
 
 	// Length
-	public static BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-	public static BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-	public static BaseUnit DM = new BaseUnit(CM, 10, "decimeter", "dm");
-	public static BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-	public static BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-	public static BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
+	public static Unit METER = new Unit(LENGTH, "meter", "m");
+	public static Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+	public static Unit DM = new Unit(CM, 10, "decimeter", "dm");
+	public static Unit INCH = new Unit(CM, 2.54, "inch", "in");
+	public static Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+	public static Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
 
 	// Time
-	public static BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-	public static BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-	public static BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
-	public static BaseUnit DAY = new BaseUnit(HOUR, 24, "day", "d");
+	public static Unit SECOND = new Unit(TIME, "second", "s");
+	public static Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+	public static Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
+	public static Unit DAY = new Unit(HOUR, 24, "day", "d");
 
 	// Mass
-	public static BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
-	public static BaseUnit GRAM = new BaseUnit(KILOGRAM, 0.001, "gram", "g");
-	public static BaseUnit MILLIGRAM = new BaseUnit(GRAM, 0.001, "milligram", "mg");
-	public static BaseUnit MICROGRAM = new BaseUnit(MILLIGRAM, 0.001, "microgram", "mcg");
+	public static Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
+	public static Unit GRAM = new Unit(KILOGRAM, 0.001, "gram", "g");
+	public static Unit MILLIGRAM = new Unit(GRAM, 0.001, "milligram", "mg");
+	public static Unit MICROGRAM = new Unit(MILLIGRAM, 0.001, "microgram", "mcg");
 	
 	//Current
-	public static BaseUnit AMPERE = new BaseUnit(CURRENT, "ampere", "A");
+	public static Unit AMPERE = new Unit(CURRENT, "ampere", "A");
 	
 	//TemperatureScale
-	public static BaseUnit KELVIN = new BaseUnit(TEMPERATURE, "kelvin", "K");
+	public static Unit KELVIN = new Unit(TEMPERATURE, "kelvin", "K");
 	
 	//Luminosity
-	public static BaseUnit CANDELA = new BaseUnit(LUMINOSITY, "candela", "cd");
+	public static Unit CANDELA = new Unit(LUMINOSITY, "candela", "cd");
 	
 	//Angle	
-	public static BaseUnit RADIAN = new BaseUnit(ANGLE, "raidan", "rad");
-	public static BaseUnit DEGREE = new BaseUnit(RADIAN, FastMath.PI/180,"degree", "deg");
+	public static Unit RADIAN = new Unit(ANGLE, "raidan", "rad");
+	public static Unit DEGREE = new Unit(RADIAN, FastMath.PI/180,"degree", "deg");
 	
 	//Solid Angle
-	public static BaseUnit STERADIAN = new BaseUnit(SOLID_ANGLE, "steradian", "st");
+	public static Unit STERADIAN = new Unit(SOLID_ANGLE, "steradian", "st");
 	
 	//speed
 	public static ComposedUnit MPH = ComposedUnit.builder().setBaseUnit(MILE, 1).setBaseUnit(HOUR, -1).build();

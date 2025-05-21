@@ -7,11 +7,11 @@ import gov.hhs.aspr.ms.util.errors.ContractException;
  * example, meter, foot, mile all measure length and second, minute and hour all
  * measure time.
  */
-public final class BaseUnit {
+public final class Unit {
 	private final String name;
 	private final double value;
 	private final String shortName;
-	private final Measure measure;
+	private final UnitType measure;
 
 	/**
 	 * Creates a unit from another unit and applies a scalar to that unit. The name
@@ -35,7 +35,7 @@ public final class BaseUnit {
 	 *                           if the scalar is not positive</li>
 	 *                           </ul>
 	 */
-	public BaseUnit(BaseUnit baseUnit, double scalar, String name, String shortName) {
+	public Unit(Unit baseUnit, double scalar, String name, String shortName) {
 		if (name == null) {
 			throw new ContractException(MeasuresError.NULL_UNIT_NAME);
 		}
@@ -86,7 +86,7 @@ public final class BaseUnit {
 	 *                           measure is null</li>
 	 *                           </ul>
 	 */
-	public BaseUnit(Measure measure, String name, String shortName) {
+	public Unit(UnitType measure, String name, String shortName) {
 		if (name == null) {
 			throw new ContractException(MeasuresError.NULL_UNIT_NAME);
 		}
@@ -130,7 +130,7 @@ public final class BaseUnit {
 	/**
 	 * Returns the measure of this unit
 	 */
-	public Measure getMeasure() {
+	public UnitType getMeasure() {
 		return measure;
 	}
 
@@ -167,10 +167,10 @@ public final class BaseUnit {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof BaseUnit)) {
+		if (!(obj instanceof Unit)) {
 			return false;
 		}
-		BaseUnit other = (BaseUnit) obj;
+		Unit other = (Unit) obj;
 		if (measure == null) {
 			if (other.measure != null) {
 				return false;

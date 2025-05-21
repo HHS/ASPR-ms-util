@@ -20,36 +20,36 @@ import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
 public class AT_Measure {
 
 	@Test
-	@UnitTestConstructor(target = Measure.class, args = { String.class })
+	@UnitTestConstructor(target = UnitType.class, args = { String.class })
 	public void testMeasure() {
 		// there are no postcondition tests
 
 		// precondition test: if the name is null
-		ContractException contractException = assertThrows(ContractException.class, () -> new Measure(null));
+		ContractException contractException = assertThrows(ContractException.class, () -> new UnitType(null));
 		assertEquals(MeasuresError.NULL_MEASURE_NAME, contractException.getErrorType());
 
 		// precondition test: if the name is blank
-		contractException = assertThrows(ContractException.class, () -> new Measure(""));
+		contractException = assertThrows(ContractException.class, () -> new UnitType(""));
 		assertEquals(MeasuresError.BLANK_MEASURE_NAME, contractException.getErrorType());
 
 		// precondition test: if the name is blank
-		contractException = assertThrows(ContractException.class, () -> new Measure(" "));
+		contractException = assertThrows(ContractException.class, () -> new UnitType(" "));
 		assertEquals(MeasuresError.BLANK_MEASURE_NAME, contractException.getErrorType());
 
 	}
 
 	@Test
-	@UnitTestMethod(target = Measure.class, name = "equals", args = { Object.class })
+	@UnitTestMethod(target = UnitType.class, name = "equals", args = { Object.class })
 	public void testEquals() {
 
 		// only measures with the same name are equal
-		assertEquals(new Measure("a"), new Measure("a"));
-		assertNotEquals(new Measure("a"), new Measure("b"));
-		assertNotEquals(new Measure("a"), new Measure("A"));
+		assertEquals(new UnitType("a"), new UnitType("a"));
+		assertNotEquals(new UnitType("a"), new UnitType("b"));
+		assertNotEquals(new UnitType("a"), new UnitType("A"));
 
 		// not equal to null
-		Measure a = new Measure("a");
-		Measure b = new Measure("b");
+		UnitType a = new UnitType("a");
+		UnitType b = new UnitType("b");
 		assertFalse(a.equals(null));
 		assertFalse(b.equals(null));
 
@@ -61,8 +61,8 @@ public class AT_Measure {
 		assertTrue(b.equals(b));
 
 		// symmetric, transitive, stable
-		Measure c1 = new Measure("c");
-		Measure c2 = new Measure("c");
+		UnitType c1 = new UnitType("c");
+		UnitType c2 = new UnitType("c");
 		for (int i = 0; i < 5; i++) {
 			assertTrue(c1.equals(c2));
 			assertTrue(c2.equals(c1));
@@ -70,27 +70,27 @@ public class AT_Measure {
 	}
 
 	@Test
-	@UnitTestMethod(target = Measure.class, name = "getName", args = {})
+	@UnitTestMethod(target = UnitType.class, name = "getName", args = {})
 	public void testGetName() {
 
 		for (int i = 0; i < 30; i++) {
 			String expectedValue = "name" + i;
-			Measure measure = new Measure(expectedValue);
+			UnitType measure = new UnitType(expectedValue);
 			String actualValue = measure.getName();
 			assertEquals(expectedValue, actualValue);
 		}
 	}
 
 	@Test
-	@UnitTestMethod(target = Measure.class, name = "hashCode", args = {})
+	@UnitTestMethod(target = UnitType.class, name = "hashCode", args = {})
 	public void testHashCode() {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(3826969971798275453L);
 
 		// equal objects have equal hash codes
 		for (int i = 0; i < 30; i++) {
 			String name = "name"+randomGenerator.nextInt(1000000000);
-			Measure m1 = new Measure(name);
-			Measure m2 = new Measure(name);
+			UnitType m1 = new UnitType(name);
+			UnitType m2 = new UnitType(name);
 			assertEquals(m1, m2);
 			assertEquals(m1.hashCode(), m2.hashCode());
 		}
@@ -98,7 +98,7 @@ public class AT_Measure {
 		// hash codes are reasonably distributed
 		Set<Integer> hashCodes = new LinkedHashSet<>();
 		for (int i = 0; i < 100; i++) {			
-			Measure measure = new Measure("name"+randomGenerator.nextInt(1000000000));
+			UnitType measure = new UnitType("name"+randomGenerator.nextInt(1000000000));
 			hashCodes.add(measure.hashCode());
 		}
 		assertEquals(100, hashCodes.size());
@@ -107,9 +107,9 @@ public class AT_Measure {
 	}
 
 	@Test
-	@UnitTestMethod(target = Measure.class, name = "toString", args = {})
+	@UnitTestMethod(target = UnitType.class, name = "toString", args = {})
 	public void testToString() {
-		Measure measure = new Measure("someMeasure");
+		UnitType measure = new UnitType("someMeasure");
 		String actualValue = measure.toString();
 		String expectedValue = "Measure [name=someMeasure]";
 		assertEquals(expectedValue, actualValue);

@@ -27,31 +27,31 @@ public class AT_ComposedUnit {
 	@UnitTestMethod(target = ComposedUnit.class, name = "getBaseUnits", args = {})
 	public void testGetBaseUnits() {
 
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		Measure MASS = new Measure("mass");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
 
-		BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
-		BaseUnit POUND = new BaseUnit(KILOGRAM, 0.45359237, "pound", "lb");
-		BaseUnit OUNCE = new BaseUnit(POUND, 1.0 / 16, "ounce", "oz");
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
+		Unit POUND = new Unit(KILOGRAM, 0.45359237, "pound", "lb");
+		Unit OUNCE = new Unit(POUND, 1.0 / 16, "ounce", "oz");
 
 		// case 1
 		ComposedUnit composedUnit = ComposedUnit.builder().setBaseUnit(OUNCE, 2).setBaseUnit(HOUR, 3).build();
-		List<BaseUnit> expectedBaseUnits = new ArrayList<>();
+		List<Unit> expectedBaseUnits = new ArrayList<>();
 		expectedBaseUnits.add(OUNCE);
 		expectedBaseUnits.add(HOUR);
 
-		List<BaseUnit> actualBaseUnits = composedUnit.getBaseUnits();
+		List<Unit> actualBaseUnits = composedUnit.getBaseUnits();
 		assertEquals(expectedBaseUnits, actualBaseUnits);
 
 		// case 2
@@ -86,18 +86,18 @@ public class AT_ComposedUnit {
 	public void testEquals() {
 		// Two composed units are equal if and only if their units and powers are equal
 
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
 
 		ComposedUnit MPS1 = ComposedUnit.builder()//
 				.setBaseUnit(METER, 1)//
@@ -152,21 +152,21 @@ public class AT_ComposedUnit {
 	@Test
 	@UnitTestMethod(target = ComposedUnit.class, name = "getLongLabel", args = {})
 	public void testGetLongLabel() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		Measure MASS = new Measure("mass");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
 
-		BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
 
 		// sample 1
 		String actualValue = ComposedUnit.builder()//
@@ -201,18 +201,18 @@ public class AT_ComposedUnit {
 	@Test
 	@UnitTestMethod(target = ComposedUnit.class, name = "getLongName", args = {})
 	public void testGetLongName() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
 
 		// sample 1 -- without setting long name
 		ComposedUnit composedUnit = ComposedUnit.builder()//
@@ -236,18 +236,18 @@ public class AT_ComposedUnit {
 	@Test
 	@UnitTestMethod(target = ComposedUnit.class, name = "getShortName", args = {})
 	public void testGetShortName() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
 
 		// sample 1 -- without setting short name
 		ComposedUnit composedUnit = ComposedUnit.builder()//
@@ -269,16 +269,16 @@ public class AT_ComposedUnit {
 	}
 
 	@Test
-	@UnitTestMethod(target = ComposedUnit.class, name = "getPower", args = { Measure.class })
+	@UnitTestMethod(target = ComposedUnit.class, name = "getPower", args = { UnitType.class })
 	public void testGetPower() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		Measure MASS = new Measure("mass");
-		Measure AMPERE = new Measure("electric_current");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
+		UnitType AMPERE = new UnitType("electric_current");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
 
 		ComposedUnit composedUnit = ComposedUnit.builder()//
 				.setBaseUnit(KILOGRAM, 1)//
@@ -314,21 +314,21 @@ public class AT_ComposedUnit {
 	@Test
 	@UnitTestMethod(target = ComposedUnit.class, name = "getShortLabel", args = {})
 	public void testGetShortLabel() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		Measure MASS = new Measure("mass");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
 
-		BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
 
 		// sample 1
 		String actualValue = ComposedUnit.builder()//
@@ -360,16 +360,16 @@ public class AT_ComposedUnit {
 	}
 
 	@Test
-	@UnitTestMethod(target = ComposedUnit.class, name = "getBaseUnit", args = { Measure.class })
+	@UnitTestMethod(target = ComposedUnit.class, name = "getBaseUnit", args = { UnitType.class })
 	public void testGetBaseUnit() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		Measure MASS = new Measure("mass");
-		Measure AMPERE = new Measure("electric_current");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
+		UnitType AMPERE = new UnitType("electric_current");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
 
 		ComposedUnit composedUnit = ComposedUnit.builder()//
 				.setBaseUnit(KILOGRAM, 1)//
@@ -377,7 +377,7 @@ public class AT_ComposedUnit {
 				.setBaseUnit(SECOND, -3)//
 				.build();
 
-		Optional<BaseUnit> optional = composedUnit.getBaseUnit(MASS);
+		Optional<Unit> optional = composedUnit.getBaseUnit(MASS);
 		assertTrue(optional.isPresent());
 		assertEquals(KILOGRAM, optional.get());
 
@@ -410,22 +410,22 @@ public class AT_ComposedUnit {
 		assertEquals(1.0, ComposedUnit.builder()//
 				.build().getValue());
 
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		Measure MASS = new Measure("mass");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
 
-		BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
-		BaseUnit POUND = new BaseUnit(KILOGRAM, 0.45359237, "pound", "lb");
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
+		Unit POUND = new Unit(KILOGRAM, 0.45359237, "pound", "lb");
 
 		// example 1: miles per hour
 		ComposedUnit composedUnit = ComposedUnit.builder()//
@@ -464,41 +464,41 @@ public class AT_ComposedUnit {
 	 */
 	private ComposedUnit getRandomComposedUnit(long seed) {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		Measure MASS = new Measure("mass");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
-		List<BaseUnit> timeUnits = new ArrayList<>();
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
+		List<Unit> timeUnits = new ArrayList<>();
 		timeUnits.add(SECOND);
 		timeUnits.add(MINUTE);
 		timeUnits.add(HOUR);
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
-		List<BaseUnit> distanceUnits = new ArrayList<>();
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
+		List<Unit> distanceUnits = new ArrayList<>();
 		distanceUnits.add(METER);
 		distanceUnits.add(CM);
 		distanceUnits.add(INCH);
 		distanceUnits.add(FOOT);
 		distanceUnits.add(MILE);
 
-		BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
-		BaseUnit POUND = new BaseUnit(KILOGRAM, 0.45359237, "pound", "lb");
-		BaseUnit OUNCE = new BaseUnit(POUND, 1.0 / 16, "ounce", "oz");
-		List<BaseUnit> massUnits = new ArrayList<>();
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
+		Unit POUND = new Unit(KILOGRAM, 0.45359237, "pound", "lb");
+		Unit OUNCE = new Unit(POUND, 1.0 / 16, "ounce", "oz");
+		List<Unit> massUnits = new ArrayList<>();
 		massUnits.add(KILOGRAM);
 		massUnits.add(POUND);
 		massUnits.add(OUNCE);
 
-		BaseUnit timeUnit = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
-		BaseUnit distanceUnit = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
-		BaseUnit massUnit = massUnits.get(randomGenerator.nextInt(massUnits.size()));
+		Unit timeUnit = timeUnits.get(randomGenerator.nextInt(timeUnits.size()));
+		Unit distanceUnit = distanceUnits.get(randomGenerator.nextInt(distanceUnits.size()));
+		Unit massUnit = massUnits.get(randomGenerator.nextInt(massUnits.size()));
 
 		int timePower = randomGenerator.nextInt(5) + 1 * (randomGenerator.nextInt(2) * 2 - 1);
 		int distancePower = randomGenerator.nextInt(5) + 1 * (randomGenerator.nextInt(2) * 2 - 1);
@@ -537,23 +537,23 @@ public class AT_ComposedUnit {
 	@Test
 	@UnitTestMethod(target = ComposedUnit.class, name = "isCompatible", args = { ComposedUnit.class })
 	public void testIsCompatible() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		Measure MASS = new Measure("mass");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
 
-		BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
-		BaseUnit POUND = new BaseUnit(KILOGRAM, 0.45359237, "pound", "lb");
-		BaseUnit OUNCE = new BaseUnit(POUND, 1.0 / 16, "ounce", "oz");
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
+		Unit POUND = new Unit(KILOGRAM, 0.45359237, "pound", "lb");
+		Unit OUNCE = new Unit(POUND, 1.0 / 16, "ounce", "oz");
 
 		ComposedUnit composedUnit1 = ComposedUnit.builder().setBaseUnit(HOUR, 1).setBaseUnit(METER, -1).build();
 		ComposedUnit composedUnit2 = ComposedUnit.builder().setBaseUnit(MINUTE, 1).setBaseUnit(FOOT, -1).build();
@@ -584,10 +584,10 @@ public class AT_ComposedUnit {
 	@Test
 	@UnitTestMethod(target = ComposedUnit.class, name = "isMeasureLess", args = {})
 	public void testIsMeasureLess() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 		ComposedUnit composedUnit = ComposedUnit.builder()//
 				.setBaseUnit(METER, 1)//
 				.setBaseUnit(METER, 0)//
@@ -606,10 +606,10 @@ public class AT_ComposedUnit {
 	@Test
 	@UnitTestMethod(target = ComposedUnit.class, name = "toString", args = {})
 	public void testToString() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 		ComposedUnit MPS = ComposedUnit.builder()//
 				.setBaseUnit(METER, 1)//
 				.setBaseUnit(SECOND, -1)//
@@ -627,15 +627,15 @@ public class AT_ComposedUnit {
 	}
 
 	@Test
-	@UnitTestMethod(target = ComposedUnit.Builder.class, name = "setBaseUnit", args = { BaseUnit.class, int.class })
+	@UnitTestMethod(target = ComposedUnit.Builder.class, name = "setBaseUnit", args = { Unit.class, int.class })
 	public void testSetBaseUnit() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		Measure MASS = new Measure("mass");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit KILOGRAM = new BaseUnit(MASS, "kilogram", "kg");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
 
 		ComposedUnit composedUnit = ComposedUnit.builder()//
 				.setBaseUnit(KILOGRAM, 1)//
@@ -643,7 +643,7 @@ public class AT_ComposedUnit {
 				.setBaseUnit(SECOND, -3)//
 				.build();
 
-		Optional<BaseUnit> optionalUnit = composedUnit.getBaseUnit(MASS);
+		Optional<Unit> optionalUnit = composedUnit.getBaseUnit(MASS);
 		assertTrue(optionalUnit.isPresent());
 		assertEquals(KILOGRAM, optionalUnit.get());
 		Optional<Integer> optionalPower = composedUnit.getPower(MASS);
@@ -678,18 +678,18 @@ public class AT_ComposedUnit {
 	@Test
 	@UnitTestMethod(target = ComposedUnit.Builder.class, name = "setLongName", args = { String.class })
 	public void testSetLongName() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
 
 		// sample 1 -- without setting long name
 		ComposedUnit composedUnit = ComposedUnit.builder()//
@@ -722,18 +722,18 @@ public class AT_ComposedUnit {
 	@Test
 	@UnitTestMethod(target = ComposedUnit.Builder.class, name = "setShortName", args = { String.class })
 	public void testSetShortName() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
 
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit MINUTE = new BaseUnit(SECOND, 60, "minute", "min");
-		BaseUnit HOUR = new BaseUnit(MINUTE, 60, "hour", "h");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
+		Unit HOUR = new Unit(MINUTE, 60, "hour", "h");
 
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
-		BaseUnit CM = new BaseUnit(METER, 0.01, "centimeter", "cm");
-		BaseUnit INCH = new BaseUnit(CM, 2.54, "inch", "in");
-		BaseUnit FOOT = new BaseUnit(INCH, 12, "foot", "ft");
-		BaseUnit MILE = new BaseUnit(FOOT, 5280, "mile", "mi");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
+		Unit INCH = new Unit(CM, 2.54, "inch", "in");
+		Unit FOOT = new Unit(INCH, 12, "foot", "ft");
+		Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
 
 		// sample 1 -- without setting short name
 		ComposedUnit composedUnit = ComposedUnit.builder()//
@@ -766,10 +766,10 @@ public class AT_ComposedUnit {
 	@Test
 	@UnitTestMethod(target = ComposedUnit.Builder.class, name = "setNames", args = { String.class, String.class })
 	public void testSetNames() {
-		Measure TIME = new Measure("time");
-		Measure LENGTH = new Measure("length");
-		BaseUnit SECOND = new BaseUnit(TIME, "second", "s");
-		BaseUnit METER = new BaseUnit(LENGTH, "meter", "m");
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
 
 		// case 1 -- null long name, null short name
 		ComposedUnit composedUnit = ComposedUnit.builder()//

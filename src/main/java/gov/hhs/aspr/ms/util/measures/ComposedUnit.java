@@ -21,10 +21,10 @@ public final class ComposedUnit {
 	 * integer power.
 	 */
 	private static class UnitPower {
-		private final BaseUnit baseUnit;
+		private final Unit baseUnit;
 		private final Integer power;
 
-		public UnitPower(BaseUnit baseUnit, Integer power) {
+		public UnitPower(Unit baseUnit, Integer power) {
 			super();
 			this.baseUnit = baseUnit;
 			this.power = power;
@@ -81,10 +81,10 @@ public final class ComposedUnit {
 	private final double value;
 	private final String longName;
 	private final String shortName;
-	private final Map<Measure, UnitPower> measures = new LinkedHashMap<>();
+	private final Map<UnitType, UnitPower> measures = new LinkedHashMap<>();
 
 	private static class Data {
-		private Map<Measure, UnitPower> measures = new TreeMap<>((m1, m2) -> m1.getName().compareTo(m2.getName()));
+		private Map<UnitType, UnitPower> measures = new TreeMap<>((m1, m2) -> m1.getName().compareTo(m2.getName()));
 		private String shortName;
 		private String longName;
 	}
@@ -95,7 +95,7 @@ public final class ComposedUnit {
 		measures.putAll(data.measures);
 
 		double product = 1;
-		for (Measure measure : measures.keySet()) {
+		for (UnitType measure : measures.keySet()) {
 			UnitPower unitPower = measures.get(measure);
 			product *= FastMath.pow(unitPower.baseUnit.getValue(), unitPower.power);
 		}
@@ -120,7 +120,7 @@ public final class ComposedUnit {
 	 *                           measure is null</li>
 	 *                           </ul>
 	 */
-	public Optional<Integer> getPower(Measure measure) {
+	public Optional<Integer> getPower(UnitType measure) {
 		if (measure == null) {
 			throw new ContractException(MeasuresError.NULL_MEASURE);
 		}
@@ -135,8 +135,8 @@ public final class ComposedUnit {
 	 * Returns the base units for this composed unit ordered by measure name.
 	 * 
 	 */
-	public List<BaseUnit> getBaseUnits() {
-		List<BaseUnit> result = new ArrayList<>();
+	public List<Unit> getBaseUnits() {
+		List<Unit> result = new ArrayList<>();
 		for (UnitPower unitPower : measures.values()) {
 			result.add(unitPower.baseUnit);
 		}
@@ -153,7 +153,7 @@ public final class ComposedUnit {
 	 *                           measure is null</li>
 	 *                           </ul>
 	 */
-	public Optional<BaseUnit> getBaseUnit(Measure measure) {
+	public Optional<Unit> getBaseUnit(UnitType measure) {
 		if (measure == null) {
 			throw new ContractException(MeasuresError.NULL_MEASURE);
 		}
@@ -191,7 +191,7 @@ public final class ComposedUnit {
 		 *                           base unit is null</li>
 		 *                           </ul>
 		 */
-		public Builder setBaseUnit(BaseUnit baseUnit, int power) {
+		public Builder setBaseUnit(Unit baseUnit, int power) {
 			if (baseUnit == null) {
 				throw new ContractException(MeasuresError.NULL_UNIT);
 			}
@@ -267,7 +267,7 @@ public final class ComposedUnit {
 		if (!measures.keySet().equals(composedUnit.measures.keySet())) {
 			return false;
 		}
-		for (Measure measure : measures.keySet()) {
+		for (UnitType measure : measures.keySet()) {
 			Integer power1 = measures.get(measure).power;
 			Integer power2 = composedUnit.measures.get(measure).power;
 			if (!power1.equals(power2)) {
@@ -360,7 +360,7 @@ public final class ComposedUnit {
 	public String getShortLabel() {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;
-		for (Measure measure : measures.keySet()) {
+		for (UnitType measure : measures.keySet()) {
 			UnitPower unitPower = measures.get(measure);
 			if (first) {
 				first = false;
@@ -404,7 +404,7 @@ public final class ComposedUnit {
 	public String getLongLabel() {
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;
-		for (Measure measure : measures.keySet()) {
+		for (UnitType measure : measures.keySet()) {
 			UnitPower unitPower = measures.get(measure);
 			if (first) {
 				first = false;
@@ -426,7 +426,7 @@ public final class ComposedUnit {
 		Builder builder = builder();
 
 		// Favor the units of the base
-		for (Measure measure : baseComposite.measures.keySet()) {
+		for (UnitType measure : baseComposite.measures.keySet()) {
 			UnitPower baseUnitPower = baseComposite.measures.get(measure);
 			int power = baseUnitPower.power;
 			UnitPower auxUnitPower = auxComposite.measures.get(measure);
@@ -437,7 +437,7 @@ public final class ComposedUnit {
 		}
 
 		// Any measures not in the base need to be captured
-		for (Measure measure : auxComposite.measures.keySet()) {
+		for (UnitType measure : auxComposite.measures.keySet()) {
 			UnitPower auxUnitPower = auxComposite.measures.get(measure);
 			int power = auxUnitPower.power;
 			UnitPower baseUnitPower = baseComposite.measures.get(measure);
@@ -458,7 +458,7 @@ public final class ComposedUnit {
 		Builder builder = builder();
 
 		// Favor the units of the base
-		for (Measure measure : baseComposite.measures.keySet()) {
+		for (UnitType measure : baseComposite.measures.keySet()) {
 			UnitPower baseUnitPower = baseComposite.measures.get(measure);
 			int power = baseUnitPower.power;
 			UnitPower auxUnitPower = auxComposite.measures.get(measure);
@@ -469,7 +469,7 @@ public final class ComposedUnit {
 		}
 
 		// Any measures not in the base need to be captured
-		for (Measure measure : auxComposite.measures.keySet()) {
+		for (UnitType measure : auxComposite.measures.keySet()) {
 			UnitPower auxUnitPower = auxComposite.measures.get(measure);
 			int power = auxUnitPower.power;
 			UnitPower baseUnitPower = baseComposite.measures.get(measure);
@@ -484,7 +484,7 @@ public final class ComposedUnit {
 
 	static ComposedUnit getInverse(ComposedUnit composedUnit) {
 		Builder builder = builder();
-		for (Measure measure : composedUnit.measures.keySet()) {
+		for (UnitType measure : composedUnit.measures.keySet()) {
 			UnitPower unitPower = composedUnit.measures.get(measure);
 			builder.setBaseUnit(unitPower.baseUnit, -unitPower.power);
 		}
@@ -493,7 +493,7 @@ public final class ComposedUnit {
 
 	static ComposedUnit getPowerComposite(ComposedUnit composedUnit, int power) {
 		Builder builder = builder();
-		for (Measure measure : composedUnit.measures.keySet()) {
+		for (UnitType measure : composedUnit.measures.keySet()) {
 			UnitPower unitPower = composedUnit.measures.get(measure);
 			builder.setBaseUnit(unitPower.baseUnit, unitPower.power * power);
 		}
@@ -508,7 +508,7 @@ public final class ComposedUnit {
 			return composedUnit;
 		}
 		Builder builder = builder();
-		for (Measure measure : composedUnit.measures.keySet()) {
+		for (UnitType measure : composedUnit.measures.keySet()) {
 			UnitPower unitPower = composedUnit.measures.get(measure);
 			if (unitPower.power % root != 0) {
 				throw new ContractException(MeasuresError.POWER_IS_NOT_ROOT_COMPATIBLE);

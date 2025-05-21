@@ -8,7 +8,7 @@ import gov.hhs.aspr.ms.util.errors.ContractException;
  * a volume can be viewed as the cube of distance. Each measure is identified by
  * its name.
  */
-public final class Measure {
+public final class UnitType {
 
 	private final String name;
 
@@ -26,7 +26,7 @@ public final class Measure {
 	 *                           </ul>
 	 * 
 	 */
-	public Measure(String name) {
+	public UnitType(String name) {
 		if (name == null) {
 			throw new ContractException(MeasuresError.NULL_MEASURE_NAME);
 		}
@@ -62,10 +62,10 @@ public final class Measure {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof Measure)) {
+		if (!(obj instanceof UnitType)) {
 			return false;
 		}
-		Measure other = (Measure) obj;
+		UnitType other = (UnitType) obj;
 		if (!name.equals(other.name)) {
 			return false;
 		}
