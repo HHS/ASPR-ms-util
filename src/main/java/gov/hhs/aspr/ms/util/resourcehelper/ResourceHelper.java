@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import gov.hhs.aspr.ms.util.errors.ContractException;
@@ -123,6 +124,22 @@ public class ResourceHelper {
         return createDirectory(dirPath);
     }
 
+    public static void deleteDirectory(Path dir) {
+        deleteDirectory(dir.toFile());
+    }
+
+    private static void deleteDirectory(File file) {
+        File[] contents = file.listFiles();
+        if (contents != null) {
+            for (File f : contents) {
+                if (!Files.isSymbolicLink(f.toPath())) {
+                    deleteDirectory(f);
+                }
+            }
+        }
+        file.delete();
+    }
+
     /**
      * Given a directory path and a file name, creates a file with the given name in
      * the given directory.
@@ -221,11 +238,11 @@ public class ResourceHelper {
         File file = filePath.toFile();
 
         if (file.isDirectory()) {
-            throw new ContractException(ResourceError.FILE_PATH_IS_DIRECTORY,file);
+            throw new ContractException(ResourceError.FILE_PATH_IS_DIRECTORY, file);
         }
 
         if (!file.exists()) {
-            throw new ContractException(ResourceError.UNKNOWN_FILE,file);
+            throw new ContractException(ResourceError.UNKNOWN_FILE, file);
         }
 
         return filePath;
@@ -265,7 +282,7 @@ public class ResourceHelper {
         File file = filePath.toFile();
 
         if (file.isDirectory()) {
-            throw new ContractException(ResourceError.FILE_PATH_IS_DIRECTORY,file);
+            throw new ContractException(ResourceError.FILE_PATH_IS_DIRECTORY, file);
         }
 
         if (!file.exists()) {
@@ -311,7 +328,7 @@ public class ResourceHelper {
         File maybeFile = directoryPath.toFile();
 
         if (maybeFile.isFile()) {
-            throw new ContractException(ResourceError.DIRECTORY_PATH_IS_FILE,maybeFile);
+            throw new ContractException(ResourceError.DIRECTORY_PATH_IS_FILE, maybeFile);
         }
 
         if (!maybeFile.exists()) {
