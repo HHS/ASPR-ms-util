@@ -224,7 +224,7 @@ public final class Unit {
 	 * Returns this Unit as a ComposedUnit
 	 */
 	public ComposedUnit asComposite() {
-		return ComposedUnit.builder().setUnit(this, 1).build();
+		return ComposedUnit.builder().setUnit(this, 1).setNames(name, shortName).build();
 	}
 
 }

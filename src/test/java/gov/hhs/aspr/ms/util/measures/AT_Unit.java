@@ -272,11 +272,11 @@ public class AT_Unit {
 		Unit METER = new Unit(LENGTH, "meter", "m");
 		Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
 
-		ComposedUnit expectedValue = ComposedUnit.builder().setUnit(METER, 1).build();
+		ComposedUnit expectedValue = ComposedUnit.builder().setUnit(METER, 1).setNames("meter", "m").build();
 		ComposedUnit actualValue = METER.asComposite();
 		assertEquals(expectedValue, actualValue);
 
-		expectedValue = ComposedUnit.builder().setUnit(CM, 1).build();
+		expectedValue = ComposedUnit.builder().setUnit(CM, 1).setNames("centimeter", "cm").build();
 		actualValue = CM.asComposite();
 		assertEquals(expectedValue, actualValue);
 
