@@ -29,10 +29,10 @@ public final class Quantity {
 	 * a ComposedUnit.
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_UNIT} if the
-	 *                               unit is null</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_UNIT} if the
+	 *                           unit is null</li>
+	 *                           </ul>
 	 */
 	public Quantity(Unit unit, double value) {
 		if (unit == null) {
@@ -50,6 +50,42 @@ public final class Quantity {
 	}
 
 	/**
+	 * Returns the value of the Quantity cast to an int value.
+	 * 
+	 * @throws ContractException
+	 *                           <ul>
+	 *                           <li>
+	 *                           {@linkplain MeasuresError#VALUE_CANNOT_BE_CAST_TO_INT}
+	 *                           if the value is NaN, less than Integer.MIN_VALUE,
+	 *                           or greater than Integer.MAX_VALUE.</li>
+	 *                           </ul>
+	 */
+	public int getValueAsInt() {
+		if (Double.isNaN(value) || value < Integer.MIN_VALUE || value > Integer.MAX_VALUE) {
+			throw new ContractException(MeasuresError.VALUE_CANNOT_BE_CAST_TO_INT);
+		}
+		return (int) value;
+	}
+
+	/**
+	 * Returns the value of the Quantity cast to a long value.
+	 * 
+	 * @throws ContractException
+	 *                           <ul>
+	 *                           <li>
+	 *                           {@linkplain MeasuresError#VALUE_CANNOT_BE_CAST_TO_INT}
+	 *                           if the value is NaN, less than Long.MIN_VALUE, or
+	 *                           greater than Long.MAX_VALUE.</li>
+	 *                           </ul>
+	 */
+	public long getValueAsLong() {
+		if (Double.isNaN(value) || value < Long.MIN_VALUE || value > Long.MAX_VALUE) {
+			throw new ContractException(MeasuresError.VALUE_CANNOT_BE_CAST_TO_LONG);
+		}
+		return (long) value;
+	}
+
+	/**
 	 * Returns the ComposedUnit of the Quantity
 	 */
 	public ComposedUnit getComposedUnit() {
@@ -61,13 +97,13 @@ public final class Quantity {
 	 * are exactly equal.
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_QUANTITY} if
-	 *                               the quantity is null</li>
-	 *                               <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
-	 *                               if the quantity does not have matching
-	 *                               dimensions</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_QUANTITY} if the
+	 *                           quantity is null</li>
+	 *                           <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
+	 *                           if the quantity does not have matching
+	 *                           dimensions</li>
+	 *                           </ul>
 	 */
 	public boolean eq(Quantity quantity) {
 		return eq(quantity, 0);
@@ -78,13 +114,13 @@ public final class Quantity {
 	 * differ from 1 by no more than the tolerance.
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_QUANTITY} if
-	 *                               the quantity is null</li>
-	 *                               <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
-	 *                               if the quantity does not have matching
-	 *                               dimensions</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_QUANTITY} if the
+	 *                           quantity is null</li>
+	 *                           <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
+	 *                           if the quantity does not have matching
+	 *                           dimensions</li>
+	 *                           </ul>
 	 */
 	public boolean eq(Quantity quantity, double tolerance) {
 		validateQuantityNotNull(quantity);
@@ -98,13 +134,13 @@ public final class Quantity {
 	 * Returns true if and only if this Quantity is greater than the given Quantity
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_QUANTITY} if
-	 *                               the quantity is null</li>
-	 *                               <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
-	 *                               if the quantity does not have matching
-	 *                               dimensions</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_QUANTITY} if the
+	 *                           quantity is null</li>
+	 *                           <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
+	 *                           if the quantity does not have matching
+	 *                           dimensions</li>
+	 *                           </ul>
 	 */
 	public boolean gt(Quantity quantity) {
 		validateQuantityNotNull(quantity);
@@ -118,13 +154,13 @@ public final class Quantity {
 	 * Returns true if and only if this Quantity is less than the given Quantity
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_QUANTITY} if
-	 *                               the quantity is null</li>
-	 *                               <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
-	 *                               if the quantity does not have matching
-	 *                               dimensions</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_QUANTITY} if the
+	 *                           quantity is null</li>
+	 *                           <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
+	 *                           if the quantity does not have matching
+	 *                           dimensions</li>
+	 *                           </ul>
 	 */
 	public boolean lt(Quantity quantity) {
 		validateQuantityNotNull(quantity);
@@ -139,13 +175,13 @@ public final class Quantity {
 	 * given Quantity
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_QUANTITY} if
-	 *                               the quantity is null</li>
-	 *                               <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
-	 *                               if the quantity does not have matching
-	 *                               dimensions</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_QUANTITY} if the
+	 *                           quantity is null</li>
+	 *                           <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
+	 *                           if the quantity does not have matching
+	 *                           dimensions</li>
+	 *                           </ul>
 	 */
 	public boolean gte(Quantity quantity) {
 		validateQuantityNotNull(quantity);
@@ -160,13 +196,13 @@ public final class Quantity {
 	 * Quantity
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_QUANTITY} if
-	 *                               the quantity is null</li>
-	 *                               <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
-	 *                               if the quantity does not have matching
-	 *                               dimensions</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_QUANTITY} if the
+	 *                           quantity is null</li>
+	 *                           <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
+	 *                           if the quantity does not have matching
+	 *                           dimensions</li>
+	 *                           </ul>
 	 */
 	public boolean lte(Quantity quantity) {
 		validateQuantityNotNull(quantity);
@@ -193,13 +229,13 @@ public final class Quantity {
 	 * this Quantity
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_QUANTITY} if
-	 *                               the quantity is null</li>
-	 *                               <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
-	 *                               if the quantity does not have equal powers over
-	 *                               it unitTypes</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_QUANTITY} if the
+	 *                           quantity is null</li>
+	 *                           <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
+	 *                           if the quantity does not have equal powers over it
+	 *                           unitTypes</li>
+	 *                           </ul>
 	 */
 	public Quantity add(Quantity quantity) {
 		validateQuantityNotNull(quantity);
@@ -212,17 +248,25 @@ public final class Quantity {
 	}
 
 	/**
+	 * Returns a new Quantity resulting from the rounding of this quantity's value
+	 * to a whole number based on the rounding rule.
+	 */
+	public Quantity round(RoundingRule roundingRule) {
+		return new Quantity(composedUnit, RoundingRule.round(value, roundingRule));
+	}
+
+	/**
 	 * Returns a new Quantity resulting from the subtraction of the given Quantity
 	 * from this Quantity
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_QUANTITY} if
-	 *                               the quantity is null</li>
-	 *                               <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
-	 *                               if the quantity does not have equal powers over
-	 *                               it unitTypes</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_QUANTITY} if the
+	 *                           quantity is null</li>
+	 *                           <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
+	 *                           if the quantity does not have equal powers over it
+	 *                           unitTypes</li>
+	 *                           </ul>
 	 */
 	public Quantity sub(Quantity quantity) {
 		validateQuantityNotNull(quantity);
@@ -239,10 +283,10 @@ public final class Quantity {
 	 * the given Quantity
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_QUANTITY} if
-	 *                               the quantity is null</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_QUANTITY} if the
+	 *                           quantity is null</li>
+	 *                           </ul>
 	 */
 	public Quantity mult(Quantity quantity) {
 		validateQuantityNotNull(quantity);
@@ -258,10 +302,10 @@ public final class Quantity {
 	 * given Quantity
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_QUANTITY} if
-	 *                               the quantity is null</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_QUANTITY} if the
+	 *                           quantity is null</li>
+	 *                           </ul>
 	 */
 	public Quantity div(Quantity quantity) {
 		validateQuantityNotNull(quantity);
@@ -295,13 +339,13 @@ public final class Quantity {
 	 * Returns a new Quantity resulting from the inversion of this Quantity
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NON_POSITIVE_ROOT}
-	 *                               if the root is not positive</li>
-	 *                               <li>{@linkplain MeasuresError#POWER_IS_NOT_ROOT_COMPATIBLE}
-	 *                               if any of the unitType powers is not divisible
-	 *                               by the root</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NON_POSITIVE_ROOT} if
+	 *                           the root is not positive</li>
+	 *                           <li>{@linkplain MeasuresError#POWER_IS_NOT_ROOT_COMPATIBLE}
+	 *                           if any of the unitType powers is not divisible by
+	 *                           the root</li>
+	 *                           </ul>
 	 */
 	public Quantity root(int root) {
 		ComposedUnit newComposedUnit = ComposedUnit.getRootComposite(composedUnit, root);
@@ -314,13 +358,13 @@ public final class Quantity {
 	 * to the given ComposedUnit
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_COMPOSITE}
-	 *                               if the composedUnit is null</li>
-	 *                               <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
-	 *                               if the composedUnit is not compatible with this
-	 *                               Quantity's composedUnit</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_COMPOSITE} if
+	 *                           the composedUnit is null</li>
+	 *                           <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
+	 *                           if the composedUnit is not compatible with this
+	 *                           Quantity's composedUnit</li>
+	 *                           </ul>
 	 */
 	public Quantity rebase(ComposedUnit composedUnit) {
 		if (composedUnit == null) {
@@ -409,6 +453,20 @@ public final class Quantity {
 	}
 
 	/**
+	 * Returns true if and only if the value can be cast to int without loss.
+	 */
+	public boolean isIntValue() {
+		return RoundingRule.isIntValue(value);
+	}
+
+	/**
+	 * Returns true if and only if the value can be cast to long without loss.
+	 */
+	public boolean isLongValue() {
+		return RoundingRule.isLongValue(value);
+	}
+
+	/**
 	 * Returns true if and only if the value is non-positive
 	 */
 	public boolean isNonPositive() {
@@ -427,10 +485,10 @@ public final class Quantity {
 	 * given Quantity are equal.
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_QUANTITY} if
-	 *                               the quantity is null</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_QUANTITY} if the
+	 *                           quantity is null</li>
+	 *                           </ul>
 	 */
 	public boolean isCompatible(Quantity quantity) {
 		validateQuantityNotNull(quantity);

@@ -1105,7 +1105,7 @@ public class AT_Quantity {
 			Unit FOOT = new Unit(INCH, 12, "foot", "ft");
 			Unit SECOND = new Unit(TIME, "second", "sec");
 			Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
-			
+
 			ComposedUnit FSPMS = ComposedUnit.builder().setUnit(FOOT, 2).setUnit(MINUTE, -2).build();
 			Quantity q = new Quantity(FSPMS, 3.6);
 			q.root(-1);
@@ -1120,7 +1120,7 @@ public class AT_Quantity {
 			Unit FOOT = new Unit(INCH, 12, "foot", "ft");
 			Unit SECOND = new Unit(TIME, "second", "sec");
 			Unit MINUTE = new Unit(SECOND, 60, "minute", "min");
-			
+
 			ComposedUnit FSPMS = ComposedUnit.builder().setUnit(FOOT, 2).setUnit(MINUTE, -2).build();
 			Quantity q = new Quantity(FSPMS, 3.6);
 			q.root(3);
@@ -1343,4 +1343,196 @@ public class AT_Quantity {
 			assertEquals(expectedValue, actualValue);
 		}
 	}
+
+	@Test
+	@UnitTestMethod(target = Quantity.class, name = "round", args = {})
+	public void testRound() {
+		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(4829795492799583108L);
+		
+		UnitType TIME = new UnitType("time");
+		Unit HOUR = new Unit(TIME, "hour", "h");
+
+		/*
+		 * All rounding rules when applied to whole numbers should return the input.
+		 * Note that large values (x: abs(x)>=2^52) are already whole numbers.
+		 */
+		for (int i = -10; i < 10; i++) {
+			double value = i;
+			Quantity quantity = new Quantity(HOUR, value);
+			assertEquals(value, quantity.round(RoundingRule.UP).getValue());
+			assertEquals(value, quantity.round(RoundingRule.DOWN).getValue());
+			assertEquals(value, quantity.round(RoundingRule.AWAY_FROM_ZERO).getValue());
+			assertEquals(value, quantity.round(RoundingRule.TOWARD_ZERO).getValue());
+			assertEquals(value, quantity.round(RoundingRule.NEAREST).getValue());
+		}
+
+		/* Rounding rules when applied to non-whole numbers. */
+		for (int i = -10; i < 10; i++) {
+			double value = i + 0.9 * randomGenerator.nextDouble() + 0.1;
+			Quantity quantity = new Quantity(HOUR, value);
+			assertEquals((double)(i + 1), quantity.round(RoundingRule.UP).getValue());
+			assertEquals((double)(i), quantity.round(RoundingRule.DOWN).getValue());			
+			assertEquals((double)(i < 0 ? i : i + 1), quantity.round(RoundingRule.AWAY_FROM_ZERO).getValue());
+			assertEquals((double)(i < 0 ? i + 1 : i), quantity.round(RoundingRule.TOWARD_ZERO).getValue());
+			assertEquals(FastMath.floor(value + 0.5), quantity.round(RoundingRule.NEAREST).getValue());
+		}
+	}
+
+	@Test
+	@UnitTestMethod(target = Quantity.class, name = "isIntValue", args = {})
+	public void testIsIntValue() {
+		UnitType TIME = new UnitType("time");
+		Unit HOUR = new Unit(TIME, "hour", "h");
+
+		// zero
+		assertTrue(new Quantity(HOUR, 0.0).isIntValue());
+		assertTrue(new Quantity(HOUR, -0.0).isIntValue());
+
+		// whole numbers
+		assertTrue(new Quantity(HOUR, -45).isIntValue());
+		assertTrue(new Quantity(HOUR, -1).isIntValue());
+		assertTrue(new Quantity(HOUR, 1).isIntValue());
+		assertTrue(new Quantity(HOUR, 28).isIntValue());
+
+		// non-whole numbers
+		assertFalse(new Quantity(HOUR, -122.7).isIntValue());
+		assertFalse(new Quantity(HOUR, -45.07).isIntValue());
+		assertFalse(new Quantity(HOUR, 13.354).isIntValue());
+		assertFalse(new Quantity(HOUR, 12342343.23).isIntValue());
+
+		// extreme values
+		assertTrue(new Quantity(HOUR, Integer.MAX_VALUE).isIntValue());
+		assertFalse(new Quantity(HOUR, (double) Integer.MAX_VALUE + 1.0).isIntValue());
+		assertTrue(new Quantity(HOUR, Integer.MIN_VALUE).isIntValue());
+		assertFalse(new Quantity(HOUR, (double) Integer.MIN_VALUE - 1.0).isIntValue());
+		assertFalse(new Quantity(HOUR, Double.NaN).isIntValue());
+		assertFalse(new Quantity(HOUR, Double.POSITIVE_INFINITY).isIntValue());
+		assertFalse(new Quantity(HOUR, Double.NEGATIVE_INFINITY).isIntValue());
+
+	}
+
+	@Test
+	@UnitTestMethod(target = Quantity.class, name = "isLongValue", args = {})
+	public void testIsLongValue() {
+
+		UnitType TIME = new UnitType("time");
+		Unit HOUR = new Unit(TIME, "hour", "h");
+
+		// zero
+		assertTrue(new Quantity(HOUR, 0.0).isLongValue());
+		assertTrue(new Quantity(HOUR, -0.0).isLongValue());
+
+		// whole numbers
+		assertTrue(new Quantity(HOUR, -5234789128456L).isLongValue());
+		assertTrue(new Quantity(HOUR, -45).isLongValue());
+		assertTrue(new Quantity(HOUR, -1).isLongValue());
+		assertTrue(new Quantity(HOUR, 1).isLongValue());
+		assertTrue(new Quantity(HOUR, 28).isLongValue());
+		assertTrue(new Quantity(HOUR, 5234789128456L).isLongValue());
+
+		// non-whole numbers
+		assertFalse(new Quantity(HOUR, -122.7).isLongValue());
+		assertFalse(new Quantity(HOUR, -45.07).isLongValue());
+		assertFalse(new Quantity(HOUR, 13.354).isLongValue());
+		assertFalse(new Quantity(HOUR, 12342343.23).isLongValue());
+
+		/*
+		 * extreme values -- note that adding a small value to a large double will not
+		 * necessarily raise the value, so we must use a larger value to properly move
+		 * the double above or belong max and min long.
+		 */
+		assertTrue(new Quantity(HOUR, Long.MAX_VALUE).isLongValue());
+		assertFalse(new Quantity(HOUR, (double) Long.MAX_VALUE + 10_000.0).isLongValue());
+		assertTrue(new Quantity(HOUR, Long.MIN_VALUE).isLongValue());
+		assertFalse(new Quantity(HOUR, (double) Long.MIN_VALUE - 10_000.0).isLongValue());
+
+	}
+
+	@Test
+	@UnitTestMethod(target = Quantity.class, name = "getValueAsInt", args = {})
+	public void testGetValueAsInt() {
+
+		UnitType TIME = new UnitType("time");
+		Unit HOUR = new Unit(TIME, "hour", "h");
+
+		// zero
+		assertEquals(0, new Quantity(HOUR, 0.0).getValueAsInt());
+		assertEquals(0, new Quantity(HOUR, -0.0).getValueAsInt());
+
+		// whole numbers
+		assertEquals(-45, new Quantity(HOUR, -45).getValueAsInt());
+		assertEquals(-1, new Quantity(HOUR, -1).getValueAsInt());
+		assertEquals(1, new Quantity(HOUR, 1).getValueAsInt());
+		assertEquals(28, new Quantity(HOUR, 28).getValueAsInt());
+
+		// non-whole numbers
+		assertEquals(-122, new Quantity(HOUR, -122.7).getValueAsInt());
+		assertEquals(-45, new Quantity(HOUR, -45.07).getValueAsInt());
+		assertEquals(13, new Quantity(HOUR, 13.354).getValueAsInt());
+		assertEquals(12342343, new Quantity(HOUR, 12342343.23).getValueAsInt());
+
+		// extreme values
+		assertEquals(Integer.MAX_VALUE, new Quantity(HOUR, Integer.MAX_VALUE).getValueAsInt());
+		assertEquals(Integer.MIN_VALUE, new Quantity(HOUR, Integer.MIN_VALUE).getValueAsInt());
+
+		ContractException contractException = assertThrows(ContractException.class, () -> {
+			new Quantity(HOUR, Double.NaN).getValueAsInt();
+		});
+		assertEquals(MeasuresError.VALUE_CANNOT_BE_CAST_TO_INT, contractException.getErrorType());
+		
+		contractException = assertThrows(ContractException.class, () -> {
+			new Quantity(HOUR, (double) Integer.MAX_VALUE+1.0).getValueAsInt();
+		});
+		assertEquals(MeasuresError.VALUE_CANNOT_BE_CAST_TO_INT, contractException.getErrorType());
+		
+		contractException = assertThrows(ContractException.class, () -> {
+			new Quantity(HOUR, (double) Integer.MIN_VALUE-1.0).getValueAsInt();
+		});
+		assertEquals(MeasuresError.VALUE_CANNOT_BE_CAST_TO_INT, contractException.getErrorType());
+
+
+	}
+
+	@Test
+	@UnitTestMethod(target = Quantity.class, name = "getValueAsLong", args = {})
+	public void testGetValueAsLong() {
+		UnitType TIME = new UnitType("time");
+		Unit HOUR = new Unit(TIME, "hour", "h");
+
+		// zero
+		assertEquals(0, new Quantity(HOUR, 0.0).getValueAsLong());
+		assertEquals(0, new Quantity(HOUR, -0.0).getValueAsLong());
+
+		// whole numbers
+		assertEquals(-45, new Quantity(HOUR, -45).getValueAsLong());
+		assertEquals(-1, new Quantity(HOUR, -1).getValueAsLong());
+		assertEquals(1, new Quantity(HOUR, 1).getValueAsLong());
+		assertEquals(28, new Quantity(HOUR, 28).getValueAsLong());
+
+		// non-whole numbers
+		assertEquals(-122, new Quantity(HOUR, -122.7).getValueAsLong());
+		assertEquals(-45, new Quantity(HOUR, -45.07).getValueAsLong());
+		assertEquals(13, new Quantity(HOUR, 13.354).getValueAsLong());
+		assertEquals(12342343, new Quantity(HOUR, 12342343.23).getValueAsLong());
+
+		// extreme values
+		assertEquals(Integer.MAX_VALUE, new Quantity(HOUR, Integer.MAX_VALUE).getValueAsLong());
+		assertEquals(Integer.MIN_VALUE, new Quantity(HOUR, Integer.MIN_VALUE).getValueAsLong());
+
+		ContractException contractException = assertThrows(ContractException.class, () -> {
+			new Quantity(HOUR, Double.NaN).getValueAsLong();
+		});
+		assertEquals(MeasuresError.VALUE_CANNOT_BE_CAST_TO_LONG, contractException.getErrorType());
+		
+		contractException = assertThrows(ContractException.class, () -> {
+			new Quantity(HOUR, (double) Long.MAX_VALUE+10000.0).getValueAsLong();
+		});
+		assertEquals(MeasuresError.VALUE_CANNOT_BE_CAST_TO_LONG, contractException.getErrorType());
+		
+		contractException = assertThrows(ContractException.class, () -> {
+			new Quantity(HOUR, (double) Long.MIN_VALUE-10000.0).getValueAsLong();
+		});
+		assertEquals(MeasuresError.VALUE_CANNOT_BE_CAST_TO_LONG, contractException.getErrorType());
+	}
+
 }
