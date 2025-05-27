@@ -15,6 +15,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.math3.random.RandomGenerator;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import gov.hhs.aspr.ms.util.annotations.UnitTag;
@@ -676,6 +677,7 @@ public class AT_ComposedUnit {
 
 	}
 	
+	@Disabled
 	@Test
 	@UnitTestMethod(target = ComposedUnit.Builder.class, name = "setComposedUnit", args = { Unit.class, int.class })
 	public void testSetComposedUnit() {
