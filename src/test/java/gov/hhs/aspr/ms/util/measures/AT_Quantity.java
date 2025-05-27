@@ -403,9 +403,10 @@ public class AT_Quantity {
 	}
 
 	@Test
-	@UnitTestMethod(target = Quantity.class, name = "e", args = { Quantity.class, double.class })
-	public void testE() {
+	@UnitTestMethod(target = Quantity.class, name = "eq", args = { Quantity.class, double.class })
+	public void testEq() {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(2589875454956650034L);
+
 		for (int i = 0; i < 100; i++) {
 
 			/*
@@ -429,6 +430,83 @@ public class AT_Quantity {
 			Quantity q4 = q2.scale(1 - 1e-10);
 			assertFalse(q1.eq(q4, 1e-12));
 		}
+
+		// special edge case tests
+		UnitType MASS = new UnitType("mass");
+		Unit KG = new Unit(MASS, "kilogram", "kg");
+		UnitType TIME = new UnitType("time");
+		Unit HOUR = new Unit(TIME, "hour", "h");
+
+		Quantity q1 = new Quantity(HOUR, Double.NaN);
+		Quantity q2 = new Quantity(HOUR, 1);
+		assertFalse(q1.eq(q2));
+
+		q1 = new Quantity(HOUR, 1);
+		q2 = new Quantity(HOUR, Double.NaN);
+		assertFalse(q1.eq(q2));
+		
+		q1 = new Quantity(HOUR, Double.NaN);
+		q2 = new Quantity(HOUR, Double.NaN);
+		assertFalse(q1.eq(q2));
+
+		// Show reflexivity for eq.
+		for (int i = 0; i < 30; i++) {
+			double baseValue = randomGenerator.nextDouble();						
+			q1 = new Quantity(HOUR, baseValue);			
+			assertTrue(q1.eq(q1, 0));			
+		}
+
+		// Show symmetry for eq.
+		for (int i = 0; i < 30; i++) {
+			double baseValue = randomGenerator.nextDouble() + 1;
+			double tolerance = 0.01;
+			double altValue = baseValue * 1.001;
+			q1 = new Quantity(HOUR, baseValue);
+			q2 = new Quantity(HOUR, altValue);
+			assertTrue(q1.eq(q2, tolerance));
+			assertTrue(q2.eq(q1, tolerance));
+		}
+
+		for (int i = 0; i < 30; i++) {
+			double baseValue = randomGenerator.nextDouble() + 1;
+			double tolerance = 0.01;
+			double altValue = baseValue * 1.1;
+			q1 = new Quantity(HOUR, baseValue);
+			q2 = new Quantity(HOUR, altValue);
+			assertFalse(q1.eq(q2, tolerance));
+			assertFalse(q2.eq(q1, tolerance));
+		}
+
+		// precondition test: if the quantity is null
+		ContractException contractException = assertThrows(ContractException.class, () -> {
+			Quantity q = new Quantity(HOUR, 1);
+			q.eq(null);
+		});
+		assertEquals(MeasuresError.NULL_QUANTITY, contractException.getErrorType());
+
+		// precondition test: if the quantity does not have matching dimensions
+		contractException = assertThrows(ContractException.class, () -> {
+			Quantity q3 = new Quantity(HOUR, 1);
+			Quantity q4 = new Quantity(KG, 1);
+			q3.eq(q4);
+		});
+		assertEquals(MeasuresError.INCOMPATIBLE_UNIT_TYPES, contractException.getErrorType());
+
+		// precondition test: if the tolerance value us not in the interval
+		contractException = assertThrows(ContractException.class, () -> {
+			Quantity q3 = new Quantity(HOUR, 1.5);
+			Quantity q4 = new Quantity(HOUR, 1.5000005);
+			q3.eq(q4, 1.0);
+		});
+		assertEquals(MeasuresError.INVALID_TOLERANCE, contractException.getErrorType());
+
+		contractException = assertThrows(ContractException.class, () -> {
+			Quantity q3 = new Quantity(HOUR, 1.5);
+			Quantity q4 = new Quantity(HOUR, 1.5000005);
+			q3.eq(q4, -0.1);
+		});
+		assertEquals(MeasuresError.INVALID_TOLERANCE, contractException.getErrorType());
+
 	}
 
 	@Test
@@ -1348,7 +1426,7 @@ public class AT_Quantity {
 	@UnitTestMethod(target = Quantity.class, name = "round", args = {})
 	public void testRound() {
 		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(4829795492799583108L);
-		
+
 		UnitType TIME = new UnitType("time");
 		Unit HOUR = new Unit(TIME, "hour", "h");
 
@@ -1370,10 +1448,10 @@ public class AT_Quantity {
 		for (int i = -10; i < 10; i++) {
 			double value = i + 0.9 * randomGenerator.nextDouble() + 0.1;
 			Quantity quantity = new Quantity(HOUR, value);
-			assertEquals((double)(i + 1), quantity.round(RoundingRule.UP).getValue());
-			assertEquals((double)(i), quantity.round(RoundingRule.DOWN).getValue());			
-			assertEquals((double)(i < 0 ? i : i + 1), quantity.round(RoundingRule.AWAY_FROM_ZERO).getValue());
-			assertEquals((double)(i < 0 ? i + 1 : i), quantity.round(RoundingRule.TOWARD_ZERO).getValue());
+			assertEquals((double) (i + 1), quantity.round(RoundingRule.UP).getValue());
+			assertEquals((double) (i), quantity.round(RoundingRule.DOWN).getValue());
+			assertEquals((double) (i < 0 ? i : i + 1), quantity.round(RoundingRule.AWAY_FROM_ZERO).getValue());
+			assertEquals((double) (i < 0 ? i + 1 : i), quantity.round(RoundingRule.TOWARD_ZERO).getValue());
 			assertEquals(FastMath.floor(value + 0.5), quantity.round(RoundingRule.NEAREST).getValue());
 		}
 	}
@@ -1479,17 +1557,16 @@ public class AT_Quantity {
 			new Quantity(HOUR, Double.NaN).getValueAsInt();
 		});
 		assertEquals(MeasuresError.VALUE_CANNOT_BE_CAST_TO_INT, contractException.getErrorType());
-		
+
 		contractException = assertThrows(ContractException.class, () -> {
-			new Quantity(HOUR, (double) Integer.MAX_VALUE+1.0).getValueAsInt();
-		});
-		assertEquals(MeasuresError.VALUE_CANNOT_BE_CAST_TO_INT, contractException.getErrorType());
-		
-		contractException = assertThrows(ContractException.class, () -> {
-			new Quantity(HOUR, (double) Integer.MIN_VALUE-1.0).getValueAsInt();
+			new Quantity(HOUR, (double) Integer.MAX_VALUE + 1.0).getValueAsInt();
 		});
 		assertEquals(MeasuresError.VALUE_CANNOT_BE_CAST_TO_INT, contractException.getErrorType());
 
+		contractException = assertThrows(ContractException.class, () -> {
+			new Quantity(HOUR, (double) Integer.MIN_VALUE - 1.0).getValueAsInt();
+		});
+		assertEquals(MeasuresError.VALUE_CANNOT_BE_CAST_TO_INT, contractException.getErrorType());
 
 	}
 
@@ -1523,14 +1600,14 @@ public class AT_Quantity {
 			new Quantity(HOUR, Double.NaN).getValueAsLong();
 		});
 		assertEquals(MeasuresError.VALUE_CANNOT_BE_CAST_TO_LONG, contractException.getErrorType());
-		
+
 		contractException = assertThrows(ContractException.class, () -> {
-			new Quantity(HOUR, (double) Long.MAX_VALUE+10000.0).getValueAsLong();
+			new Quantity(HOUR, (double) Long.MAX_VALUE + 10000.0).getValueAsLong();
 		});
 		assertEquals(MeasuresError.VALUE_CANNOT_BE_CAST_TO_LONG, contractException.getErrorType());
-		
+
 		contractException = assertThrows(ContractException.class, () -> {
-			new Quantity(HOUR, (double) Long.MIN_VALUE-10000.0).getValueAsLong();
+			new Quantity(HOUR, (double) Long.MIN_VALUE - 10000.0).getValueAsLong();
 		});
 		assertEquals(MeasuresError.VALUE_CANNOT_BE_CAST_TO_LONG, contractException.getErrorType());
 	}

@@ -23,6 +23,7 @@ public enum MeasuresError implements ContractError {
 	NULL_ROUNDING_RULE("Null rounding rule"),//
 	VALUE_CANNOT_BE_CAST_TO_INT("Value cannot be cast to int"),//
 	VALUE_CANNOT_BE_CAST_TO_LONG("Value cannot be cast to long"),//
+	INVALID_TOLERANCE("Tolerance values must be in the interval [0,1)")
 
 	// NULL_CONSTANT_DESCRIPTION("Null constant description"),
 	// NULL_CONSTANT_LABEL("Null constant label"),

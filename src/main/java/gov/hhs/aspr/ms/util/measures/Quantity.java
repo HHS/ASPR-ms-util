@@ -110,8 +110,9 @@ public final class Quantity {
 	}
 
 	/**
-	 * Returns true if and only if the ratio of this Quantity to the given Quantity
-	 * differ from 1 by no more than the tolerance.
+	 * Returns true if and only if the ratio quantities differ from 1 by no more
+	 * than the tolerance. For non NaN valued quantities, results are reflexive,
+	 * symmetric, but not necessarily transitive.
 	 * 
 	 * @throws ContractException
 	 *                           <ul>
@@ -120,14 +121,46 @@ public final class Quantity {
 	 *                           <li>{@linkplain MeasuresError#INCOMPATIBLE_UNIT_TYPES}
 	 *                           if the quantity does not have matching
 	 *                           dimensions</li>
+	 *                           <li>{@linkplain MeasuresError#INVALID_TOLERANCE} if
+	 *                           the tolerance value us not in the interval
+	 *                           [0,1)</li>
+	 * 
 	 *                           </ul>
 	 */
 	public boolean eq(Quantity quantity, double tolerance) {
+		validateTolerance(tolerance);
 		validateQuantityNotNull(quantity);
 		validateQuantityIsCompatible(quantity);
+		
 		double v1 = value * composedUnit.getValue();
 		double v2 = quantity.value * quantity.composedUnit.getValue();
-		return FastMath.abs(1 - (v2 / v1)) <= tolerance;
+		
+		if(Double.isNaN(v1)||Double.isNaN(v2)) {
+			return false;
+		}
+
+		double intendedLowerBound = (1 - tolerance) * v1;
+		double intendedUpperBound = (1 + tolerance) * v1;
+		
+		double actualLowerBound = FastMath.min(intendedLowerBound, intendedUpperBound);
+		double actualUpperBound = FastMath.max(intendedLowerBound, intendedUpperBound);
+		
+		if (v2 < actualLowerBound || v2 > actualUpperBound) {
+			return false;
+		}
+
+		intendedLowerBound = (1 - tolerance) * v2;
+		intendedUpperBound = (1 + tolerance) * v2;
+		
+		actualLowerBound = FastMath.min(intendedLowerBound, intendedUpperBound);
+		actualUpperBound = FastMath.max(intendedLowerBound, intendedUpperBound);
+
+		
+		if (v1 < actualLowerBound || v1 > actualUpperBound) {
+			return false;
+		}
+		
+		return true;
 	}
 
 	/**
@@ -210,6 +243,17 @@ public final class Quantity {
 		double v1 = value * composedUnit.getValue();
 		double v2 = quantity.value * quantity.composedUnit.getValue();
 		return v1 <= v2;
+	}
+
+	private void validateTolerance(double tolerance) {
+	
+		if(Double.isNaN(tolerance)) {
+			throw new ContractException(MeasuresError.INVALID_TOLERANCE);
+		}
+		
+		if (tolerance < 0 || tolerance >= 1) {
+			throw new ContractException(MeasuresError.INVALID_TOLERANCE);
+		}
 	}
 
 	private void validateQuantityNotNull(Quantity quantity) {
