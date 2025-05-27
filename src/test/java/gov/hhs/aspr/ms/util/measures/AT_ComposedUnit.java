@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -629,6 +630,56 @@ public class AT_ComposedUnit {
 	@Test
 	@UnitTestMethod(target = ComposedUnit.Builder.class, name = "setUnit", args = { Unit.class, int.class })
 	public void testSetUnit() {
+		UnitType TIME = new UnitType("time");
+		UnitType LENGTH = new UnitType("length");
+		UnitType MASS = new UnitType("mass");
+
+		Unit SECOND = new Unit(TIME, "second", "s");
+		Unit METER = new Unit(LENGTH, "meter", "m");
+		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
+
+		ComposedUnit composedUnit = ComposedUnit.builder()//
+				.setUnit(KILOGRAM, 1)//
+				.setUnit(METER, 2)//
+				.setUnit(SECOND, -3)//
+				.build();
+
+		Optional<Unit> optionalUnit = composedUnit.getUnit(MASS);
+		assertTrue(optionalUnit.isPresent());
+		assertEquals(KILOGRAM, optionalUnit.get());
+		Optional<Integer> optionalPower = composedUnit.getPower(MASS);
+		assertTrue(optionalPower.isPresent());
+		assertEquals(1, optionalPower.get());
+
+		optionalUnit = composedUnit.getUnit(LENGTH);
+		assertTrue(optionalUnit.isPresent());
+		assertEquals(METER, optionalUnit.get());
+		optionalPower = composedUnit.getPower(LENGTH);
+		assertTrue(optionalPower.isPresent());
+		assertEquals(2, optionalPower.get());
+
+		optionalUnit = composedUnit.getUnit(TIME);
+		assertTrue(optionalUnit.isPresent());
+		assertEquals(SECOND, optionalUnit.get());
+		optionalPower = composedUnit.getPower(TIME);
+		assertTrue(optionalPower.isPresent());
+		assertEquals(-3, optionalPower.get());
+
+		// precondition test: if the unit is null
+		ContractException contractException = assertThrows(ContractException.class, () -> {
+			ComposedUnit.builder()//
+					.setUnit(null, 1)//
+					.build();
+		});
+
+		assertEquals(MeasuresError.NULL_UNIT, contractException.getErrorType());
+
+	}
+	
+	@Test
+	@UnitTestMethod(target = ComposedUnit.Builder.class, name = "setComposedUnit", args = { Unit.class, int.class })
+	public void testSetComposedUnit() {
+		fail();
 		UnitType TIME = new UnitType("time");
 		UnitType LENGTH = new UnitType("length");
 		UnitType MASS = new UnitType("mass");
