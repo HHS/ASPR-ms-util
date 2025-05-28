@@ -5,8 +5,8 @@ import org.apache.commons.math3.util.FastMath;
 public final class StandardUnits {
     // Length
     public final static Unit METER = new Unit(StandardUnitTypes.LENGTH, "meter", "m");
-    public final static Unit CM = new Unit(METER, 0.01, "centimeter", "cm");
-    public final static Unit DM = new Unit(CM, 10, "decimeter", "dm");
+    public final static Unit CM = new Unit(METER, StandardScalars.CENTI, "centimeter", "cm");
+    public final static Unit DM = new Unit(METER, StandardScalars.DECI, "decimeter", "dm");
     public final static Unit INCH = new Unit(CM, 2.54, "inch", "in");
     public final static Unit FOOT = new Unit(INCH, 12, "foot", "ft");
     public final static Unit MILE = new Unit(FOOT, 5280, "mile", "mi");
@@ -18,10 +18,10 @@ public final class StandardUnits {
     public final static Unit DAY = new Unit(HOUR, 24, "day", "d");
 
     // Mass
-    public final static Unit KILOGRAM = new Unit(StandardUnitTypes.MASS, "kilogram", "kg");
-    public final static Unit GRAM = new Unit(KILOGRAM, 0.001, "gram", "g");
-    public final static Unit MILLIGRAM = new Unit(GRAM, 0.001, "milligram", "mg");
-    public final static Unit MICROGRAM = new Unit(MILLIGRAM, 0.001, "microgram", "mcg");
+    public final static Unit GRAM = new Unit(StandardUnitTypes.MASS, "gram", "g");
+    public final static Unit KILOGRAM = new Unit(GRAM,StandardScalars.KILO, "kilogram", "kg");    
+    public final static Unit MILLIGRAM = new Unit(GRAM, StandardScalars.MILLI, "milligram", "mg");
+    public final static Unit MICROGRAM = new Unit(MILLIGRAM, StandardScalars.MICRO, "microgram", "mcg");
 
     // Current
     public final static Unit AMPERE = new Unit(StandardUnitTypes.CURRENT, "ampere", "A");
