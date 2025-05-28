@@ -115,10 +115,10 @@ public final class ComposedUnit {
 	 * are either not set or set to zero in the builder are not present.
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_UNIT_TYPE}
-	 *                               if the unitType is null</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_UNIT_TYPE} if
+	 *                           the unitType is null</li>
+	 *                           </ul>
 	 */
 	public Optional<Integer> getPower(UnitType unitType) {
 		if (unitType == null) {
@@ -147,10 +147,10 @@ public final class ComposedUnit {
 	 * either not set or set to zero in the builder are not present.
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_UNIT_TYPE}
-	 *                               if the unitType is null</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_UNIT_TYPE} if
+	 *                           the unitType is null</li>
+	 *                           </ul>
 	 */
 	public Optional<Unit> getUnit(UnitType unitType) {
 		if (unitType == null) {
@@ -185,10 +185,10 @@ public final class ComposedUnit {
 		 * power is zero, then the current Unit for the Unit's unitType is removed.
 		 * 
 		 * @throws ContractException
-		 *                               <ul>
-		 *                               <li>{@linkplain MeasuresError#NULL_UNIT} if the
-		 *                               unit is null</li>
-		 *                               </ul>
+		 *                           <ul>
+		 *                           <li>{@linkplain MeasuresError#NULL_UNIT} if the
+		 *                           unit is null</li>
+		 *                           </ul>
 		 */
 		public Builder setUnit(Unit unit, int power) {
 			if (unit == null) {
@@ -199,6 +199,36 @@ public final class ComposedUnit {
 			} else {
 				data.unitTypes.remove(unit.getUnitType());
 			}
+			return this;
+		}
+
+		/**
+		 * Sets the Units for the ComposedUnit's UnitTypes. If the power is non-zero,
+		 * the Units and powers replace the current Units and powers for the Unit's
+		 * UnitTypes. If the power is zero, then the current Units for the
+		 * ComposedUnit's unitTypes are removed.
+		 * 
+		 * @throws ContractException
+		 *                           <ul>
+		 *                           <li>{@linkplain MeasuresError#NULL_COMPOSITE} if the
+		 *                           composed unit is null</li>
+		 *                           </ul>
+		 */
+		public Builder setComposedUnit(ComposedUnit composedUnit, int power) {
+			if (composedUnit == null) {
+				throw new ContractException(MeasuresError.NULL_COMPOSITE);
+			}
+
+			for (UnitType unitType : composedUnit.unitTypes.keySet()) {
+				if (power == 0) {
+					data.unitTypes.remove(unitType);
+					continue;
+				}
+				UnitPower unitPower = composedUnit.unitTypes.get(unitType);
+				UnitPower newUnitPower = new UnitPower(unitPower.unit, unitPower.power * power);
+				data.unitTypes.put(unitType, newUnitPower);
+			}
+
 			return this;
 		}
 
@@ -252,10 +282,10 @@ public final class ComposedUnit {
 	 * the same UnitTypes(but perhaps different Units) to the same integer powers.
 	 * 
 	 * @throws ContractException
-	 *                               <ul>
-	 *                               <li>{@linkplain MeasuresError#NULL_COMPOSITE}
-	 *                               if the ComposedUnit is null</li>
-	 *                               </ul>
+	 *                           <ul>
+	 *                           <li>{@linkplain MeasuresError#NULL_COMPOSITE} if
+	 *                           the ComposedUnit is null</li>
+	 *                           </ul>
 	 */
 	public boolean isCompatible(ComposedUnit composedUnit) {
 		if (composedUnit == null) {
