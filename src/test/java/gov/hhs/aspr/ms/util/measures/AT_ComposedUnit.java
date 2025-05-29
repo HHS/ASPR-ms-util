@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -15,7 +14,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.math3.random.RandomGenerator;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import gov.hhs.aspr.ms.util.annotations.UnitTag;
@@ -676,55 +674,70 @@ public class AT_ComposedUnit {
 		assertEquals(MeasuresError.NULL_UNIT, contractException.getErrorType());
 
 	}
-	
-	@Disabled
+
 	@Test
 	@UnitTestMethod(target = ComposedUnit.Builder.class, name = "setComposedUnit", args = { Unit.class, int.class })
 	public void testSetComposedUnit() {
-		fail();
-		UnitType TIME = new UnitType("time");
-		UnitType LENGTH = new UnitType("length");
-		UnitType MASS = new UnitType("mass");
 
-		Unit SECOND = new Unit(TIME, "second", "s");
-		Unit METER = new Unit(LENGTH, "meter", "m");
-		Unit KILOGRAM = new Unit(MASS, "kilogram", "kg");
 
+		//a base composed unit used throughout the tests below
 		ComposedUnit composedUnit = ComposedUnit.builder()//
-				.setUnit(KILOGRAM, 1)//
-				.setUnit(METER, 2)//
-				.setUnit(SECOND, -3)//
+				.setUnit(StandardUnits.KILOGRAM, 1)//
+				.setUnit(StandardUnits.METER, 2)//
+				.setUnit(StandardUnits.SECOND, -3)//
 				.build();
 
-		Optional<Unit> optionalUnit = composedUnit.getUnit(MASS);
-		assertTrue(optionalUnit.isPresent());
-		assertEquals(KILOGRAM, optionalUnit.get());
-		Optional<Integer> optionalPower = composedUnit.getPower(MASS);
-		assertTrue(optionalPower.isPresent());
-		assertEquals(1, optionalPower.get());
 
-		optionalUnit = composedUnit.getUnit(LENGTH);
-		assertTrue(optionalUnit.isPresent());
-		assertEquals(METER, optionalUnit.get());
-		optionalPower = composedUnit.getPower(LENGTH);
-		assertTrue(optionalPower.isPresent());
-		assertEquals(2, optionalPower.get());
+		//using zero power
+		ComposedUnit actualComposedUnit = ComposedUnit.builder()//				
+				.setComposedUnit(composedUnit, 0)//				
+				.build();
+		
+		
+		ComposedUnit expectComposedUnit = ComposedUnit.builder()//				
+				.build();
+		
+		assertEquals(expectComposedUnit, actualComposedUnit);
+		
+		//using unit before and after the composed unit
+		actualComposedUnit = ComposedUnit.builder()//
+				.setUnit(StandardUnits.KILOGRAM, 5)//
+				.setComposedUnit(composedUnit, 2)//
+				.setUnit(StandardUnits.KILOGRAM, 1)//
+				.setUnit(StandardUnits.AMPERE, 2)//
+				.build();
+		
+		expectComposedUnit = ComposedUnit.builder()//
+				.setUnit(StandardUnits.KILOGRAM, 1)//
+				.setUnit(StandardUnits.METER, 4)//
+				.setUnit(StandardUnits.SECOND, -6)//
+				.setUnit(StandardUnits.AMPERE, 2)//
+				.build();
+		
+		//using unit before and after the composed unit
+		actualComposedUnit = ComposedUnit.builder()//
+				.setComposedUnit(composedUnit, 2)//				
+				.setUnit(StandardUnits.AMPERE, 2)//
+				.setComposedUnit(composedUnit, -2)//
+				.build();
+		
+		expectComposedUnit = ComposedUnit.builder()//
+				.setComposedUnit(composedUnit, -2)//
+				.setUnit(StandardUnits.AMPERE, 2)//
+				.build();
+		
+		assertEquals(expectComposedUnit, actualComposedUnit);
+		
+		
 
-		optionalUnit = composedUnit.getUnit(TIME);
-		assertTrue(optionalUnit.isPresent());
-		assertEquals(SECOND, optionalUnit.get());
-		optionalPower = composedUnit.getPower(TIME);
-		assertTrue(optionalPower.isPresent());
-		assertEquals(-3, optionalPower.get());
-
-		// precondition test: if the unit is null
+		// precondition test: if the composed unit is null
 		ContractException contractException = assertThrows(ContractException.class, () -> {
 			ComposedUnit.builder()//
-					.setUnit(null, 1)//
+					.setComposedUnit(null, 1)//
 					.build();
 		});
 
-		assertEquals(MeasuresError.NULL_UNIT, contractException.getErrorType());
+		assertEquals(MeasuresError.NULL_COMPOSITE, contractException.getErrorType());
 
 	}
 

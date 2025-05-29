@@ -203,15 +203,15 @@ public final class ComposedUnit {
 		}
 
 		/**
-		 * Sets the Units for the ComposedUnit's UnitTypes. If the power is non-zero,
-		 * the Units and powers replace the current Units and powers for the Unit's
-		 * UnitTypes. If the power is zero, then the current Units for the
-		 * ComposedUnit's unitTypes are removed.
+		 * Sets the Units for the ComposedUnit's UnitTypes, raised to the given power.
+		 * If the power is non-zero, the Units and powers replace the current Units and
+		 * powers for the Unit's UnitTypes. If the power is zero, then the current Units
+		 * for the ComposedUnit's unitTypes are removed.
 		 * 
 		 * @throws ContractException
 		 *                           <ul>
-		 *                           <li>{@linkplain MeasuresError#NULL_COMPOSITE} if the
-		 *                           composed unit is null</li>
+		 *                           <li>{@linkplain MeasuresError#NULL_COMPOSITE} if
+		 *                           the composed unit is null</li>
 		 *                           </ul>
 		 */
 		public Builder setComposedUnit(ComposedUnit composedUnit, int power) {
