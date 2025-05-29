@@ -1,6 +1,8 @@
 package gov.hhs.aspr.ms.util.measures;
 
 public final class StandardScalars {
+	public final static double PERCENT = 0.01;
+	
     public final static double QUECTO = 1E-30;
     public final static double RONTO = 1E-27;
     public final static double YOCTO = 1E-24;

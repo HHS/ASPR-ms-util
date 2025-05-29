@@ -87,6 +87,14 @@ public class AT_StandardUnits {
         assertEquals("day", StandardUnits.DAY.getLongName());
         assertEquals("d", StandardUnits.DAY.getShortName());
     }
+    
+    @Test
+    @UnitTestField(target = StandardUnits.class, name = "WEEK")
+    public void test_WEEK() {
+        assertInstanceOf(Unit.class, StandardUnits.WEEK);
+        assertEquals("week", StandardUnits.WEEK.getLongName());
+        assertEquals("d", StandardUnits.DAY.getShortName());
+    }
 
     @Test
     @UnitTestField(target = StandardUnits.class, name = "KILOGRAM")

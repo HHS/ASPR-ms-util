@@ -131,35 +131,34 @@ public final class Quantity {
 		validateTolerance(tolerance);
 		validateQuantityNotNull(quantity);
 		validateQuantityIsCompatible(quantity);
-		
+
 		double v1 = value * composedUnit.getValue();
 		double v2 = quantity.value * quantity.composedUnit.getValue();
-		
-		if(Double.isNaN(v1)||Double.isNaN(v2)) {
+
+		if (Double.isNaN(v1) || Double.isNaN(v2)) {
 			return false;
 		}
 
 		double intendedLowerBound = (1 - tolerance) * v1;
 		double intendedUpperBound = (1 + tolerance) * v1;
-		
+
 		double actualLowerBound = FastMath.min(intendedLowerBound, intendedUpperBound);
 		double actualUpperBound = FastMath.max(intendedLowerBound, intendedUpperBound);
-		
+
 		if (v2 < actualLowerBound || v2 > actualUpperBound) {
 			return false;
 		}
 
 		intendedLowerBound = (1 - tolerance) * v2;
 		intendedUpperBound = (1 + tolerance) * v2;
-		
+
 		actualLowerBound = FastMath.min(intendedLowerBound, intendedUpperBound);
 		actualUpperBound = FastMath.max(intendedLowerBound, intendedUpperBound);
 
-		
 		if (v1 < actualLowerBound || v1 > actualUpperBound) {
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -246,11 +245,11 @@ public final class Quantity {
 	}
 
 	private void validateTolerance(double tolerance) {
-	
-		if(Double.isNaN(tolerance)) {
+
+		if (Double.isNaN(tolerance)) {
 			throw new ContractException(MeasuresError.INVALID_TOLERANCE);
 		}
-		
+
 		if (tolerance < 0 || tolerance >= 1) {
 			throw new ContractException(MeasuresError.INVALID_TOLERANCE);
 		}
@@ -290,6 +289,23 @@ public final class Quantity {
 		double v = quantity.value * quantity.composedUnit.getValue() / composedUnit.getValue();
 		return new Quantity(composedUnit, value + v);
 	}
+
+	/**
+	 * Returns a new Quantity resulting from this Quantity, but with its value set
+	 * to zero. Equivalent to scaling by zero.
+	 */
+	public Quantity getZero() {
+		return new Quantity(composedUnit, 0);//
+	}
+	
+	/**
+	 * Returns a new Quantity resulting from this Quantity, but with its value set
+	 * to one.
+	 */
+	public Quantity getOne() {
+		return new Quantity(composedUnit, 1);//
+	}
+
 
 	/**
 	 * Returns a new Quantity resulting from the rounding of this quantity's value
