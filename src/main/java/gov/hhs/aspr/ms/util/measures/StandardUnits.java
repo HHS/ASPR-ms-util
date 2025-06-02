@@ -23,7 +23,7 @@ public final class StandardUnits {
     public final static Unit GRAM = new Unit(StandardUnitTypes.MASS, "gram", "g");
     public final static Unit KILOGRAM = new Unit(GRAM,StandardScalars.KILO, "kilogram", "kg");    
     public final static Unit MILLIGRAM = new Unit(GRAM, StandardScalars.MILLI, "milligram", "mg");
-    public final static Unit MICROGRAM = new Unit(MILLIGRAM, StandardScalars.MICRO, "microgram", "mcg");
+    public final static Unit MICROGRAM = new Unit(GRAM, StandardScalars.MICRO, "microgram", "mcg");
 
     // Current
     public final static Unit AMPERE = new Unit(StandardUnitTypes.CURRENT, "ampere", "A");
