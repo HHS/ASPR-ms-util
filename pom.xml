@@ -68,7 +68,7 @@
         <!-- dependency versions-->
         <commons-math3.version>3.6.1</commons-math3.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
-        <junit-jupiter-engine.version>5.13.1</junit-jupiter-engine.version>
+        <junit-jupiter-engine.version>5.13.2</junit-jupiter-engine.version>
         <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
     </properties>
 
