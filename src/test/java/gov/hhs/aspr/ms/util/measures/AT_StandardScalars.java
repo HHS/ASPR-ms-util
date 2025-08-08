@@ -150,4 +150,10 @@ public class AT_StandardScalars {
     public void test_QUETTA() {
         assertEquals(1E30, StandardScalars.QUETTA);
     }
+    
+    @Test
+    @UnitTestField(target = StandardScalars.class, name = "PERCENT")
+    public void test_PERCENT() {
+        assertEquals(0.01, StandardScalars.PERCENT);
+    }
 }

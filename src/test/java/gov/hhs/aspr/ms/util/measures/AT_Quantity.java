@@ -1611,5 +1611,28 @@ public class AT_Quantity {
 		});
 		assertEquals(MeasuresError.VALUE_CANNOT_BE_CAST_TO_LONG, contractException.getErrorType());
 	}
+	
+
+	@Test
+	@UnitTestMethod(target = Quantity.class, name = "getZero", args = { double.class })
+	public void testGetZero() {
+		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(7438551332551547296L);
+		for (int i = 0; i < 30; i++) {
+			Quantity quantity = getRandomQuantity(randomGenerator.nextLong());
+			quantity = quantity.getZero();
+			assertEquals(0, quantity.getValue());
+		}
+	}
+	
+	@Test
+	@UnitTestMethod(target = Quantity.class, name = "getOne", args = { double.class })
+	public void testGetOne() {
+		RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(7438551332551547296L);
+		for (int i = 0; i < 30; i++) {
+			Quantity quantity = getRandomQuantity(randomGenerator.nextLong());
+			quantity = quantity.getOne();
+			assertEquals(1, quantity.getValue());
+		}
+	}
 
 }

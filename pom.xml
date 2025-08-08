@@ -7,7 +7,7 @@
     <!-- Artifact -->
     <groupId>gov.hhs.aspr.ms</groupId>
     <artifactId>util</artifactId>
-    <version>4.4.3</version>
+    <version>4.5.0</version>
     <packaging>jar</packaging>
 
     <name>Modeling Utils</name>
@@ -55,20 +55,21 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <readyForAutoVersion>false</readyForAutoVersion>
 
         <!-- plugin versions -->
-        <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
-        <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
+        <flatten-maven-plugin.version>1.7.2</flatten-maven-plugin.version>
+        <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
-        <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
-        <central-publishing-maven-plugin.version>0.7.0</central-publishing-maven-plugin.version>
+        <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+        <central-publishing-maven-plugin.version>0.8.0</central-publishing-maven-plugin.version>
 
         <!-- dependency versions-->
         <commons-math3.version>3.6.1</commons-math3.version>
         <jcip-annotations.version>1.0</jcip-annotations.version>
-        <junit-jupiter-engine.version>5.11.4</junit-jupiter-engine.version>
-        <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
+        <junit-jupiter-engine.version>5.13.2</junit-jupiter-engine.version>
+        <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
     </properties>
 
     <!-- Dependencies -->
